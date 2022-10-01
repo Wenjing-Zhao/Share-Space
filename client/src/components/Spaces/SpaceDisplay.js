@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { MdRoom } from "react-icons/md";
 
 const Space = () => {
   return (
     <Wrapper>
       <Image>
-        <Location>Location</Location>
+        <Location>
+          <MdRoom />
+          Location
+        </Location>
         <Img src="" alt="" />
       </Image>
 
@@ -24,6 +28,7 @@ const Wrapper = styled.div`
 
 const Location = styled.h2`
   padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
 `;
 
 const Image = styled.div`

@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 import Error from "../Error";
 import SpaceDisplay from "./SpaceDisplay";
+import SearchBar from "../Homepage/SearchBar";
 
 const Spaces = () => {
   return (
     <Wrapper>
       <SearchSection>
         <Search>
-          <p></p>
+          <SearchBar />
         </Search>
       </SearchSection>
 
@@ -36,11 +37,12 @@ const Wrapper = styled.div`
 `;
 
 const SearchSection = styled.div`
-  height: 80px;
+  height: 100px;
   background: var(--primary-color);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 `;
 
 const Search = styled.div`

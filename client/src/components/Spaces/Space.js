@@ -4,13 +4,14 @@ import { FiMail, FiHeart, FiMessageSquare, FiCheck } from "react-icons/fi";
 
 import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
+import SearchBar from "../Homepage/SearchBar";
 
 const Space = () => {
   return (
     <Wrapper>
       <SearchSection>
         <Search>
-          <p></p>
+          <SearchBar />
         </Search>
       </SearchSection>
 
@@ -111,6 +112,7 @@ const SearchSection = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 `;
 
 const Search = styled.div`

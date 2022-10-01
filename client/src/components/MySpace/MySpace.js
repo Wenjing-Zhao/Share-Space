@@ -4,13 +4,14 @@ import { FiEdit, FiAlertCircle, FiCheck } from "react-icons/fi";
 
 import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
+import SearchBar from "../Homepage/SearchBar";
 
 const MySpace = () => {
   return (
     <Wrapper>
       <SearchSection>
         <Search>
-          <p></p>
+          <SearchBar />
         </Search>
       </SearchSection>
 
@@ -109,11 +110,12 @@ const Wrapper = styled.div`
 // search bar
 
 const SearchSection = styled.div`
-  height: 80px;
+  height: 100px;
   background: var(--primary-color);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 `;
 
 const Search = styled.div`
