@@ -3,13 +3,12 @@ import { createGlobalStyle } from "styled-components";
 export default createGlobalStyle`
     :root {
         //color
-        --primary-color: #850E35;
-        --icon-color: #CF455C;
-        --title-color: #470031;
+        --primary-color: #b71540;
+        --border-color: #F9F9F9;
+        --font-color: #1e272e;
 
         //width
         --max-page-width: 1200px;
-        --max-content-width: 800px;
         --breakpoint-phone: 600px;
       
         //font
@@ -29,6 +28,7 @@ export default createGlobalStyle`
     figure, figcaption, footer, header, hgroup,
     menu, nav, output, ruby, section, summary,
     time, mark, audio, video {
+        color:var(--font-color);
         margin: 0;
         padding: 0;
         border: 0;

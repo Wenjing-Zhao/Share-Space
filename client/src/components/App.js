@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
-import { FiLoader } from "react-icons/fi";
 
 import Header from "./Header";
 import Homepage from "./Homepage/Homepage";
-import Spaces from "./Spaces/Spaces";
 import SearchResult from "./Homepage/SearchResult";
+import Spaces from "./Spaces/Spaces";
+import Space from "./Spaces/Space";
 import MySpace from "./MySpace/MySpace";
 import Footer from "./Footer";
 
@@ -17,9 +16,10 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/search" element={<SearchResult />} />
         <Route path="/spaces" element={<Spaces />} />
-        <Route path="/search/keyword" element={<SearchResult />} />
-        <Route path="/myspace/:spaceId" element={<MySpace />} />
+        <Route path="/spaces/:spaceId" element={<Space />} />
+        <Route path="/myspace" element={<MySpace />} />
       </Routes>
 
       <Footer />
