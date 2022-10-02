@@ -1,0 +1,41 @@
+[
+  {
+    "userId": "9ceaaff9-a402-4c02-8add-d3612803daa2",
+    "firstName": "Ethan",
+    "lastName": "Moore",
+    "email": "bernadette.bernier@lacroix.info",
+    "spaces": ["e7b610c6-ceea-449e-921a-838d042491ce"],
+    "favorites": ["88a33c23-3332-4ef2-bd71-be7a6430486f"],
+    "messages":
+    [
+      {
+        "spaceId": "e7b610c6-ceea-449e-921a-838d042491ce",
+        "receivedMessages": ["Hello", "How are you?"]
+      }
+    ]
+  },
+  {
+    "userId": "0ae6dac5-d518-435a-849f-f99aadde954b",
+    "firstName": "Liam",
+    "lastName": "Johnston",
+    "email": "brigitte65@yahoo.com",
+    "spaces": ["88a33c23-3332-4ef2-bd71-be7a6430486f"],
+    "favorites": ["e7b610c6-ceea-449e-921a-838d042491ce"],
+    "messages":
+    [
+      {
+        "spaceId": "e7b610c6-ceea-449e-921a-838d042491ce",
+        "receivedMessages": ["Hi", "I'am good."]
+      }
+    ]
+  },
+  {
+    "userId": "eb074991-c3e4-46cd-ba4a-2aa0ba738fd6",
+    "firstName": "Audrey",
+    "lastName": "Wong",
+    "email": "yblais@girard.com",
+    "spaces": ["77z33c23-3332-4ef2-bd71-be7a6430123f"],
+    "favorites": ["e7b610c6-ceea-449e-921a-838d042491ce", "88a33c23-3332-4ef2-bd71-be7a6430486f"],
+    "messages": []
+  }
+]

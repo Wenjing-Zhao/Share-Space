@@ -47,13 +47,20 @@ const Space = () => {
 
             <div>
               <Name>Wenjing Zhao</Name>
-              <SpaceId>Space Id: 1234-5678-1234</SpaceId>
+              <Email>E-mail: 12345678@1234.com</Email>
 
-              <Button>
+              <EmailButton>
                 <FiMail style={{ fontSize: "13px" }} />
-                {` Send E-mail`}
-              </Button>
+                {` Send Me E-mail`}
+              </EmailButton>
+            </div>
+          </UserInfo>
 
+          <SpaceInfo>
+            <Title>My spaces</Title>
+
+            <ButtonSection>
+              <SpaceId>Space Id: 1234-5678-1234</SpaceId>
               <Button
                 onClick={() => {
                   setOpenMessageModal(true);
@@ -61,18 +68,14 @@ const Space = () => {
                 }}
               >
                 <FiMessageSquare style={{ fontSize: "13px" }} />
-                {` Message Me`}
+                {` Message`}
               </Button>
 
               <Button>
                 <FiHeart style={{ fontSize: "13px" }} />
                 {` Favorite`}
               </Button>
-            </div>
-          </UserInfo>
-
-          <SpaceInfo>
-            <Title>My space</Title>
+            </ButtonSection>
 
             <House>
               <img src="" alt="" />
@@ -178,9 +181,14 @@ const Name = styled.h3`
   font-size: 1.8rem;
 `;
 
-const SpaceId = styled.p`
+const Email = styled.p`
   font-size: 1.2rem;
   margin: 20px 0;
+`;
+
+const SpaceId = styled.p`
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 `;
 
 // space info
@@ -200,8 +208,8 @@ const Title = styled.h3`
 `;
 
 const House = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   border: 1px solid black;
 `;
 
@@ -242,13 +250,46 @@ const MyFavorites = styled.h3`
   font-size: 1.5rem;
 `;
 
-// button
+// button'
+const ButtonSection = styled.div`
+  width: 100%;
+`;
+
+const EmailButton = styled.button`
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 5px;
+  width: 220px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  margin-right: 10px;
+  min-height: 30px;
+  outline: none;
+  padding: 10px 24px;
+  text-align: center;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+`;
 
 const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 180px;
+  width: 150px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;

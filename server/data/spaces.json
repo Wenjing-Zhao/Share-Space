@@ -1,0 +1,56 @@
+[
+  {
+    "spaceId": "e7b610c6-ceea-449e-921a-838d042491ce",
+    "spaceDetails":
+    {
+      "imageSrc": "",
+      "availableDate": "",
+      "needs": ["dogs", "cats"],
+      "addressDetails":
+      { 
+        "address": "418 Chemin Blanchette",
+        "city": "Sainte-Yves",
+        "region": "MB",
+        "country": "Canada",
+        "postal": "H0C3S9"
+      }
+    },
+    "host": "9ceaaff9-a402-4c02-8add-d3612803daa2"
+  },
+  {
+    "spaceId": "88a33c23-3332-4ef2-bd71-be7a6430486f",
+    "spaceDetails":
+    {
+      "imageSrc": "",
+      "availableDate": "",
+      "needs": ["dogs", "plants"],
+      "addressDetails":
+      { 
+        "address": "3073 Rue Antoine",
+        "city": "Ste-Laurence",
+        "region": "QC",
+        "country": "Canada",
+        "postal": "D8E1Y9"
+      }
+    },
+    "host": "0ae6dac5-d518-435a-849f-f99aadde954b"
+  },
+  {
+    "spaceId": "77z33c23-3332-4ef2-bd71-be7a6430123f",
+    "spaceDetails":
+    {
+      "imageSrc": "",
+      "availableDate": "",
+      "needs": ["dogs"],
+      "addressDetails":
+      { 
+        "address": "52025 Rue Villeneuve",
+        "city": "Saint-Benoit",
+        "region": "BC",
+        "country": "Canada",
+        "postal": "K3B1N6"
+      }
+    },
+    "host": "eb074991-c3e4-46cd-ba4a-2aa0ba738fd6"
+  }
+]

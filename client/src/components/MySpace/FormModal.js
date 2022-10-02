@@ -70,12 +70,17 @@ const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
           </InputWrapper>
 
           <InputWrapper>
-            <Label htmlFor="address">My Address</Label>
+            <Label htmlFor="address">Address</Label>
             <Input type="" name="" value="" />
           </InputWrapper>
 
           <InputWrapper>
             <Label htmlFor="city">City</Label>
+            <Input type="" name="" value="" />
+          </InputWrapper>
+
+          <InputWrapper>
+            <Label htmlFor="region">Region</Label>
             <Input type="" name="" value="" />
           </InputWrapper>
 
@@ -98,7 +103,7 @@ const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
 
 const Wrapper = styled.div`
   width: 600px;
-  height: 700px;
+  height: 760px;
   position: fixed;
   top: 50%;
   left: 50%;

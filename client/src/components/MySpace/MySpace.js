@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FiEdit, FiTrash2, FiCheckCircle } from "react-icons/fi";
+import { FiPlusSquare, FiEdit, FiTrash2, FiCheckCircle } from "react-icons/fi";
 
 // import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
@@ -42,14 +42,21 @@ const MySpace = () => {
 
             <div>
               <Name>Wenjing Zhao</Name>
-              <SpaceId>Space Id: 1234-5678-1234</SpaceId>
+              <UserId>User Id: 1234-5678-1234</UserId>
             </div>
           </UserInfo>
 
           <SpaceInfo>
-            <Title>My space</Title>
+            <Title>My spaces</Title>
+
+            <Button>
+              <FiPlusSquare style={{ fontSize: "13px" }} />
+              {` Add`}
+            </Button>
 
             <ButtonSection>
+              <SpaceId>Space Id: 1234-5678-1234</SpaceId>
+
               <Button
                 onClick={() => {
                   setOpenFormModal(true);
@@ -130,7 +137,7 @@ const Wrapper = styled.div`
 // search bar
 
 const SearchSection = styled.div`
-  height: 100px;
+  height: 80px;
   background: var(--primary-color);
   display: flex;
   flex-wrap: wrap;
@@ -173,9 +180,14 @@ const Name = styled.h3`
   font-size: 1.8rem;
 `;
 
-const SpaceId = styled.p`
+const UserId = styled.p`
   font-size: 1.2rem;
   margin-top: 20px;
+`;
+
+const SpaceId = styled.p`
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 `;
 
 // space info
@@ -195,8 +207,8 @@ const Title = styled.h3`
 `;
 
 const House = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   border: 1px solid black;
 `;
 
