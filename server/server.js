@@ -6,14 +6,31 @@ const helmet = require("helmet");
 const app = express();
 const port = 8000;
 
+const {
+  getSpaces,
+  getSpace,
+  addSpace,
+  updateSpace,
+  deleteSpace,
+} = require("./handlers/spaceHandlers");
+
+const { getUser, addUser, updateUser } = require("./handlers/userHandlers");
+
 app.use(helmet());
 app.use(morgan("tiny"));
 
 // add endpoints here
 // ------------------
-app.get("/", (req, res) => {
-  res.send("hello world!");
-});
+
+app.get("/api/get-spaces", getSpaces);
+app.get("/api/get-space/:spaceId", getSpace);
+app.post("/api/add-space", addSpace);
+app.patch("/api/update-space", updateSpace);
+app.delete("/api/delete-space/:spaceId", deleteSpace);
+
+app.get("/api/get-user", getUser);
+app.post("api/add-user", addUser);
+app.patch("/api/update-user", updateUser);
 
 // ------------------
 
