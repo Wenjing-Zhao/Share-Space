@@ -45,6 +45,7 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 3rem;
+  font-weight: 600;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -87,13 +88,13 @@ const Links = styled.div`
 `;
 
 const LinkStyle = styled(Link)`
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 500;
 
   &:hover {
     color: white;
-    text-decoration: none;
+    text-decoration: underline;
   }
 `;
 

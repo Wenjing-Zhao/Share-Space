@@ -104,7 +104,7 @@ const Input = styled.input`
   margin-left: 20px;
 
   &:focus {
-    outline: #3b90ff solid 3px;
+    outline: #cf6a87 solid 3px;
     outline-offset: 1px;
   }
 `;
@@ -120,13 +120,13 @@ const ClearButton = styled.button`
   display: inline-block;
   font-weight: 600;
   outline: none;
-  padding: 10px 13px;
+  padding: 10px 12px;
   text-align: center;
   transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
   position: relative;
   right: 55px;
-  opacity: 60%;
+  opacity: 50%;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;

@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { FiEdit, FiAlertCircle, FiCheck } from "react-icons/fi";
+import { FiEdit, FiCheckCircle } from "react-icons/fi";
 
 import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
+import FormModal from "./FormModal";
 
 const MySpace = () => {
   return (
     <Wrapper>
+      <FormModal />
+
       <SearchSection>
         <Search>
           <SearchBar />
@@ -34,55 +37,51 @@ const MySpace = () => {
             <ButtonSection>
               <Button>
                 <FiEdit style={{ fontSize: "13px" }} />
-                {` Edit Space`}
+                {` Edit`}
+              </Button>
+
+              <Button>
+                <FiEdit style={{ fontSize: "13px" }} />
+                {` Delete`}
               </Button>
             </ButtonSection>
 
             <House>
-              <FiAlertCircle style={{ fontSize: "13px" }} />
-              <span> Please edit first!</span>
-
               <img src="" alt="" />
             </House>
 
             <SubSpaceInfo>
               <div>
                 <SmallTitlt>Available date</SmallTitlt>
-                <FiAlertCircle style={{ fontSize: "13px" }} />
-                <span> Please edit first!</span>
 
-                {/* <p>2022.10.01 - 2022.10.10</p> */}
-              </div>
-
-              <div>
-                <SmallTitlt>My Address</SmallTitlt>
-                <FiAlertCircle style={{ fontSize: "13px" }} />
-                <span> Please edit first!</span>
-
-                {/* <p>20 Florence, Cadiac, QC, CA J5R 0A8</p> */}
+                <p>2022.10.01 - 2022.10.10</p>
               </div>
 
               <div>
                 <SmallTitlt>Pets & Needs</SmallTitlt>
-                <FiAlertCircle style={{ fontSize: "13px" }} />
-                <span> Please edit first!</span>
 
-                {/* <Needs>
+                <Needs>
                   <span>
-                    <FiCheck />
-                    Dogs
+                    <FiCheckCircle />
+                    {` Dogs`}
                   </span>
 
                   <span>
-                    <FiCheck />
-                    Cats
+                    <FiCheckCircle />
+                    {` Cats`}
                   </span>
-                  
+
                   <span>
-                    <FiCheck />
-                    Plants
+                    <FiCheckCircle />
+                    {` Plants`}
                   </span>
-                </Needs> */}
+                </Needs>
+              </div>
+
+              <div>
+                <SmallTitlt>My Address</SmallTitlt>
+
+                <p>20 Florence, Cadiac, QC, CA J5R 0A8</p>
               </div>
             </SubSpaceInfo>
           </SpaceInfo>
@@ -105,6 +104,7 @@ const MySpace = () => {
 
 const Wrapper = styled.div`
   min-height: calc(100vh - 250px);
+  position: relative;
 `;
 
 // search bar
@@ -227,7 +227,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 170px;
+  width: 130px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;

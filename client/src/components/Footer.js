@@ -45,12 +45,20 @@ const FooterLink = styled(Link)`
   color: white;
   font-size: 1.2rem;
   text-decoration: none;
+
+  &:hover {
+    color: #cf6a87;
+  }
 `;
 
 const ExternalLink = styled.a`
   color: white;
   font-size: 1.2rem;
   text-decoration: none;
+
+  &:hover {
+    color: #cf6a87;
+  }
 `;
 
 const Hr = styled.hr`

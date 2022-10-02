@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { FiMail, FiHeart, FiMessageSquare, FiCheck } from "react-icons/fi";
+import {
+  FiMail,
+  FiHeart,
+  FiMessageSquare,
+  FiCheckCircle,
+} from "react-icons/fi";
 
 import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
@@ -57,29 +62,29 @@ const Space = () => {
               </div>
 
               <div>
-                <SmallTitlt>My Address</SmallTitlt>
-                <span>20 Florence, Cadiac, QC, CA J5R 0A8</span>
-              </div>
-
-              <div>
                 <SmallTitlt>Pets & Needs</SmallTitlt>
 
                 <Needs>
                   <span>
-                    <FiCheck />
+                    <FiCheckCircle />
                     Dogs
                   </span>
 
                   <span>
-                    <FiCheck />
+                    <FiCheckCircle />
                     Cats
                   </span>
 
                   <span>
-                    <FiCheck />
+                    <FiCheckCircle />
                     Plants
                   </span>
                 </Needs>
+              </div>
+
+              <div>
+                <SmallTitlt>My Address</SmallTitlt>
+                <span>20 Florence, Cadiac, QC, CA J5R 0A8</span>
               </div>
             </SubSpaceInfo>
           </SpaceInfo>
@@ -220,7 +225,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 170px;
+  width: 180px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
