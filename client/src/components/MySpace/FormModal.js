@@ -36,18 +36,16 @@ const onChange = (checkedValues) => {
   console.log("checked = ", checkedValues);
 };
 
-const FormPopup = () => {
+const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
   const { RangePicker } = DatePicker;
 
-  const closeModal = () => {};
-
   return (
-    <Wrapper>
+    <Wrapper openFormModal={openFormModal}>
       <Section>
         <CloseButton
-          type="button"
           onClick={() => {
-            closeModal();
+            setOpenFormModal(false);
+            setHidden();
           }}
         >
           <MdOutlineClear style={{ fontSize: "15px" }} />
@@ -109,7 +107,7 @@ const Wrapper = styled.div`
   background: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 5px;
-  display: flex;
+  display: ${(props) => (props.openFormModal ? "flex" : "none")};
   justify-content: center;
   align-items: center;
 `;
@@ -202,4 +200,4 @@ const SubmitButton = styled.button`
   }
 `;
 
-export default FormPopup;
+export default FormModal;

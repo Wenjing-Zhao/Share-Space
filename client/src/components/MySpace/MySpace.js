@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { FiEdit, FiCheckCircle } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiCheckCircle } from "react-icons/fi";
 
-import Error from "../Error";
+// import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
 import FormModal from "./FormModal";
 
 const MySpace = () => {
+  const [openFormModal, setOpenFormModal] = useState(false);
+
+  // stop scrolling when modal open
+  const setHidden = () => {
+    if (document.body.style.overflow !== "hidden") {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  };
+
   return (
     <Wrapper>
-      <FormModal />
+      <FormModal
+        openFormModal={openFormModal}
+        setOpenFormModal={setOpenFormModal}
+        setHidden={setHidden}
+      />
 
       <SearchSection>
         <Search>
@@ -35,13 +50,18 @@ const MySpace = () => {
             <Title>My space</Title>
 
             <ButtonSection>
-              <Button>
+              <Button
+                onClick={() => {
+                  setOpenFormModal(true);
+                  setHidden();
+                }}
+              >
                 <FiEdit style={{ fontSize: "13px" }} />
                 {` Edit`}
               </Button>
 
               <Button>
-                <FiEdit style={{ fontSize: "13px" }} />
+                <FiTrash2 style={{ fontSize: "13px" }} />
                 {` Delete`}
               </Button>
             </ButtonSection>

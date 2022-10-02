@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Error from "../Error";
+// import Error from "../Error";
 import SpaceDisplay from "./SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
 

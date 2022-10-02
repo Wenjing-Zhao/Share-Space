@@ -3,17 +3,17 @@ import styled from "styled-components";
 import { MdOutlineClear, MdRoom } from "react-icons/md";
 
 const SearchBar = () => {
-  const [value, setValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [matchedList, setMatchedList] = useState([]);
 
   return (
     <Wrapper>
       <Input
         type="text"
-        value={value}
+        value={searchValue}
         placeholder="Where do you want to go? (Country, city...)"
         onChange={(evt) => {
-          setValue(evt.target.value);
+          setSearchValue(evt.target.value);
 
           // setMatchedList(
           //   suggestions.filter((ele) => {
@@ -43,7 +43,7 @@ const SearchBar = () => {
       <ClearButton
         type="button"
         onClick={() => {
-          setValue("");
+          setSearchValue("");
           setMatchedList([]);
         }}
       >
@@ -53,7 +53,7 @@ const SearchBar = () => {
       <FindButton
         type="button"
         onClick={() => {
-          setValue("");
+          setSearchValue("");
           setMatchedList([]);
         }}
       >

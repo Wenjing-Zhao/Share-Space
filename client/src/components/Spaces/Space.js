@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   FiMail,
@@ -7,13 +7,31 @@ import {
   FiCheckCircle,
 } from "react-icons/fi";
 
-import Error from "../Error";
+// import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
+import MessageModal from "./MessageModal";
 
 const Space = () => {
+  const [openMessageModal, setOpenMessageModal] = useState(false);
+
+  // stop scrolling when modal open
+  const setHidden = () => {
+    if (document.body.style.overflow !== "hidden") {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  };
+
   return (
     <Wrapper>
+      <MessageModal
+        openMessageModal={openMessageModal}
+        setOpenMessageModal={setOpenMessageModal}
+        setHidden={setHidden}
+      />
+
       <SearchSection>
         <Search>
           <SearchBar />
@@ -36,7 +54,12 @@ const Space = () => {
                 {` Send E-mail`}
               </Button>
 
-              <Button>
+              <Button
+                onClick={() => {
+                  setOpenMessageModal(true);
+                  setHidden();
+                }}
+              >
                 <FiMessageSquare style={{ fontSize: "13px" }} />
                 {` Message Me`}
               </Button>
@@ -249,6 +272,15 @@ const Button = styled.button`
     box-shadow: none;
     transform: translateY(0);
   }
+`;
+
+const ModalContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 export default Space;
