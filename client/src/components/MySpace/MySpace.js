@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FiPlusSquare, FiEdit, FiTrash2, FiCheckCircle } from "react-icons/fi";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // import Error from "../Error";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
@@ -8,7 +9,23 @@ import SearchBar from "../Homepage/SearchBar";
 import FormModal from "./FormModal";
 
 const MySpace = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const [openFormModal, setOpenFormModal] = useState(false);
+
+  //   if (isLoading) {
+  //     return <div>Loading ...</div>;
+  //   }
+
+  //   return (
+  //     isAuthenticated && (
+  //       <div>
+  //         <img src={user.picture} alt={user.name} />
+  //         <h2>{user.name}</h2>
+  //         <p>{user.email}</p>
+  //       </div>
+  //     )
+  //   );
+  // };
 
   // stop scrolling when modal open
   const setHidden = () => {
@@ -43,6 +60,11 @@ const MySpace = () => {
             <div>
               <Name>Wenjing Zhao</Name>
               <UserId>User Id: 1234-5678-1234</UserId>
+
+              <Button>
+                <FiEdit style={{ fontSize: "13px" }} />
+                {` Profile`}
+              </Button>
             </div>
           </UserInfo>
 
@@ -182,7 +204,7 @@ const Name = styled.h3`
 
 const UserId = styled.p`
   font-size: 1.2rem;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 
 const SpaceId = styled.p`

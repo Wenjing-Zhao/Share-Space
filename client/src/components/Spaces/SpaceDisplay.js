@@ -21,7 +21,6 @@ const Space = () => {
 };
 
 const Wrapper = styled.div`
-  /* border: 1px solid black; */
   width: 270px;
   height: 335px;
 `;

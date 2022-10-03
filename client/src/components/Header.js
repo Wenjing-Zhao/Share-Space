@@ -1,12 +1,15 @@
 import React, { createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import { AiOutlineHome } from "react-icons/ai";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import logo from "../assets/logo.png";
+import LoginButton from "./MySpace/LoginButton";
+import LogoutButton from "./MySpace/LogoutButton";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <Wrapper>
@@ -21,8 +24,10 @@ const Header = () => {
         </Logo>
 
         <SignIn>
-          <HeaderLink to="/myspace">My Space</HeaderLink>
-          <HeaderLink to="/">Sign In</HeaderLink>
+          <HeaderLink to="/myspace">My Spaces</HeaderLink>
+
+          <LoginButton />
+          <LogoutButton />
         </SignIn>
       </Section>
     </Wrapper>

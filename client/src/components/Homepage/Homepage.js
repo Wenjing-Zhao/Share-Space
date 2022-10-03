@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaDog, FaUserAlt, FaHome, FaRegHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 
 import poster from "../../assets/poster.jpg";
 import SearchBar from "./SearchBar";
@@ -28,10 +28,6 @@ const Homepage = () => {
           <FaRegHeart style={{ fontSize: "50px" }} />
 
           <Para>Connecting like-minded people around the world</Para>
-
-          {/* <FaDog style={{ fontSize: "30px" }} />
-          <FaUserAlt style={{ fontSize: "30px" }} />
-          <FaHome style={{ fontSize: "30px" }} /> */}
         </Intro>
       </Section>
     </Wrapper>

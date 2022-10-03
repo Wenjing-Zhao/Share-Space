@@ -1,6 +1,6 @@
 import React from "react";
-import { FaBomb } from "react-icons/fa";
 import styled from "styled-components";
+import { FaBomb } from "react-icons/fa";
 
 const Error = () => {
   return (

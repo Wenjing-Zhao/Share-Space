@@ -315,13 +315,13 @@ const Button = styled.button`
   }
 `;
 
-const ModalContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-`;
+// const ModalContainer = styled.div`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   background: rgba(0, 0, 0, 0.5);
+// `;
 
 export default Space;
