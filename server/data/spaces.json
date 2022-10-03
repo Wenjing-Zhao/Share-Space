@@ -3,7 +3,7 @@
     "spaceId": "e7b610c6-ceea-449e-921a-838d042491ce",
     "spaceDetails":
     {
-      "imageSrc": "",
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664764083/dofzxt9ucmtavzti3dtw.jpg",
       "availableDate": "",
       "needs": ["dogs", "cats"],
       "addressDetails":
@@ -21,7 +21,7 @@
     "spaceId": "88a33c23-3332-4ef2-bd71-be7a6430486f",
     "spaceDetails":
     {
-      "imageSrc": "",
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664764071/sxyjcnugweglnhjpmw65.jpg",
       "availableDate": "",
       "needs": ["dogs", "plants"],
       "addressDetails":
@@ -39,7 +39,7 @@
     "spaceId": "77z33c23-3332-4ef2-bd71-be7a6430123f",
     "spaceDetails":
     {
-      "imageSrc": "",
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664764065/uuvduythpkq4ar4pyblj.jpg",
       "availableDate": "",
       "needs": ["dogs"],
       "addressDetails":

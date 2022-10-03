@@ -2,42 +2,47 @@ import React from "react";
 import styled from "styled-components";
 import { MdOutlineClear } from "react-icons/md";
 
-import "antd/dist/antd.min.css";
 import { DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Checkbox } from "antd";
 
-// this is for the image upload
-const props = {
-  // name: "file",
-  // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  // headers: {
-  //   authorization: "authorization-text",
-  // },
-
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
-
-// this is for the "pets and needs"
-const plainOptions = ["Dogs", "Cats", "Plants"];
-
-const onChange = (checkedValues) => {
-  console.log("checked = ", checkedValues);
-};
-
 const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
   const { RangePicker } = DatePicker;
+
+  // const [formData, setFormData] = useState({});
+
+  // const handleChange = (key, value) => {
+  //   setFormData({
+  //     ...formData,
+  //     [key]: value,
+  //   });
+  // };
+
+  // this is for image upload
+  const props = {
+    action: "https://api.cloudinary.com/v1_1/sharespace/image/upload",
+    data: {
+      upload_preset: "irdmdwmq",
+    },
+
+    onChange(info) {
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+        console.log(info.fileList[0].response.secure_url);
+        console.log(info.file.response.secure_url);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
+  // this is for the "pets and needs" check
+  const plainOptions = ["Dogs", "Cats", "Plants"];
+
+  const onChange = (checkedValues) => {
+    console.log("checked = ", checkedValues);
+  };
 
   return (
     <Wrapper openFormModal={openFormModal}>
