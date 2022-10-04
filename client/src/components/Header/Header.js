@@ -9,7 +9,7 @@ import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <Wrapper>
@@ -26,7 +26,7 @@ const Header = () => {
         <SignIn>
           {isAuthenticated ? (
             <>
-              <HeaderLink to="/myspace">My Spaces</HeaderLink>
+              <HeaderLink to="/account">My Account</HeaderLink>
               <LogoutButton />
             </>
           ) : (
@@ -82,6 +82,7 @@ const SignIn = styled.div`
 
 const HeaderLink = styled(Link)`
   font-size: 1.2rem;
+  font-weight: 500;
   text-decoration: none;
 
   &:hover {

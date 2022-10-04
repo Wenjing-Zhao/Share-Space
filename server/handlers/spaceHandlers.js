@@ -10,7 +10,29 @@ const options = {
 };
 
 // return an array of all spaces
-const getSpaces = async (req, res) => {};
+const getSpaces = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    const spacesData = await db.collection("spaces").find().toArray();
+
+    if (spacesData.length === 0) {
+      return res.status(404).json({ status: 404, message: "Spaces Not found" });
+    }
+
+    res.status(200).json({ status: 200, data: spacesData });
+  } catch (err) {
+    res.status(500).json({ status: 500, message: err.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
 
 // return a single space
 const getSpace = async (req, res) => {};

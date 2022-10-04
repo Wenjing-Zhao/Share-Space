@@ -7,7 +7,7 @@ import Homepage from "./Homepage/Homepage";
 import SearchResult from "./Homepage/SearchResult";
 import Spaces from "./Spaces/Spaces";
 import Space from "./Spaces/Space";
-import MySpace from "./MySpace/MySpace";
+import Account from "./Account/Account";
 import Footer from "./Footer";
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/search" element={<SearchResult />} />
         <Route path="/spaces" element={<Spaces />} />
         <Route path="/spaces/:spaceId" element={<Space />} />
-        <Route path="/myspace" element={<MySpace />} />
+        <Route path="/account/:userId" element={<Account />} />
       </Routes>
 
       <Footer />

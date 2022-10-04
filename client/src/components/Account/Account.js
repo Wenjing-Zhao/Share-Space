@@ -69,7 +69,7 @@ const MySpace = () => {
           </UserInfo>
 
           <SpaceInfo>
-            <Title>My spaces</Title>
+            <Title>My Spaces</Title>
 
             <Button>
               <FiPlusSquare style={{ fontSize: "13px" }} />

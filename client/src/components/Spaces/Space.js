@@ -40,25 +40,7 @@ const Space = () => {
 
       <InfoSection>
         <Info>
-          <UserInfo>
-            <Avatar>
-              <img src="" alt="" />
-            </Avatar>
-
-            <div>
-              <Name>Wenjing Zhao</Name>
-              <Email>E-mail: 12345678@1234.com</Email>
-
-              <EmailButton>
-                <FiMail style={{ fontSize: "13px" }} />
-                {` Send Me E-mail`}
-              </EmailButton>
-            </div>
-          </UserInfo>
-
           <SpaceInfo>
-            <Title>My spaces</Title>
-
             <ButtonSection>
               <SpaceId>Space Id: 1234-5678-1234</SpaceId>
               <Button
@@ -114,12 +96,28 @@ const Space = () => {
               </div>
             </SubSpaceInfo>
           </SpaceInfo>
+
+          <UserInfo>
+            <Avatar>
+              <img src="" alt="" />
+            </Avatar>
+
+            <div>
+              <Name>Wenjing Zhao</Name>
+              <Email>E-mail: 12345678@1234.com</Email>
+
+              <EmailButton>
+                <FiMail style={{ fontSize: "13px" }} />
+                {` Send E-mail`}
+              </EmailButton>
+            </div>
+          </UserInfo>
         </Info>
       </InfoSection>
 
       <Section>
         <Display>
-          <MyFavorites>My Favorites</MyFavorites>
+          <MyFavorites>His / Her Favorites</MyFavorites>
 
           <SpaceDisplay />
           <SpaceDisplay />
@@ -189,6 +187,7 @@ const Email = styled.p`
 const SpaceId = styled.p`
   font-size: 1.2rem;
   margin-bottom: 20px;
+  font-weight: bold;
 `;
 
 // space info
@@ -200,11 +199,6 @@ const SpaceInfo = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 20px;
-`;
-
-const Title = styled.h3`
-  width: 100%;
-  font-size: 1.5rem;
 `;
 
 const House = styled.div`
@@ -259,7 +253,7 @@ const EmailButton = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 220px;
+  width: 180px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
