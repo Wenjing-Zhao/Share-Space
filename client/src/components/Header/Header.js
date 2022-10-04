@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import logo from "../assets/logo.png";
-import LoginButton from "./MySpace/LoginButton";
-import LogoutButton from "./MySpace/LogoutButton";
+import logo from "../../assets/logo.png";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <Wrapper>
@@ -30,7 +30,10 @@ const Header = () => {
               <LogoutButton />
             </>
           ) : (
-            <LoginButton />
+            <>
+              <Welcome>Welcome!</Welcome>
+              <LoginButton />
+            </>
           )}
         </SignIn>
       </Section>
@@ -66,7 +69,7 @@ const Img = styled.img`
 const Title = styled.h1`
   color: var(--primary-color);
   font-size: 2.5rem;
-  font-weight: bolder;
+  font-weight: 800;
   margin-left: 15px;
 `;
 
@@ -85,6 +88,10 @@ const HeaderLink = styled(Link)`
     color: var(--primary-color);
     text-decoration: underline;
   }
+`;
+
+const Welcome = styled.p`
+  font-size: 1.2rem;
 `;
 
 export default Header;

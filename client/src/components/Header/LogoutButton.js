@@ -2,17 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
+const LogoutButton = () => {
+  const { logout } = useAuth0();
 
-  return <Button onClick={() => loginWithRedirect()}>Sign In / Sign Up</Button>;
+  return (
+    <Button onClick={() => logout({ returnTo: window.location.origin })}>
+      Sign Out
+    </Button>
+  );
 };
 
 const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
-  border-radius: 5px;
-  width: 200px;
+  border-radius: 50px;
+  width: 130px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
@@ -37,4 +41,4 @@ const Button = styled.button`
   }
 `;
 
-export default LoginButton;
+export default LogoutButton;

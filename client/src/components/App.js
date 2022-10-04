@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "antd/dist/antd.min.css";
 
-import Header from "./Header";
+import Header from "./Header/Header";
 import Homepage from "./Homepage/Homepage";
 import SearchResult from "./Homepage/SearchResult";
 import Spaces from "./Spaces/Spaces";
