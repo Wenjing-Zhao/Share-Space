@@ -6,14 +6,8 @@
     "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664763291/avihs47dnlpot2ycrvdc.jpg",
     "email": "bernadette.bernier@lacroix.info",
     "spaces": ["e7b610c6-ceea-449e-921a-838d042491ce"],
-    "favorites": ["88a33c23-3332-4ef2-bd71-be7a6430486f"],
-    "messages":
-    [
-      {
-        "spaceId": "e7b610c6-ceea-449e-921a-838d042491ce",
-        "receivedMessages": ["Hello", "How are you?"]
-      }
-    ]
+    "favorites": ["88a33c23-3332-4ef2-bd71-be7a6430486f", "77z33c23-3332-4ef2-bd71-be7a6430123f", "1a7943c3-4312-4c58-8cbd-210d1142bfb2", "f798a433-967f-4f39-bca5-4273bd68db5f"],
+    "messages": []
   },
   {
     "userId": "0ae6dac5-d518-435a-849f-f99aadde954b",
@@ -22,14 +16,8 @@
     "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664763320/rl6lbcl0lkl8a05cnjb8.jpg",
     "email": "brigitte65@yahoo.com",
     "spaces": ["88a33c23-3332-4ef2-bd71-be7a6430486f"],
-    "favorites": ["e7b610c6-ceea-449e-921a-838d042491ce"],
-    "messages":
-    [
-      {
-        "spaceId": "e7b610c6-ceea-449e-921a-838d042491ce",
-        "receivedMessages": ["Hi", "I'am good."]
-      }
-    ]
+    "favorites": ["e7b610c6-ceea-449e-921a-838d042491ce", "77z33c23-3332-4ef2-bd71-be7a6430123f", "1a7943c3-4312-4c58-8cbd-210d1142bfb2"],
+    "messages": []
   },
   {
     "userId": "eb074991-c3e4-46cd-ba4a-2aa0ba738fd6",
@@ -38,7 +26,57 @@
     "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664763335/gewmivartj7syohphipn.jpg",
     "email": "yblais@girard.com",
     "spaces": ["77z33c23-3332-4ef2-bd71-be7a6430123f"],
-    "favorites": ["e7b610c6-ceea-449e-921a-838d042491ce", "88a33c23-3332-4ef2-bd71-be7a6430486f"],
+    "favorites": ["1a7943c3-4312-4c58-8cbd-210d1142bfb2", "f798a433-967f-4f39-bca5-4273bd68db5f", "5e4ee4f8-0f7d-4225-a6ea-353b07a70b63", "828db47f-e3da-471d-b0e8-5efe47ee4124"],
+    "messages": []
+  },
+  {
+    "userId": "3187c7dd-54a8-4acc-926c-7becb2772af9",
+    "firstName": "Charlotte",
+    "lastName": "Simard",
+    "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664819037/mm6zbual5ljru42sqwu4.jpg",
+    "email": "roy.michele@gmail.com",
+    "spaces": ["1a7943c3-4312-4c58-8cbd-210d1142bfb2"],
+    "favorites": ["f798a433-967f-4f39-bca5-4273bd68db5f", "5e4ee4f8-0f7d-4225-a6ea-353b07a70b63"],
+    "messages": []
+  },
+  {
+    "userId": "5ce3166e-e408-4ab4-9e3b-64c9ef16f682",
+    "firstName": "Sophia",
+    "lastName": "Jones",
+    "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664819032/twgxryit5rm0szuqe3c5.jpg",
+    "email": "stephane.carrier@langlois.com",
+    "spaces": ["f798a433-967f-4f39-bca5-4273bd68db5f"],
+    "favorites": ["828db47f-e3da-471d-b0e8-5efe47ee4124", "5f79d656-fc11-4468-86dc-b0a7801a2845"],
+    "messages": []
+  },
+  {
+    "userId": "6cf04c6c-a1c0-4f67-9262-7cfdc5bb1ab8",
+    "firstName": "Hunter",
+    "lastName": "Scott",
+    "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664819026/kcvooqfd5co0ojgsmg6g.jpg",
+    "email": "flevesque@gmail.com",
+    "spaces": ["5e4ee4f8-0f7d-4225-a6ea-353b07a70b63"],
+    "favorites": ["e7b610c6-ceea-449e-921a-838d042491ce", "88a33c23-3332-4ef2-bd71-be7a6430486f", "77z33c23-3332-4ef2-bd71-be7a6430123f", "f798a433-967f-4f39-bca5-4273bd68db5f"],
+    "messages": []
+  },
+  {
+    "userId": "893ffcf1-667f-40a3-9e6e-8c6363406fc4",
+    "firstName": "Leo",
+    "lastName": "Poirier",
+    "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664819021/izab6awq4fjklu2xflni.jpg",
+    "email": "martel.gabrielle@hotmail.com",
+    "spaces": ["828db47f-e3da-471d-b0e8-5efe47ee4124", "5f79d656-fc11-4468-86dc-b0a7801a2845"],
+    "favorites": ["77z33c23-3332-4ef2-bd71-be7a6430123f", "1a7943c3-4312-4c58-8cbd-210d1142bfb2", "f798a433-967f-4f39-bca5-4273bd68db5f"],
+    "messages": []
+  },
+  {
+    "userId": "fc4510c2-2900-4b09-bc9d-5df1132ade09",
+    "firstName": "Samuel",
+    "lastName": "Miller",
+    "avatarUrl":"https://res.cloudinary.com/sharespace/image/upload/v1664819015/fwmfbceqqk4a2ogzuowx.jpg",
+    "email": "jbernard@tremblay.com",
+    "spaces": [],
+    "favorites": ["5e4ee4f8-0f7d-4225-a6ea-353b07a70b63", "828db47f-e3da-471d-b0e8-5efe47ee4124"],
     "messages": []
   }
 ]

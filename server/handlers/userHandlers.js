@@ -17,3 +17,5 @@ const addUser = async (req, res) => {};
 
 // updates a specified user
 const updateUser = async (req, res) => {};
+
+module.exports = { getUser, addUser, updateUser };

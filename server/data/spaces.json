@@ -4,7 +4,7 @@
     "spaceDetails":
     {
       "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664764083/dofzxt9ucmtavzti3dtw.jpg",
-      "availableDate": "",
+      "availableDate": ["Oct 12 2022", "Nov 24 2022"],
       "needs": ["dogs", "cats"],
       "addressDetails":
       { 
@@ -12,7 +12,7 @@
         "city": "Sainte-Yves",
         "region": "MB",
         "country": "Canada",
-        "postal": "H0C3S9"
+        "postal": "H0C 3S9"
       }
     },
     "host": "9ceaaff9-a402-4c02-8add-d3612803daa2"
@@ -22,7 +22,7 @@
     "spaceDetails":
     {
       "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664764071/sxyjcnugweglnhjpmw65.jpg",
-      "availableDate": "",
+      "availableDate": ["Oct 28 2022", "Nov 01 2022"],
       "needs": ["dogs", "plants"],
       "addressDetails":
       { 
@@ -30,7 +30,7 @@
         "city": "Ste-Laurence",
         "region": "QC",
         "country": "Canada",
-        "postal": "D8E1Y9"
+        "postal": "D8E 1Y9"
       }
     },
     "host": "0ae6dac5-d518-435a-849f-f99aadde954b"
@@ -40,7 +40,7 @@
     "spaceDetails":
     {
       "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664764065/uuvduythpkq4ar4pyblj.jpg",
-      "availableDate": "",
+      "availableDate": ["Oct 15 2022", "Nov 20 2022"],
       "needs": ["dogs"],
       "addressDetails":
       { 
@@ -48,9 +48,99 @@
         "city": "Saint-Benoit",
         "region": "BC",
         "country": "Canada",
-        "postal": "K3B1N6"
+        "postal": "K3B 1N6"
       }
     },
     "host": "eb074991-c3e4-46cd-ba4a-2aa0ba738fd6"
+  },
+  {
+    "spaceId": "1a7943c3-4312-4c58-8cbd-210d1142bfb2",
+    "spaceDetails":
+    {
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664822422/bvpz0beauei7osfvd6e0.jpg",
+      "availableDate": ["Nov 12 2022", "Nov 25 2022"],
+      "needs": ["dogs"],
+      "addressDetails":
+      { 
+        "address": "7 Chemin Caroline",
+        "city": "Saint-Nicolas-de-Gonzague",
+        "region": "NS",
+        "country": "Canada",
+        "postal": "E2I 3Y7"
+      }
+    },
+    "host": "3187c7dd-54a8-4acc-926c-7becb2772af9"
+  },
+  {
+    "spaceId": "f798a433-967f-4f39-bca5-4273bd68db5f",
+    "spaceDetails":
+    {
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664822422/ij9k2mivjjzp7dhtt5it.jpg",
+      "availableDate": ["Oct 29 2022", "Nov 05 2022"],
+      "needs": ["plants"],
+      "addressDetails":
+      { 
+        "address": "1 Avenue Catherine",
+        "city": "Ste-Robert",
+        "region": "QC",
+        "country": "Canada",
+        "postal": "N1B 1A3"
+      }
+    },
+    "host": "5ce3166e-e408-4ab4-9e3b-64c9ef16f682"
+  },
+  {
+    "spaceId": "5e4ee4f8-0f7d-4225-a6ea-353b07a70b63",
+    "spaceDetails":
+    {
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664822422/ninnbrgj1dvffj98852r.jpg",
+      "availableDate": ["Oct 25 2022", "Oct 31 2022"],
+      "needs": ["cats"],
+      "addressDetails":
+      { 
+        "address": "8415 Chemin Perreault",
+        "city": "Sainte-Marc-des-Pins",
+        "region": "PE",
+        "country": "Canada",
+        "postal": "U0X 4Z0"
+      }
+    },
+    "host": "6cf04c6c-a1c0-4f67-9262-7cfdc5bb1ab8"
+  },
+  {
+    "spaceId": "828db47f-e3da-471d-b0e8-5efe47ee4124",
+    "spaceDetails":
+    {
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664822431/n3ujnfbv2mcfymnasftq.jpg",
+      "availableDate": ["Oct 19 2022", "Nov 28 2022"],
+      "needs": ["cats", "dogs", "plants"],
+      "addressDetails":
+      { 
+        "address": "5 Chemin Boisvert",
+        "city": "Ste-Alice-des-Aulnaies",
+        "region": "QC",
+        "country": "Canada",
+        "postal": "U5K 2E8"
+      }
+    },
+    "host": "893ffcf1-667f-40a3-9e6e-8c6363406fc4"
+  },
+  {
+    "spaceId": "5f79d656-fc11-4468-86dc-b0a7801a2845",
+    "spaceDetails":
+    {
+      "imageSrc": "https://res.cloudinary.com/sharespace/image/upload/v1664822431/oqzxibuqmredvymtkkqm.jpg",
+      "availableDate": ["Oct 16 2022", "Nov 10 2022"],
+      "needs": ["dogs", "plants"],
+      "addressDetails":
+      { 
+        "address": "33 Route David Apt. 879",
+        "city": "Ste-Danielle",
+        "region": "QC",
+        "country": "Canada",
+        "postal": "H8T 8N1"
+      }
+    },
+    "host": "893ffcf1-667f-40a3-9e6e-8c6363406fc4"
   }
 ]

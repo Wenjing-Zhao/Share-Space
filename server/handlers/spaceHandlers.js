@@ -23,3 +23,5 @@ const updateSpace = async (req, res) => {};
 
 // deletes a specified space
 const deleteSpace = async (req, res) => {};
+
+module.exports = { getSpaces, getSpace, addSpace, updateSpace, deleteSpace };

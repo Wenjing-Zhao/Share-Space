@@ -11,7 +11,7 @@ const SearchBar = () => {
       <Input
         type="text"
         value={searchValue}
-        placeholder="Where do you want to go? (Country, city...)"
+        placeholder="Where do you want to go? (Country, region, city...)"
         onChange={(evt) => {
           setSearchValue(evt.target.value);
 

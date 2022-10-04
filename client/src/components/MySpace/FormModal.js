@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { MdOutlineClear } from "react-icons/md";
+import moment from "moment";
 
 import { DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -9,6 +10,13 @@ import { Checkbox } from "antd";
 
 const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
   const { RangePicker } = DatePicker;
+  const dateFormat = "MMM DD YYYY";
+  const [datePicker, setDatePicker] = useState([]);
+
+  // DatePicker can not select days before today and today
+  const disabledDate = (current) => {
+    return current && current < moment().endOf("day");
+  };
 
   // const [formData, setFormData] = useState({});
 
@@ -66,7 +74,15 @@ const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
 
           <InputWrapper>
             <Label htmlFor="date">Available date</Label>
-            <RangePicker />
+            <RangePicker
+              format={dateFormat}
+              disabledDate={disabledDate}
+              onChange={(evt) =>
+                setDatePicker(
+                  evt.map((ele) => moment(ele._d).format(dateFormat))
+                )
+              }
+            />
           </InputWrapper>
 
           <InputWrapper>

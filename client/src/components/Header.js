@@ -24,10 +24,14 @@ const Header = () => {
         </Logo>
 
         <SignIn>
-          <HeaderLink to="/myspace">My Spaces</HeaderLink>
-
-          <LoginButton />
-          <LogoutButton />
+          {isAuthenticated ? (
+            <>
+              <HeaderLink to="/myspace">My Spaces</HeaderLink>
+              <LogoutButton />
+            </>
+          ) : (
+            <LoginButton />
+          )}
         </SignIn>
       </Section>
     </Wrapper>
@@ -68,6 +72,8 @@ const Title = styled.h1`
 
 const SignIn = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 25px;
 `;
 
