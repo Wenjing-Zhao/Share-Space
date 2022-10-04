@@ -144,7 +144,6 @@ const MySpace = () => {
           <SpaceDisplay />
           <SpaceDisplay />
           <SpaceDisplay />
-          <SpaceDisplay />
         </Display>
       </Section>
     </Wrapper>
@@ -261,9 +260,9 @@ const Display = styled.div`
   width: var(--max-page-width);
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   padding: 50px 20px;
-  gap: 20px;
+  gap: 54px;
 `;
 
 const MyFavorites = styled.h3`

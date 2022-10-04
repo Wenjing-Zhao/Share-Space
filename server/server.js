@@ -25,12 +25,12 @@ app.use(morgan("tiny"));
 app.get("/api/get-spaces", getSpaces);
 app.get("/api/get-space/:spaceId", getSpace);
 app.post("/api/add-space", addSpace);
-app.patch("/api/update-space", updateSpace);
+app.patch("/api/update-space/:spaceId", updateSpace);
 app.delete("/api/delete-space/:spaceId", deleteSpace);
 
-app.get("/api/get-user", getUser);
+app.get("/api/get-user/:userId", getUser);
 app.post("api/add-user", addUser);
-app.patch("/api/update-user", updateUser);
+app.patch("/api/update-user/:userId", updateUser);
 
 // ------------------
 

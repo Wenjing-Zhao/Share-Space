@@ -58,16 +58,16 @@ const Display = styled.div`
   width: var(--max-page-width);
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 50px 20px;
-  gap: 20px;
+  justify-content: flex-start;
+  padding: 60px 20px;
+  gap: 54px;
 `;
 
 const Title = styled.h1`
   width: 100%;
   font-size: 1.8rem;
   text-align: center;
-  margin-bottom: 30px;
+  font-weight: 700;
 `;
 
 export default SearchResult;

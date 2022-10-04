@@ -26,8 +26,8 @@ const getSpaces = async (req, res) => {
     }
 
     res.status(200).json({ status: 200, data: spacesData });
-  } catch (err) {
-    res.status(500).json({ status: 500, message: err.message });
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
   } finally {
     client.close();
     console.log("disconnected!");
@@ -35,7 +35,30 @@ const getSpaces = async (req, res) => {
 };
 
 // return a single space
-const getSpace = async (req, res) => {};
+const getSpace = async (req, res) => {
+  const { spaceId } = req.params;
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    const spaceData = await db.collection("spaces").findOne({ spaceId });
+
+    spaceData
+      ? res.status(200).json({ status: 200, data: spaceData })
+      : res
+          .status(404)
+          .json({ status: 404, spaceId, message: "Space Not Found" });
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
 
 // creates a new space
 const addSpace = async (req, res) => {};

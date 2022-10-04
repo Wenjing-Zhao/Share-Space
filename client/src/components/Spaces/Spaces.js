@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-// import Error from "../Error";
+import Error from "../Error";
+import Loading from "../Loading";
 import SpaceDisplay from "./SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
 
 const Spaces = () => {
+  const [spaces, setSpaces] = useState(null);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const fetchSpacesData = async () => {
+      try {
+        const response = await fetch("/api/get-spaces");
+        const json = await response.json();
+
+        setSpaces(json.data);
+      } catch (error) {
+        setIsError(true);
+      }
+    };
+
+    fetchSpacesData();
+  }, []);
+
   return (
     <Wrapper>
       <SearchSection>
@@ -14,20 +33,30 @@ const Spaces = () => {
         </Search>
       </SearchSection>
 
-      <Section>
-        <Display>
-          <Title>- All Spaces -</Title>
+      {spaces ? (
+        <Section>
+          <Display>
+            <Title>- All Spaces -</Title>
 
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-        </Display>
-      </Section>
+            {spaces.map((space) => (
+              <SpaceDisplay
+                key={space.spaceId}
+                imageSrc={space.spaceDetails.imageSrc}
+                availableDateFrom={space.spaceDetails.availableDate[0]}
+                availableDateTo={space.spaceDetails.availableDate[1]}
+                needs={space.spaceDetails.needs}
+                country={space.spaceDetails.addressDetails.country}
+                region={space.spaceDetails.addressDetails.region}
+                city={space.spaceDetails.addressDetails.city}
+              />
+            ))}
+          </Display>
+        </Section>
+      ) : isError ? (
+        <Error />
+      ) : (
+        <Loading />
+      )}
     </Wrapper>
   );
 };
@@ -58,16 +87,16 @@ const Display = styled.div`
   width: var(--max-page-width);
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 50px 20px;
-  gap: 20px;
+  justify-content: flex-start;
+  padding: 60px 20px;
+  gap: 54px;
 `;
 
 const Title = styled.h1`
   width: 100%;
   font-size: 1.8rem;
   text-align: center;
-  margin-bottom: 30px;
+  font-weight: 700;
 `;
 
 export default Spaces;

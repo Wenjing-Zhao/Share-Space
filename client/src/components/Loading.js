@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { FaBomb } from "react-icons/fa";
+import { FiLoader } from "react-icons/fi";
 
 const Error = () => {
   return (
     <Wrapper>
       <Section>
-        <FaBomb style={{ fontSize: "50px" }} />
-        <H1>An unknown error has occurred.</H1>
-        <Para>Please try refreshing the page.</Para>
+        <FiLoaderAnimation />
       </Section>
     </Wrapper>
   );
@@ -26,14 +24,15 @@ const Section = styled.div`
   padding: 0 20px;
 `;
 
-const H1 = styled.h1`
-  font-size: 1.6rem;
-  margin-top: 50px;
-  margin-bottom: 50px;
-`;
+const FiLoaderAnimation = styled(FiLoader)`
+  font-size: 50px;
+  animation: rotate 1.5s linear infinite;
 
-const Para = styled.p`
-  font-size: 1.2rem;
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export default Error;

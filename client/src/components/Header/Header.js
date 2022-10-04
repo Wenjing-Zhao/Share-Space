@@ -26,7 +26,7 @@ const Header = () => {
         <SignIn>
           {isAuthenticated ? (
             <>
-              <HeaderLink to="/account">My Account</HeaderLink>
+              <HeaderLink to="/account/1">My Account</HeaderLink>
               <LogoutButton />
             </>
           ) : (
