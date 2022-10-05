@@ -9,7 +9,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-// return a single user
+// return a single user by userId
 const getUser = async (req, res) => {
   const { userId } = req.params;
   const client = new MongoClient(MONGO_URI, options);
@@ -41,4 +41,30 @@ const addUser = async (req, res) => {};
 // updates a specified user
 const updateUser = async (req, res) => {};
 
-module.exports = { getUser, addUser, updateUser };
+// return a single user by email
+const getSigninUser = async (req, res) => {
+  const { email } = req.params;
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    const userData = await db.collection("users").findOne({ email });
+
+    userData
+      ? res.status(200).json({ status: 200, data: userData })
+      : res
+          .status(404)
+          .json({ status: 404, email, message: "Email Not Found" });
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
+
+module.exports = { getSigninUser, getUser, addUser, updateUser };

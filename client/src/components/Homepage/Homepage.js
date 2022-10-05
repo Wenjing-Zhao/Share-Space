@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import poster from "../../assets/poster.jpg";
 import SearchBar from "./SearchBar";
+import { UserContext } from "../UserContext";
 
 const Homepage = () => {
+  const { loginWithRedirect } = useAuth0();
+  const { signInUser } = useContext(UserContext);
+
   return (
     <Wrapper>
       <Poster>
@@ -19,7 +24,14 @@ const Homepage = () => {
 
         <Links>
           <LinkStyle to="/spaces">Find all spaces</LinkStyle>
-          <LinkStyle to="/myspace">Share your space</LinkStyle>
+
+          {signInUser ? (
+            <LinkStyle to="/account/1">Share your space</LinkStyle>
+          ) : (
+            <LinkStyle onClick={() => loginWithRedirect()}>
+              Share your space
+            </LinkStyle>
+          )}
         </Links>
       </Poster>
 

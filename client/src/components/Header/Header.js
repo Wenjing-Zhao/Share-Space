@@ -1,15 +1,15 @@
-import React, { createContext } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import logo from "../../assets/logo.png";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
+import { UserContext } from "../UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { signInUser } = useContext(UserContext);
 
   return (
     <Wrapper>
@@ -24,7 +24,7 @@ const Header = () => {
         </Logo>
 
         <SignIn>
-          {isAuthenticated ? (
+          {signInUser ? (
             <>
               <HeaderLink to="/account/1">My Account</HeaderLink>
               <LogoutButton />

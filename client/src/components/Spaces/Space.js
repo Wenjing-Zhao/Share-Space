@@ -104,14 +104,14 @@ const Space = () => {
 
                 <div>
                   <SmallTitlt>Pets & Needs</SmallTitlt>
-                  {space.spaceDetails.needs.map((need) => (
-                    <Needs>
-                      <span>
+                  <Needs>
+                    {space.spaceDetails.needs.map((need) => (
+                      <span key={need}>
                         <FiCheckCircle />
                         {need}
                       </span>
-                    </Needs>
-                  ))}
+                    ))}
+                  </Needs>
                 </div>
 
                 <div>
@@ -136,6 +136,7 @@ const Space = () => {
                 <Name>
                   {host.firstName} {host.lastName}
                 </Name>
+
                 <Email>E-mail: {host.email}</Email>
 
                 <EmailButton>

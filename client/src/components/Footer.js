@@ -8,7 +8,14 @@ const Footer = () => {
       <Section>
         <Links>
           <FooterLink to="/spaces">All spaces</FooterLink>
-          <FooterLink to="/myspace">My Space</FooterLink>
+
+          <FooterLink
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
+          >
+            Back to Top ⇧
+          </FooterLink>
 
           <ExternalLink href="https://github.com/Wenjing-Zhao" target="_blank">
             About me

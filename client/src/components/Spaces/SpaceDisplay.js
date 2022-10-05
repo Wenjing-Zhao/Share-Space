@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MdRoom } from "react-icons/md";
 import { FiCheckCircle } from "react-icons/fi";
 
 const Space = ({
+  spaceId,
   imageSrc,
   availableDateFrom,
   availableDateTo,
@@ -12,9 +14,15 @@ const Space = ({
   region,
   city,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
-      <Image>
+      <Image
+        onClick={() => {
+          navigate(`/spaces/${spaceId}`);
+        }}
+      >
         <Location>
           <MdRoom />
           {country}, {region}, {city}
@@ -65,6 +73,10 @@ const Image = styled.div`
 const Img = styled.img`
   width: 100%;
   border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Hr = styled.hr`

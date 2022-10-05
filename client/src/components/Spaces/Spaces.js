@@ -41,6 +41,7 @@ const Spaces = () => {
             {spaces.map((space) => (
               <SpaceDisplay
                 key={space.spaceId}
+                spaceId={space.spaceId}
                 imageSrc={space.spaceDetails.imageSrc}
                 availableDateFrom={space.spaceDetails.availableDate[0]}
                 availableDateTo={space.spaceDetails.availableDate[1]}
