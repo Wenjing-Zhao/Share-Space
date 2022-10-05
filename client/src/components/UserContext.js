@@ -12,14 +12,22 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/signin/brigitte65@yahoo.com`);
-        // const response = await fetch(`/api/signin/${user.email}`);
-        const json = await response.json();
+        const response = await fetch("/api/add-user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            firstName: user.given_name,
+            lastName: user.family_name,
+            avatarUrl: user.picture,
+            email: user.email,
+          }),
+        });
 
-        console.log(json);
-        if (json.message === "Email Not Found") {
-          console.log("create new user");
-        } else {
+        if (response.ok) {
+          const json = await response.json();
           setSignInUser(json.data);
         }
       } catch (error) {
@@ -27,8 +35,8 @@ export const UserProvider = ({ children }) => {
       }
     };
 
-    isAuthenticated && fetchUserData();
-  }, [isAuthenticated]);
+    user && isAuthenticated && fetchUserData();
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ signInUser, isError }}>

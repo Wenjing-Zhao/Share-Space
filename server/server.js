@@ -14,15 +14,11 @@ const {
   deleteSpace,
 } = require("./handlers/spaceHandlers");
 
-const {
-  getUser,
-  addUser,
-  updateUser,
-  getSigninUser,
-} = require("./handlers/userHandlers");
+const { getUser, addUser, updateUser } = require("./handlers/userHandlers");
 
 app.use(helmet());
 app.use(morgan("tiny"));
+app.use(express.json());
 
 // add endpoints here
 // ------------------
@@ -34,9 +30,8 @@ app.patch("/api/update-space/:spaceId", updateSpace);
 app.delete("/api/delete-space/:spaceId", deleteSpace);
 
 app.get("/api/get-user/:userId", getUser);
-app.post("api/add-user", addUser);
+app.post("/api/add-user", addUser);
 app.patch("/api/update-user/:userId", updateUser);
-app.get("/api/signin/:email", getSigninUser);
 
 // ------------------
 

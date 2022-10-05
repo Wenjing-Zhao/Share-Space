@@ -3,8 +3,8 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 
-const spaces = require("../data/spaces.json");
-const users = require("../data/users.json");
+const spaces = require("./data/spaces.json");
+const users = require("./data/users.json");
 
 const options = {
   useNewUrlParser: true,

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MdOutlineClear } from "react-icons/md";
 import moment from "moment";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import { DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -10,23 +9,6 @@ import { Button, message, Upload } from "antd";
 import { Checkbox } from "antd";
 
 const FormModal = ({ openFormModal, setOpenFormModal, setHidden }) => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  //   if (isLoading) {
-  //     return <div>Loading ...</div>;
-  //   }
-
-  //   return (
-  //     isAuthenticated && (
-  //       <div>
-  //         <img src={user.picture} alt={user.name} />
-  //         <h2>{user.name}</h2>
-  //         <p>{user.email}</p>
-  //       </div>
-  //     )
-  //   );
-  // };
-
   const { RangePicker } = DatePicker;
   const dateFormat = "MMM DD YYYY";
   const [datePicker, setDatePicker] = useState([]);
