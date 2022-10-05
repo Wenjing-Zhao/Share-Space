@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 350px);
+  height: calc(100vh - 330px);
 `;
 
 const Section = styled.div`

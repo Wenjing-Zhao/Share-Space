@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 `;
 
 const SearchSection = styled.div`
-  height: 100px;
+  height: 80px;
   background: var(--primary-color);
   display: flex;
   flex-wrap: wrap;
