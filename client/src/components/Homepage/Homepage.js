@@ -26,7 +26,9 @@ const Homepage = () => {
           <LinkStyle to="/spaces">Find all spaces</LinkStyle>
 
           {signInUser ? (
-            <LinkStyle to="/account/1">Share your space</LinkStyle>
+            <LinkStyle to={`/account/${signInUser.userId}`}>
+              Share your space
+            </LinkStyle>
           ) : (
             <LinkStyle onClick={() => loginWithRedirect()}>
               Share your space

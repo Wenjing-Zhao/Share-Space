@@ -26,7 +26,9 @@ const Header = () => {
         <SignIn>
           {signInUser ? (
             <>
-              <HeaderLink to="/account/1">My Account</HeaderLink>
+              <HeaderLink to={`/account/${signInUser.userId}`}>
+                My Account
+              </HeaderLink>
               <LogoutButton />
             </>
           ) : (

@@ -1,14 +1,55 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FiPlusSquare, FiEdit, FiTrash2, FiCheckCircle } from "react-icons/fi";
 
-// import Error from "../Error";
+import Error from "../Error";
+import Loading from "../Loading";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
 import FormModal from "./FormModal";
+import { UserContext } from "../UserContext";
 
-const MySpace = () => {
+const Account = () => {
+  const { signInUser, isError } = useContext(UserContext);
+
   const [openFormModal, setOpenFormModal] = useState(false);
+  const [userSpaces, setUserSpaces] = useState(null);
+  const [userFavorites, setFavorites] = useState(null);
+  const [isProAllError, setIsProAllError] = useState(false);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const proAllResSpaces = await Promise.all(
+          signInUser.spaces.map(async (space) => {
+            const responseSpace = await fetch(`/api/get-space/${space}`);
+            const jsonSpace = await responseSpace.json();
+
+            return jsonSpace.data;
+          })
+        );
+
+        // console.log(proAllResSpaces);
+        setUserSpaces(proAllResSpaces);
+
+        const proAllResFavorites = await Promise.all(
+          signInUser.favorites.map(async (favorite) => {
+            const responseFavorite = await fetch(`/api/get-space/${favorite}`);
+            const jsonFavorite = await responseFavorite.json();
+
+            return jsonFavorite.data;
+          })
+        );
+
+        // console.log(proAllResFavorites);
+        setFavorites(proAllResFavorites);
+      } catch (error) {
+        setIsProAllError(true);
+      }
+    };
+
+    signInUser && fetchUserData();
+  }, [signInUser]);
 
   // stop scrolling when modal open
   const setHidden = () => {
@@ -21,11 +62,11 @@ const MySpace = () => {
 
   return (
     <Wrapper>
-      <FormModal
+      {/* <FormModal
         openFormModal={openFormModal}
         setOpenFormModal={setOpenFormModal}
         setHidden={setHidden}
-      />
+      /> */}
 
       <SearchSection>
         <Search>
@@ -33,104 +74,145 @@ const MySpace = () => {
         </Search>
       </SearchSection>
 
-      <InfoSection>
-        <Info>
-          <UserInfo>
-            <Avatar>
-              <img src="" alt="" />
-            </Avatar>
+      {signInUser && userSpaces && userFavorites ? (
+        <>
+          <InfoSection>
+            <Info>
+              <UserInfo>
+                <Avatar>
+                  <Img src={signInUser.avatarUrl} alt="user-avatar" />
+                </Avatar>
 
-            <div>
-              <Name>Wenjing Zhao</Name>
-              <UserId>User Id: 1234-5678-1234</UserId>
+                <div>
+                  <Name>
+                    {signInUser.firstName} {signInUser.lastName}
+                  </Name>
 
-              <Button>
-                <FiEdit style={{ fontSize: "13px" }} />
-                {` Profile`}
-              </Button>
-            </div>
-          </UserInfo>
+                  <UserId>
+                    User Id: {signInUser.userId.substring(0, 13) + "..."}
+                  </UserId>
 
-          <SpaceInfo>
-            <Title>My Spaces</Title>
+                  <Button>
+                    <FiEdit style={{ fontSize: "13px" }} />
+                    {` Profile`}
+                  </Button>
+                </div>
+              </UserInfo>
 
-            <Button>
-              <FiPlusSquare style={{ fontSize: "13px" }} />
-              {` Add`}
-            </Button>
+              <SpaceInfo>
+                <Title>My Spaces</Title>
 
-            <ButtonSection>
-              <SpaceId>
-                {/* Space Id: {space.spaceId.substring(0, 13) + "..."} */}
-              </SpaceId>
+                <Button>
+                  <FiPlusSquare style={{ fontSize: "13px" }} />
+                  {` Add`}
+                </Button>
 
-              <Button
-                onClick={() => {
-                  setOpenFormModal(true);
-                  setHidden();
-                }}
-              >
-                <FiEdit style={{ fontSize: "13px" }} />
-                {` Edit`}
-              </Button>
+                {userSpaces.length === 0 ? (
+                  <p>You don't have any space yet.</p>
+                ) : (
+                  <>
+                    {userSpaces.map((space) => (
+                      <MapSpaceInfo key={space.spaceId}>
+                        <ButtonSection>
+                          <SpaceId>
+                            Space Id: {space.spaceId.substring(0, 8) + "..."}
+                          </SpaceId>
 
-              <Button>
-                <FiTrash2 style={{ fontSize: "13px" }} />
-                {` Delete`}
-              </Button>
-            </ButtonSection>
+                          <Button
+                            onClick={() => {
+                              setOpenFormModal(true);
+                              setHidden();
+                            }}
+                          >
+                            <FiEdit style={{ fontSize: "13px" }} />
+                            {` Edit`}
+                          </Button>
 
-            <House>
-              <img src="" alt="" />
-            </House>
+                          <Button>
+                            <FiTrash2 style={{ fontSize: "13px" }} />
+                            {` Delete`}
+                          </Button>
+                        </ButtonSection>
 
-            <SubSpaceInfo>
-              <div>
-                <SmallTitlt>Available date</SmallTitlt>
+                        <House>
+                          <Img
+                            src={space.spaceDetails.imageSrc}
+                            alt="house-img"
+                          />
+                        </House>
 
-                <p>2022.10.01 - 2022.10.10</p>
-              </div>
+                        <SubSpaceInfo>
+                          <div>
+                            <SmallTitlt>Available date</SmallTitlt>
 
-              <div>
-                <SmallTitlt>Pets & Needs</SmallTitlt>
+                            <p>
+                              {space.spaceDetails.availableDate[0]} -{" "}
+                              {space.spaceDetails.availableDate[1]}
+                            </p>
+                          </div>
 
-                <Needs>
-                  <span>
-                    <FiCheckCircle />
-                    {` Dogs`}
-                  </span>
+                          <div>
+                            <SmallTitlt>Pets & Needs</SmallTitlt>
 
-                  <span>
-                    <FiCheckCircle />
-                    {` Cats`}
-                  </span>
+                            <Needs>
+                              {space.spaceDetails.needs.map((need) => (
+                                <span key={need}>
+                                  <FiCheckCircle />
+                                  {need}
+                                </span>
+                              ))}
+                            </Needs>
+                          </div>
 
-                  <span>
-                    <FiCheckCircle />
-                    {` Plants`}
-                  </span>
-                </Needs>
-              </div>
+                          <div>
+                            <SmallTitlt>Address</SmallTitlt>
+                            <p>
+                              {space.spaceDetails.addressDetails.address},{" "}
+                              {space.spaceDetails.addressDetails.city},{" "}
+                              {space.spaceDetails.addressDetails.region},{" "}
+                              {space.spaceDetails.addressDetails.country},{" "}
+                              {space.spaceDetails.addressDetails.postal}
+                            </p>
+                          </div>
+                        </SubSpaceInfo>
+                      </MapSpaceInfo>
+                    ))}
+                  </>
+                )}
+              </SpaceInfo>
+            </Info>
+          </InfoSection>
 
-              <div>
-                <SmallTitlt>Address</SmallTitlt>
-
-                <p>20 Florence, Cadiac, QC, CA J5R 0A8</p>
-              </div>
-            </SubSpaceInfo>
-          </SpaceInfo>
-        </Info>
-      </InfoSection>
-
-      <Section>
-        <Display>
-          <MyFavorites>My Favorites</MyFavorites>
-
-          <SpaceDisplay />
-          <SpaceDisplay />
-          <SpaceDisplay />
-        </Display>
-      </Section>
+          <Section>
+            <Display>
+              <MyFavorites>My Favorites</MyFavorites>
+              {userFavorites.length === 0 ? (
+                <p>You don't have any favorite yet.</p>
+              ) : (
+                <>
+                  {userFavorites.map((favorite) => (
+                    <SpaceDisplay
+                      key={favorite.spaceId}
+                      spaceId={favorite.spaceId}
+                      imageSrc={favorite.spaceDetails.imageSrc}
+                      availableDateFrom={favorite.spaceDetails.availableDate[0]}
+                      availableDateTo={favorite.spaceDetails.availableDate[1]}
+                      needs={favorite.spaceDetails.needs}
+                      country={favorite.spaceDetails.addressDetails.country}
+                      region={favorite.spaceDetails.addressDetails.region}
+                      city={favorite.spaceDetails.addressDetails.city}
+                    />
+                  ))}
+                </>
+              )}
+            </Display>
+          </Section>
+        </>
+      ) : isError || isProAllError ? (
+        <Error />
+      ) : (
+        <Loading />
+      )}
     </Wrapper>
   );
 };
@@ -179,7 +261,11 @@ const UserInfo = styled.div`
 const Avatar = styled.div`
   width: 150px;
   height: 150px;
-  border: 1px solid black;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  border-radius: 5px;
 `;
 
 const Name = styled.h3`
@@ -207,6 +293,14 @@ const SpaceInfo = styled.div`
   gap: 20px;
 `;
 
+const MapSpaceInfo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+`;
+
 const Title = styled.h3`
   width: 100%;
   font-size: 1.5rem;
@@ -216,7 +310,6 @@ const Title = styled.h3`
 const House = styled.div`
   width: 350px;
   height: 350px;
-  border: 1px solid black;
 `;
 
 const SubSpaceInfo = styled.div`
@@ -255,6 +348,7 @@ const MyFavorites = styled.h3`
   width: 100%;
   font-size: 1.5rem;
   font-weight: bold;
+  margin-bottom: -34px;
 `;
 
 // button
@@ -267,7 +361,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 130px;
+  width: 140px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
@@ -293,4 +387,4 @@ const Button = styled.button`
   }
 `;
 
-export default MySpace;
+export default Account;

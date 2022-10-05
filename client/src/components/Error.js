@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { FaBomb } from "react-icons/fa";
+import { MdRunningWithErrors } from "react-icons/md";
 
 const Error = () => {
   return (
     <Wrapper>
       <Section>
-        <FaBomb style={{ fontSize: "50px" }} />
+        <MdRunningWithErrors style={{ fontSize: "50px" }} />
         <H1>An unknown error has occurred.</H1>
         <Para>Please try refreshing the page.</Para>
       </Section>

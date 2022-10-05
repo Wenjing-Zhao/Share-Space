@@ -116,13 +116,13 @@ const Space = () => {
 
                 <div>
                   <SmallTitlt>Address</SmallTitlt>
-                  <span>
+                  <p>
                     {space.spaceDetails.addressDetails.address},{" "}
                     {space.spaceDetails.addressDetails.city},{" "}
                     {space.spaceDetails.addressDetails.region},{" "}
                     {space.spaceDetails.addressDetails.country},{" "}
                     {space.spaceDetails.addressDetails.postal}
-                  </span>
+                  </p>
                 </div>
               </SubSpaceInfo>
             </SpaceInfo>
