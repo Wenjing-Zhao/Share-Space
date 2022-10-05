@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import logo from "../../assets/logo.png";
-import LoginButton from "./LoginButton";
-import LogoutButton from "./LogoutButton";
+import Login from "./Login";
+import Logout from "./Logout";
 import { UserContext } from "../UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { loginWithRedirect } = useAuth0();
   const { signInUser } = useContext(UserContext);
 
   return (
@@ -29,12 +31,14 @@ const Header = () => {
               <HeaderLink to={`/account/${signInUser.userId}`}>
                 My Account
               </HeaderLink>
-              <LogoutButton />
+              <Logout />
             </>
           ) : (
             <>
-              <Welcome>Welcome!</Welcome>
-              <LoginButton />
+              <HeaderLink onClick={() => loginWithRedirect()}>
+                Share a space?
+              </HeaderLink>
+              <Login />
             </>
           )}
         </SignIn>
@@ -72,14 +76,14 @@ const Title = styled.h1`
   color: var(--primary-color);
   font-size: 2.5rem;
   font-weight: 800;
-  margin-left: 15px;
+  margin-left: 20px;
 `;
 
 const SignIn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
 `;
 
 const HeaderLink = styled(Link)`
@@ -91,10 +95,6 @@ const HeaderLink = styled(Link)`
     color: var(--primary-color);
     text-decoration: underline;
   }
-`;
-
-const Welcome = styled.p`
-  font-size: 1.2rem;
 `;
 
 export default Header;

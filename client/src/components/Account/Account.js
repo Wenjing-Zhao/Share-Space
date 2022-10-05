@@ -361,7 +361,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 140px;
+  width: 150px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
