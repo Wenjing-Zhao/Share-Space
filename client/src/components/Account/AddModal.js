@@ -72,8 +72,8 @@ const AddModal = ({
         </CloseButton>
 
         <form
-          onSubmit={(e) => {
-            handleSubmit(e, imageSrc, datePicker, needs, addressData);
+          onSubmit={(evt) => {
+            handleSubmit(evt, imageSrc, datePicker, needs, addressData);
           }}
         >
           <InputWrapper>

@@ -66,13 +66,13 @@ const Account = () => {
 
   // handle submit button when user want to add a space
   const handleAddSpaceSubmit = async (
-    e,
+    evt,
     imageSrc,
     datePicker,
     needs,
     addressData
   ) => {
-    e.preventDefault();
+    evt.preventDefault();
 
     try {
       const response = await fetch("/api/add-space", {
@@ -97,17 +97,36 @@ const Account = () => {
   };
 
   // handle submit button when user want to update a space
-  const handleUpdateSpaceSubmit = (
-    e,
+  const handleUpdateSpaceSubmit = async (
+    evt,
     imageSrc,
     datePicker,
     needs,
-    addressData
-  ) => {};
+    spaceId
+  ) => {
+    evt.preventDefault();
+
+    try {
+      const response = await fetch(`/api/update-space/${spaceId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          imageSrc: imageSrc,
+          availableDate: datePicker,
+          needs: needs,
+        }),
+      });
+    } catch (error) {
+      setIsUpdateSpaceError(true);
+    }
+  };
 
   // handle submit button when user want to delete a space
-  const handleDeleteSpaceSubmit = async (e, spaceId) => {
-    e.preventDefault();
+  const handleDeleteSpaceSubmit = async (evt, spaceId) => {
+    evt.preventDefault();
 
     try {
       const response = await fetch(`/api/delete-space/${spaceId}`, {
@@ -136,15 +155,6 @@ const Account = () => {
         setHidden={setHidden}
         handleSubmit={handleAddSpaceSubmit}
         error={isAddSpaceError}
-      />
-
-      {/* popup for update a space*/}
-      <UpdateModal
-        openFormModal={openUpdateModal}
-        setOpenFormModal={setOpenUpdateModal}
-        setHidden={setHidden}
-        handleSubmit={handleUpdateSpaceSubmit}
-        error={isUpdateSpaceError}
       />
 
       {/* search bar  */}
@@ -202,6 +212,16 @@ const Account = () => {
                           <SpaceId>
                             Space Id: {space.spaceId.substring(0, 8) + "..."}
                           </SpaceId>
+
+                          {/* popup for update a space*/}
+                          <UpdateModal
+                            openFormModal={openUpdateModal}
+                            setOpenFormModal={setOpenUpdateModal}
+                            setHidden={setHidden}
+                            handleSubmit={handleUpdateSpaceSubmit}
+                            error={isUpdateSpaceError}
+                            spaceId={space.spaceId}
+                          />
 
                           <Button
                             onClick={() => {

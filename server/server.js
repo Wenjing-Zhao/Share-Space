@@ -14,7 +14,11 @@ const {
   deleteSpace,
 } = require("./handlers/spaceHandlers");
 
-const { getUser, addUser } = require("./handlers/userHandlers");
+const {
+  getUser,
+  addUser,
+  updateUserFavorites,
+} = require("./handlers/userHandlers");
 
 app.use(helmet());
 app.use(morgan("tiny"));
@@ -31,6 +35,7 @@ app.delete("/api/delete-space/:spaceId", deleteSpace);
 
 app.get("/api/get-user/:userId", getUser);
 app.post("/api/add-user", addUser);
+app.patch("/api/update-user-favorites/:userId", updateUserFavorites);
 
 // ------------------
 

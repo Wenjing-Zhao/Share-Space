@@ -155,7 +155,50 @@ const addSpace = async (req, res) => {
 };
 
 // updates a specified space
-const updateSpace = async (req, res) => {};
+const updateSpace = async (req, res) => {
+  const { spaceId } = req.params;
+  const { imageSrc, availableDate, needs } = req.body;
+  const client = new MongoClient(MONGO_URI, options);
+
+  // validate if any info missing
+  if (!imageSrc || availableDate.length === 0 || needs.length === 0) {
+    return res
+      .status(400)
+      .json({ status: 400, data: req.body, message: "Information Missing" });
+  }
+
+  try {
+    await client.connect();
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    // find space data
+    const spaceData = await db.collection("spaces").findOne({ spaceId });
+
+    // validate if the space exist
+    if (!spaceData) {
+      return res
+        .status(404)
+        .json({ status: 404, spaceId, message: "Space Not Found" });
+    }
+
+    // modify the spaces collection
+    const newSpaceValues = {
+      $set: { spaceDetails: { ...spaceData.spaceDetails, ...req.body } },
+    };
+
+    const result = await db
+      .collection("spaces")
+      .updateOne({ spaceId }, newSpaceValues);
+
+    console.log(result);
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
 
 // deletes a specified space
 const deleteSpace = async (req, res) => {

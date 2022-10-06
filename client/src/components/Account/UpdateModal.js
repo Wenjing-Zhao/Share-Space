@@ -14,6 +14,7 @@ const UpdateModal = ({
   setHidden,
   handleSubmit,
   error,
+  spaceId,
 }) => {
   const { RangePicker } = DatePicker;
   const dateFormat = "MMM DD YYYY";
@@ -64,14 +65,11 @@ const UpdateModal = ({
         </CloseButton>
 
         <form
-          onSubmit={(e) => {
-            handleSubmit(e, imageSrc, datePicker, needs);
+          onSubmit={(evt) => {
+            handleSubmit(evt, imageSrc, datePicker, needs, spaceId);
           }}
         >
-          <SpaceId>
-            Space Id:
-            {/* {space.spaceId.substring(0, 8) + "..."} */}
-          </SpaceId>
+          <SpaceId>Space Id: {spaceId.substring(0, 8) + "..."}</SpaceId>
 
           <InputWrapper>
             <Label>Space image</Label>

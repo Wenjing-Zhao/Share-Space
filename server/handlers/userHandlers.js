@@ -76,4 +76,6 @@ const addUser = async (req, res) => {
   }
 };
 
-module.exports = { getUser, addUser };
+const updateUserFavorites = async () => {};
+
+module.exports = { getUser, addUser, updateUserFavorites };
