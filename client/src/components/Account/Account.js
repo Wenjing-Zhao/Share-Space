@@ -12,7 +12,7 @@ import Error from "../Error";
 import Loading from "../Loading";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
-import FormModal from "./FormModal";
+import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
 import { UserContext } from "../UserContext";
 
@@ -130,7 +130,7 @@ const Account = () => {
   return (
     <Wrapper>
       {/* popup for add a space */}
-      <FormModal
+      <AddModal
         openFormModal={openAddModal}
         setOpenFormModal={setOpenAddModal}
         setHidden={setHidden}
@@ -300,7 +300,7 @@ const Account = () => {
             </Display>
           </Section>
         </>
-      ) : isError || isProAllError ? (
+      ) : isError || isProAllError || isDeleteSpaceError ? (
         <Error />
       ) : (
         <Loading />
