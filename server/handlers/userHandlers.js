@@ -37,7 +37,6 @@ const getUser = async (req, res) => {
 
 // creates a new user
 const addUser = async (req, res) => {
-  console.log(res);
   const { firstName, lastName, avatarUrl, email } = req.body;
   const createId = uuidv4();
   const client = new MongoClient(MONGO_URI, options);
@@ -77,7 +76,4 @@ const addUser = async (req, res) => {
   }
 };
 
-// updates a specified user
-const updateUser = async (req, res) => {};
-
-module.exports = { getUser, addUser, updateUser };
+module.exports = { getUser, addUser };

@@ -1,25 +1,39 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { FiPlusSquare, FiEdit, FiTrash2, FiCheckCircle } from "react-icons/fi";
+import {
+  FiPlusSquare,
+  FiEdit,
+  FiTrash2,
+  FiCheckCircle,
+  FiAlertCircle,
+} from "react-icons/fi";
 
 import Error from "../Error";
 import Loading from "../Loading";
 import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
 import FormModal from "./FormModal";
+import UpdateModal from "./UpdateModal";
 import { UserContext } from "../UserContext";
 
 const Account = () => {
   const { signInUser, isError } = useContext(UserContext);
 
-  const [openFormModal, setOpenFormModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [isAddSpaceError, setIsAddSpaceError] = useState(false);
+  const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
+  const [isDeleteSpaceError, setIsDeleteSpaceError] = useState(false);
+
   const [userSpaces, setUserSpaces] = useState(null);
   const [userFavorites, setFavorites] = useState(null);
   const [isProAllError, setIsProAllError] = useState(false);
 
   useEffect(() => {
+    // ftech user data about spaces and favorites
     const fetchUserData = async () => {
       try {
+        // fetch user all the spaces
         const proAllResSpaces = await Promise.all(
           signInUser.spaces.map(async (space) => {
             const responseSpace = await fetch(`/api/get-space/${space}`);
@@ -29,9 +43,9 @@ const Account = () => {
           })
         );
 
-        // console.log(proAllResSpaces);
         setUserSpaces(proAllResSpaces);
 
+        // fetch user all the favorites
         const proAllResFavorites = await Promise.all(
           signInUser.favorites.map(async (favorite) => {
             const responseFavorite = await fetch(`/api/get-space/${favorite}`);
@@ -41,7 +55,6 @@ const Account = () => {
           })
         );
 
-        // console.log(proAllResFavorites);
         setFavorites(proAllResFavorites);
       } catch (error) {
         setIsProAllError(true);
@@ -51,31 +64,100 @@ const Account = () => {
     signInUser && fetchUserData();
   }, [signInUser]);
 
+  // handle submit button when user want to add a space
+  const handleAddSpaceSubmit = async (
+    e,
+    imageSrc,
+    datePicker,
+    needs,
+    addressData
+  ) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/add-space", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          spaceDetails: {
+            imageSrc: imageSrc,
+            availableDate: datePicker,
+            needs: needs,
+            addressDetails: addressData,
+          },
+          host: signInUser.userId,
+        }),
+      });
+    } catch (error) {
+      setIsAddSpaceError(true);
+    }
+  };
+
+  // handle submit button when user want to update a space
+  const handleUpdateSpaceSubmit = (
+    e,
+    imageSrc,
+    datePicker,
+    needs,
+    addressData
+  ) => {};
+
+  // handle submit button when user want to delete a space
+  const handleDeleteSpaceSubmit = async (e, spaceId) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`/api/delete-space/${spaceId}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      setIsDeleteSpaceError(true);
+    }
+  };
+
   // stop scrolling when modal open
   const setHidden = () => {
     if (document.body.style.overflow !== "hidden") {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "scroll";
+      document.body.style.overflow = "auto";
     }
   };
 
   return (
     <Wrapper>
-      {/* <FormModal
-        openFormModal={openFormModal}
-        setOpenFormModal={setOpenFormModal}
+      {/* popup for add a space */}
+      <FormModal
+        openFormModal={openAddModal}
+        setOpenFormModal={setOpenAddModal}
         setHidden={setHidden}
-      /> */}
+        handleSubmit={handleAddSpaceSubmit}
+        error={isAddSpaceError}
+      />
 
+      {/* popup for update a space*/}
+      <UpdateModal
+        openFormModal={openUpdateModal}
+        setOpenFormModal={setOpenUpdateModal}
+        setHidden={setHidden}
+        handleSubmit={handleUpdateSpaceSubmit}
+        error={isUpdateSpaceError}
+      />
+
+      {/* search bar  */}
       <SearchSection>
         <Search>
           <SearchBar />
         </Search>
       </SearchSection>
 
+      {/* sign in user info display */}
       {signInUser && userSpaces && userFavorites ? (
         <>
+          {/* user profile */}
           <InfoSection>
             <Info>
               <UserInfo>
@@ -91,24 +173,27 @@ const Account = () => {
                   <UserId>
                     User Id: {signInUser.userId.substring(0, 13) + "..."}
                   </UserId>
-
-                  <Button>
-                    <FiEdit style={{ fontSize: "13px" }} />
-                    {` Profile`}
-                  </Button>
                 </div>
               </UserInfo>
 
+              {/* user spaces */}
               <SpaceInfo>
                 <Title>My Spaces</Title>
 
-                <Button>
+                <Button
+                  onClick={() => {
+                    setOpenAddModal(true);
+                    setHidden();
+                  }}
+                >
                   <FiPlusSquare style={{ fontSize: "13px" }} />
                   {` Add`}
                 </Button>
 
                 {userSpaces.length === 0 ? (
-                  <p>You don't have any space yet.</p>
+                  <Alert>
+                    <FiAlertCircle /> You don't have any space yet.
+                  </Alert>
                 ) : (
                   <>
                     {userSpaces.map((space) => (
@@ -120,7 +205,7 @@ const Account = () => {
 
                           <Button
                             onClick={() => {
-                              setOpenFormModal(true);
+                              setOpenUpdateModal(true);
                               setHidden();
                             }}
                           >
@@ -128,7 +213,11 @@ const Account = () => {
                             {` Edit`}
                           </Button>
 
-                          <Button>
+                          <Button
+                            onClick={(e) =>
+                              handleDeleteSpaceSubmit(e, space.spaceId)
+                            }
+                          >
                             <FiTrash2 style={{ fontSize: "13px" }} />
                             {` Delete`}
                           </Button>
@@ -183,11 +272,14 @@ const Account = () => {
             </Info>
           </InfoSection>
 
+          {/* user favorites */}
           <Section>
             <Display>
               <MyFavorites>My Favorites</MyFavorites>
               {userFavorites.length === 0 ? (
-                <p>You don't have any favorite yet.</p>
+                <Alert>
+                  <FiAlertCircle /> You don't have any favorite yet.
+                </Alert>
               ) : (
                 <>
                   {userFavorites.map((favorite) => (
@@ -220,6 +312,11 @@ const Account = () => {
 const Wrapper = styled.div`
   min-height: calc(100vh - 250px);
   position: relative;
+`;
+
+const Alert = styled.p`
+  width: 100%;
+  font-size: 1.2rem;
 `;
 
 // search bar
@@ -274,7 +371,7 @@ const Name = styled.h3`
 
 const UserId = styled.p`
   font-size: 1.2rem;
-  margin: 20px 0;
+  margin-top: 20px;
 `;
 
 const SpaceId = styled.p`

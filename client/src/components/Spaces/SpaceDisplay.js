@@ -39,12 +39,12 @@ const Space = ({
 
       <Needs>
         Pets & Needs:
-        {/* {needs.map((need) => (
+        {needs.map((need) => (
           <Span key={need}>
             <FiCheckCircle />
             {need}
           </Span>
-        ))} */}
+        ))}
       </Needs>
     </Wrapper>
   );

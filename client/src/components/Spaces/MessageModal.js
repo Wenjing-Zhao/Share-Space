@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MdOutlineClear } from "react-icons/md";
 
-const MessageModal = ({ openMessageModal, setOpenMessageModal, setHidden }) => {
+const MessageModal = ({
+  spaceId,
+  openMessageModal,
+  setOpenMessageModal,
+  setHidden,
+}) => {
   const [textValue, setTextValue] = useState("");
 
   return (
@@ -20,7 +25,9 @@ const MessageModal = ({ openMessageModal, setOpenMessageModal, setHidden }) => {
 
         <form>
           <TextAreaWrapper>
-            <Label htmlFor="id">Space Id:</Label>
+            <Label htmlFor="id">
+              Space Id: {spaceId.substring(0, 8) + "..."}
+            </Label>
             <Label htmlFor="meaasge">Send message to space host:</Label>
             <TextArea
               rows="25"

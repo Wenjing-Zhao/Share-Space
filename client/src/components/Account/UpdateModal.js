@@ -8,7 +8,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Checkbox } from "antd";
 
-const FormModal = ({
+const UpdateModal = ({
   openFormModal,
   setOpenFormModal,
   setHidden,
@@ -74,6 +74,10 @@ const FormModal = ({
         <form
           onSubmit={(e) => {
             handleSubmit(e, imageSrc, datePicker, needs, addressData);
+            // setImageSrc("");
+            // setDatePicker([]);
+            // setNeeds([]);
+            // setAddressData({});
           }}
         >
           <InputWrapper>
@@ -108,7 +112,6 @@ const FormModal = ({
             <Input
               type="text"
               onChange={(e) => handleChange("address", e.target.value)}
-              required
             />
           </InputWrapper>
 
@@ -117,7 +120,6 @@ const FormModal = ({
             <Input
               type="text"
               onChange={(e) => handleChange("city", e.target.value)}
-              required
             />
           </InputWrapper>
 
@@ -126,7 +128,6 @@ const FormModal = ({
             <Input
               type="text"
               onChange={(e) => handleChange("region", e.target.value)}
-              required
             />
           </InputWrapper>
 
@@ -135,7 +136,6 @@ const FormModal = ({
             <Input
               type="text"
               onChange={(e) => handleChange("country", e.target.value)}
-              required
             />
           </InputWrapper>
 
@@ -144,11 +144,10 @@ const FormModal = ({
             <Input
               type="text"
               onChange={(e) => handleChange("postal", e.target.value)}
-              required
             />
           </InputWrapper>
 
-          <SubmitButton type="submit">Add a new space</SubmitButton>
+          <SubmitButton type="submit">Submit</SubmitButton>
           <Alert>Success! You can close or add one more.</Alert>
           <Alert>Error! You are missing a piece of information.</Alert>
         </form>
@@ -159,7 +158,7 @@ const FormModal = ({
 
 const Wrapper = styled.div`
   width: 600px;
-  height: 850px;
+  height: 800px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -268,4 +267,4 @@ const Alert = styled.p`
   margin-top: 10px;
 `;
 
-export default FormModal;
+export default UpdateModal;

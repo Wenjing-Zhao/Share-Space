@@ -61,12 +61,188 @@ const getSpace = async (req, res) => {
 };
 
 // creates a new space
-const addSpace = async (req, res) => {};
+const addSpace = async (req, res) => {
+  const { spaceDetails, host } = req.body;
+  const createId = uuidv4();
+  const client = new MongoClient(MONGO_URI, options);
+
+  const newSpace = {
+    spaceId: createId,
+    ...req.body,
+  };
+
+  // validate if any info missing
+  if (
+    !spaceDetails.imageSrc ||
+    spaceDetails.availableDate.length === 0 ||
+    spaceDetails.needs.length === 0 ||
+    spaceDetails.addressDetails === undefined ||
+    !spaceDetails.addressDetails.address ||
+    !spaceDetails.addressDetails.city ||
+    !spaceDetails.addressDetails.region ||
+    !spaceDetails.addressDetails.country ||
+    !spaceDetails.addressDetails.postal ||
+    !host
+  ) {
+    return res
+      .status(400)
+      .json({ status: 400, data: req.body, message: "Information Missing" });
+  }
+
+  console.log(newSpace);
+
+  try {
+    await client.connect();
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    const session = client.startSession();
+
+    const transactionResults = await session.withTransaction(async () => {
+      // find user data
+      const userData = await db
+        .collection("users")
+        .findOne({ userId: host }, { session });
+
+      // validate if the user exist
+      if (!userData) {
+        await session.abortTransaction();
+        const error = new Error(`User ${host} Not Found`);
+        error.statusCode = 404;
+        throw error;
+      }
+
+      // modify the users collection
+      userData.spaces.push(createId);
+      const newSpacesValues = { $set: { spaces: userData.spaces } };
+
+      const result = await db
+        .collection("users")
+        .updateOne({ userId: host }, newSpacesValues, { session });
+
+      console.log(result);
+
+      // modify the spaces collection
+      await db.collection("spaces").insertOne(newSpace, { session });
+    });
+
+    // validate transaction
+    await session.commitTransaction();
+
+    if (transactionResults) {
+      res.status(201).json({
+        status: 201,
+        data: newSpace,
+        message: "Space Added",
+      });
+    } else {
+      res.status(500).json({ status: 500, message: "Transaction Aborted" });
+    }
+
+    await session.endSession();
+  } catch (error) {
+    if (!error.statusCode) {
+      res.status(500).json({ status: 500, message: error.message });
+    }
+
+    res
+      .status(error.statusCode)
+      .json({ status: error.statusCode, message: error.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
 
 // updates a specified space
 const updateSpace = async (req, res) => {};
 
 // deletes a specified space
-const deleteSpace = async (req, res) => {};
+const deleteSpace = async (req, res) => {
+  const { spaceId } = req.params;
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    const session = client.startSession();
+
+    const transactionResults = await session.withTransaction(async () => {
+      // find space data
+      const spaceData = await db
+        .collection("spaces")
+        .findOne({ spaceId }, { session });
+
+      // validate if the space exist
+      if (!spaceData) {
+        await session.abortTransaction();
+        const error = new Error(`Space ${spaceId} Not Found`);
+        error.statusCode = 404;
+        throw error;
+      }
+
+      // find user data
+      const userData = await db
+        .collection("users")
+        .findOne({ userId: spaceData.host }, { session });
+
+      // validate if the user exist
+      if (!userData) {
+        await session.abortTransaction();
+        const error = new Error(`User ${spaceData.host} Not Found`);
+        error.statusCode = 404;
+        throw error;
+      }
+
+      // modify the users collection
+      const spaceIndex = userData.spaces.indexOf(spaceId);
+
+      // only splice user spaces array when space is found
+      if (spaceIndex > -1) {
+        userData.spaces.splice(spaceIndex, 1);
+      } else {
+        await session.abortTransaction();
+        const error = new Error(`Space ${spaceId} Not Found In User Spaces`);
+        error.statusCode = 404;
+        throw error;
+      }
+
+      const newSpacesValues = { $set: { spaces: userData.spaces } };
+
+      await db
+        .collection("users")
+        .updateOne({ userId: spaceData.host }, newSpacesValues, { session });
+
+      // modify the spaces collection
+      const result = await db
+        .collection("spaces")
+        .deleteOne({ spaceId }, { session });
+      console.log(result.deletedCount);
+    });
+
+    await session.commitTransaction();
+
+    if (transactionResults) {
+      res.status(200).json({ status: 200, message: "Space Deleted" });
+    } else {
+      res.status(500).json({ status: 500, message: "Transaction Aborted" });
+    }
+
+    await session.endSession();
+  } catch (error) {
+    if (!error.statusCode) {
+      res.status(500).json({ status: 500, message: error.message });
+    }
+
+    res
+      .status(error.statusCode)
+      .json({ status: error.statusCode, message: error.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
 
 module.exports = { getSpaces, getSpace, addSpace, updateSpace, deleteSpace };
