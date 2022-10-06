@@ -46,8 +46,8 @@ const MessageModal = ({
 };
 
 const Wrapper = styled.div`
-  width: 600px;
-  height: 600px;
+  width: 650px;
+  height: 650px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -62,8 +62,8 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
 `;
 
 const Label = styled.label`

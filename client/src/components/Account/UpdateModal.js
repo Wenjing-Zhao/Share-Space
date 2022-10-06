@@ -21,14 +21,6 @@ const UpdateModal = ({
   const [imageSrc, setImageSrc] = useState("");
   const [datePicker, setDatePicker] = useState([]);
   const [needs, setNeeds] = useState([]);
-  const [addressData, setAddressData] = useState({});
-
-  const handleChange = (key, value) => {
-    setAddressData({
-      ...addressData,
-      [key]: value,
-    });
-  };
 
   // DatePicker can not select days before today and today
   const disabledDate = (current) => {
@@ -73,15 +65,16 @@ const UpdateModal = ({
 
         <form
           onSubmit={(e) => {
-            handleSubmit(e, imageSrc, datePicker, needs, addressData);
-            // setImageSrc("");
-            // setDatePicker([]);
-            // setNeeds([]);
-            // setAddressData({});
+            handleSubmit(e, imageSrc, datePicker, needs);
           }}
         >
+          <SpaceId>
+            Space Id:
+            {/* {space.spaceId.substring(0, 8) + "..."} */}
+          </SpaceId>
+
           <InputWrapper>
-            <Label htmlFor="image">Space image</Label>
+            <Label>Space image</Label>
 
             <Upload {...props}>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -89,7 +82,7 @@ const UpdateModal = ({
           </InputWrapper>
 
           <InputWrapper>
-            <Label htmlFor="date">Available date</Label>
+            <Label>Available date</Label>
 
             <RangePicker
               format={dateFormat}
@@ -107,48 +100,8 @@ const UpdateModal = ({
             <Checkbox.Group options={plainOptions} onChange={onChange} />
           </InputWrapper>
 
-          <InputWrapper>
-            <Label>Address</Label>
-            <Input
-              type="text"
-              onChange={(e) => handleChange("address", e.target.value)}
-            />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Label>City</Label>
-            <Input
-              type="text"
-              onChange={(e) => handleChange("city", e.target.value)}
-            />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Label>Region</Label>
-            <Input
-              type="text"
-              onChange={(e) => handleChange("region", e.target.value)}
-            />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Label>Country</Label>
-            <Input
-              type="text"
-              onChange={(e) => handleChange("country", e.target.value)}
-            />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Label>Postal Code</Label>
-            <Input
-              type="text"
-              onChange={(e) => handleChange("postal", e.target.value)}
-            />
-          </InputWrapper>
-
-          <SubmitButton type="submit">Submit</SubmitButton>
-          <Alert>Success! You can close or add one more.</Alert>
+          <SubmitButton type="submit">Update Space</SubmitButton>
+          <Alert>Success! You can close or update again.</Alert>
           <Alert>Error! You are missing a piece of information.</Alert>
         </form>
       </Section>
@@ -157,8 +110,8 @@ const UpdateModal = ({
 };
 
 const Wrapper = styled.div`
-  width: 600px;
-  height: 800px;
+  width: 650px;
+  height: 420px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -173,8 +126,16 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
+`;
+
+const SpaceId = styled.p`
+  font-size: 1.2rem;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  font-weight: bold;
 `;
 
 const Label = styled.label`
@@ -186,19 +147,6 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
   margin-bottom: 20px;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  width: 100%;
-  font-size: 1rem;
-  border-radius: 2px;
-  border: 1px solid #ccc;
-
-  &:focus {
-    outline: #cf6a87 solid 2px;
-    outline-offset: 1px;
-  }
 `;
 
 const CloseButton = styled.button`

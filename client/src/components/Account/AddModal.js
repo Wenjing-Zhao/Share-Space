@@ -8,7 +8,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Checkbox } from "antd";
 
-const FormModal = ({
+const AddModal = ({
   openFormModal,
   setOpenFormModal,
   setHidden,
@@ -77,7 +77,7 @@ const FormModal = ({
           }}
         >
           <InputWrapper>
-            <Label htmlFor="image">Space image</Label>
+            <Label>Space image</Label>
 
             <Upload {...props}>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -85,7 +85,7 @@ const FormModal = ({
           </InputWrapper>
 
           <InputWrapper>
-            <Label htmlFor="date">Available date</Label>
+            <Label>Available date</Label>
 
             <RangePicker
               format={dateFormat}
@@ -99,7 +99,7 @@ const FormModal = ({
           </InputWrapper>
 
           <InputWrapper>
-            <Label htmlFor="needs">Pets & Needs</Label>
+            <Label>Pets & Needs</Label>
             <Checkbox.Group options={plainOptions} onChange={onChange} />
           </InputWrapper>
 
@@ -148,7 +148,7 @@ const FormModal = ({
             />
           </InputWrapper>
 
-          <SubmitButton type="submit">Add a new space</SubmitButton>
+          <SubmitButton type="submit">Add New Space</SubmitButton>
           <Alert>Success! You can close or add one more.</Alert>
           <Alert>Error! You are missing a piece of information.</Alert>
         </form>
@@ -158,7 +158,7 @@ const FormModal = ({
 };
 
 const Wrapper = styled.div`
-  width: 600px;
+  width: 650px;
   height: 850px;
   position: fixed;
   top: 50%;
@@ -174,8 +174,8 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
 `;
 
 const Label = styled.label`
@@ -268,4 +268,4 @@ const Alert = styled.p`
   margin-top: 10px;
 `;
 
-export default FormModal;
+export default AddModal;
