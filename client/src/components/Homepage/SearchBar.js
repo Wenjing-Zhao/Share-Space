@@ -1,37 +1,60 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MdOutlineClear, MdRoom } from "react-icons/md";
 
-const SearchBar = () => {
-  const [searchValue, setSearchValue] = useState("");
+import Suggestion from "./Suggestion";
+
+const SearchBar = ({ spaces }) => {
+  const navigate = useNavigate();
+
+  const [value, setValue] = useState("");
   const [matchedList, setMatchedList] = useState([]);
+
+  const handleSelect = (suggestion) => {
+    navigate(`/spaces/${suggestion.spaceId}`);
+  };
 
   return (
     <Wrapper>
       <Input
         type="text"
-        value={searchValue}
+        value={value}
         placeholder="Where do you want to go? (Country, region, city...)"
         onChange={(evt) => {
-          setSearchValue(evt.target.value);
+          setValue(evt.target.value);
 
-          // setMatchedList(
-          //   suggestions.filter((ele) => {
-          //     if (
-          //       ele.title
-          //         .toLowerCase()
-          //         .includes(evt.target.value.toLowerCase()) &&
-          //       evt.target.value.length > 1
-          //     ) {
-          //       return ele.title;
-          //     }
-          //   })
-          // );
+          setMatchedList(
+            spaces.filter((ele) => {
+              if (
+                ele.spaceDetails.addressDetails.country
+                  .toLowerCase()
+                  .includes(evt.target.value.toLowerCase()) &&
+                evt.target.value.length > 1
+              ) {
+                return ele.spaceDetails.addressDetails;
+              }
+
+              if (
+                ele.spaceDetails.addressDetails.region
+                  .toLowerCase()
+                  .includes(evt.target.value.toLowerCase()) &&
+                evt.target.value.length > 1
+              ) {
+                return ele.spaceDetails.addressDetails;
+              }
+
+              if (
+                ele.spaceDetails.addressDetails.city
+                  .toLowerCase()
+                  .includes(evt.target.value.toLowerCase()) &&
+                evt.target.value.length > 1
+              ) {
+                return ele.spaceDetails.addressDetails;
+              }
+            })
+          );
         }}
-
-        // handleSelect={(suggestion) => {
-        //   window.alert(suggestion);
-        // }}
 
         // onKeyDown={(evt) => {
         //   if (evt.key === "Enter") {
@@ -40,39 +63,38 @@ const SearchBar = () => {
         // }}
       />
 
+      <ListWrapper disApper={matchedList.length === 0}>
+        {matchedList.map((suggestion) => {
+          return (
+            <Suggestion
+              key={suggestion.spaceId}
+              suggestion={{
+                spaceId: suggestion.spaceId,
+                address: `${suggestion.spaceDetails.addressDetails.country}, 
+                ${suggestion.spaceDetails.addressDetails.region}, 
+                ${suggestion.spaceDetails.addressDetails.city}, 
+                ${suggestion.spaceDetails.addressDetails.address}`,
+              }}
+              handleSelect={handleSelect}
+              value={value}
+            />
+          );
+        })}
+      </ListWrapper>
+
       <ClearButton
         type="button"
         onClick={() => {
-          setSearchValue("");
+          setValue("");
           setMatchedList([]);
         }}
       >
         <MdOutlineClear style={{ fontSize: "15px" }} />
       </ClearButton>
 
-      <FindButton
-        type="button"
-        onClick={() => {
-          setSearchValue("");
-          setMatchedList([]);
-        }}
-      >
-        <MdRoom /> Find Spaces
+      <FindButton onClick={() => navigate("/spaces")} type="button">
+        <MdRoom /> Find All Spaces
       </FindButton>
-
-      {/* <ListWrapper disApper={matchedList.length === 0}>
-        {matchedList.map((suggestion) => {
-          return (
-            <Suggestion
-              key={suggestion.id}
-              suggestion={suggestion}
-              handleSelect={handleSelect}
-              value={value}
-              category={categories[suggestion.categoryId].name}
-            />
-          );
-        })}
-      </ListWrapper> */}
     </Wrapper>
   );
 };
@@ -83,13 +105,17 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
+  position: relative;
+  z-index: 2;
 `;
 
 const ListWrapper = styled.ul`
+  width: 95%;
+  position: absolute;
+  top: 65px;
+  background: white;
   line-height: 1.5rem;
   display: ${(p) => (p.disApper ? "none" : "block")};
-  margin-top: 10px;
-  font-size: 18px;
   border-radius: 5px;
   padding: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;

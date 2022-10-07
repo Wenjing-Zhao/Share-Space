@@ -1,19 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const Suggestion = ({ suggestion, handleSelect, value, category }) => {
-  const getIndex = suggestion.title.toLowerCase().indexOf(value.toLowerCase());
+const Suggestion = ({ suggestion, handleSelect, value }) => {
+  const getIndex = suggestion.address
+    .toLowerCase()
+    .indexOf(value.toLowerCase());
   const getIndexPoint = getIndex + value.length;
 
-  // console.log(getIndexPoint);
-
   return (
-    <List onClick={() => handleSelect(suggestion.title)}>
+    <List onClick={() => handleSelect(suggestion)}>
       <span>
-        {suggestion.title.slice(0, getIndexPoint)}
-        <Prediction>{suggestion.title.slice(getIndexPoint)}</Prediction>
-        <Span1> in </Span1>
-        <Span2>{category}</Span2>
+        {suggestion.address.slice(0, getIndexPoint)}
+        <Prediction>{suggestion.address.slice(getIndexPoint)}</Prediction>
       </span>
     </List>
   );
@@ -25,21 +23,11 @@ const List = styled.li`
   padding: 10px;
 
   &:hover {
-    background: lightyellow;
+    background: var(--border-color);
+    cursor: pointer;
   }
 `;
 
 const Prediction = styled.span`
   font-weight: bold;
-`;
-
-const Span1 = styled.span`
-  font-size: 15px;
-  font-style: italic;
-`;
-
-const Span2 = styled.span`
-  font-size: 15px;
-  font-style: italic;
-  color: purple;
 `;

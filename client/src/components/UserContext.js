@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
 
   const [signInUser, setSignInUser] = useState(null);
   const [isError, setIsError] = useState(false);
-  const [isUserAction, setIsUserAction] = useState(false);
+  const [userActionToggler, setUserActionToggler] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,11 +37,11 @@ export const UserProvider = ({ children }) => {
     };
 
     user && isAuthenticated && fetchUserData();
-  }, [user, isUserAction]);
+  }, [user, userActionToggler]);
 
   return (
     <UserContext.Provider
-      value={{ signInUser, isError, isUserAction, setIsUserAction }}
+      value={{ signInUser, isError, userActionToggler, setUserActionToggler }}
     >
       {children}
     </UserContext.Provider>

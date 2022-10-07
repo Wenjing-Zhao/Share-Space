@@ -25,7 +25,7 @@ const Space = ({
       >
         <Location>
           <MdRoom />
-          {country}, {region}, {city}
+          {city}, {region}, {country}
         </Location>
 
         <Img src={imageSrc} alt="space-img" />

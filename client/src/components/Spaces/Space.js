@@ -15,9 +15,10 @@ import MessageModal from "./MessageModal";
 import { UserContext } from "../UserContext";
 import Login from "../Header/Login";
 
-const Space = () => {
+const Space = ({ spaces }) => {
   const { spaceId } = useParams();
-  const { signInUser, isUserAction, setIsUserAction } = useContext(UserContext);
+  const { signInUser, userActionToggler, setUserActionToggler } =
+    useContext(UserContext);
 
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const [space, setSpace] = useState(null);
@@ -66,7 +67,7 @@ const Space = () => {
       );
 
       if (response.ok) {
-        setIsUserAction(!isUserAction);
+        setUserActionToggler(!userActionToggler);
       }
     } catch (error) {
       setIsFavoriteError(true);
@@ -93,7 +94,7 @@ const Space = () => {
 
       <SearchSection>
         <Search>
-          <SearchBar />
+          <SearchBar spaces={spaces} />
         </Search>
       </SearchSection>
 

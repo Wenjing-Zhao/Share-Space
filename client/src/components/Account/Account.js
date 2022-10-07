@@ -16,8 +16,8 @@ import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
 import { UserContext } from "../UserContext";
 
-const Account = () => {
-  const { signInUser, isError, isUserAction, setIsUserAction } =
+const Account = ({ spaces }) => {
+  const { signInUser, isError, userActionToggler, setUserActionToggler } =
     useContext(UserContext);
 
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -94,7 +94,7 @@ const Account = () => {
       });
 
       if (response.ok) {
-        setIsUserAction(!isUserAction);
+        setUserActionToggler(!userActionToggler);
       }
     } catch (error) {
       setIsAddSpaceError(true);
@@ -126,7 +126,7 @@ const Account = () => {
       });
 
       if (response.ok) {
-        setIsUserAction(!isUserAction);
+        setUserActionToggler(!userActionToggler);
       }
     } catch (error) {
       setIsUpdateSpaceError(true);
@@ -142,10 +142,8 @@ const Account = () => {
         method: "DELETE",
       });
 
-      console.log(response);
-
       if (response.ok) {
-        setIsUserAction(!isUserAction);
+        setUserActionToggler(!userActionToggler);
       }
     } catch (error) {
       setIsDeleteSpaceError(true);
@@ -175,7 +173,7 @@ const Account = () => {
       {/* search bar  */}
       <SearchSection>
         <Search>
-          <SearchBar />
+          <SearchBar spaces={spaces} />
         </Search>
       </SearchSection>
 

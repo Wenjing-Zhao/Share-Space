@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import Error from "../Error";
@@ -6,30 +6,30 @@ import Loading from "../Loading";
 import SpaceDisplay from "./SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
 
-const Spaces = () => {
-  const [spaces, setSpaces] = useState(null);
-  const [isError, setIsError] = useState(false);
+const Spaces = ({ spaces, isError }) => {
+  // const [spaces, setSpaces] = useState(null);
+  // const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    const fetchSpacesData = async () => {
-      try {
-        const response = await fetch("/api/get-spaces");
-        const json = await response.json();
+  // useEffect(() => {
+  //   const fetchSpacesData = async () => {
+  //     try {
+  //       const response = await fetch("/api/get-spaces");
+  //       const json = await response.json();
 
-        setSpaces(json.data);
-      } catch (error) {
-        setIsError(true);
-      }
-    };
+  //       setSpaces(json.data);
+  //     } catch (error) {
+  //       setIsError(true);
+  //     }
+  //   };
 
-    fetchSpacesData();
-  }, []);
+  //   fetchSpacesData();
+  // }, []);
 
   return (
     <Wrapper>
       <SearchSection>
         <Search>
-          <SearchBar />
+          <SearchBar spaces={spaces} />
         </Search>
       </SearchSection>
 

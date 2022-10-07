@@ -1,17 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import poster from "../../assets/poster.jpg";
 import SearchBar from "./SearchBar";
-import { UserContext } from "../UserContext";
 
-const Homepage = () => {
-  const { loginWithRedirect } = useAuth0();
-  const { signInUser } = useContext(UserContext);
-
+const Homepage = ({ spaces }) => {
   return (
     <Wrapper>
       <Poster>
@@ -19,22 +14,8 @@ const Homepage = () => {
         <Title>Happy travel and happy pets</Title>
 
         <SearchSection>
-          <SearchBar />
+          <SearchBar spaces={spaces} />
         </SearchSection>
-
-        <Links>
-          <LinkStyle to="/spaces">Find all spaces</LinkStyle>
-
-          {signInUser ? (
-            <LinkStyle to={`/account/${signInUser.userId}`}>
-              Share your space
-            </LinkStyle>
-          ) : (
-            <LinkStyle onClick={() => loginWithRedirect()}>
-              Share your space
-            </LinkStyle>
-          )}
-        </Links>
       </Poster>
 
       <Section>
@@ -76,6 +57,7 @@ const Img = styled.img`
 
 const SearchSection = styled.div`
   position: absolute;
+  z-index: 1;
   top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -86,15 +68,6 @@ const SearchSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const Links = styled.div`
-  display: flex;
-  gap: 40px;
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 const LinkStyle = styled(Link)`
