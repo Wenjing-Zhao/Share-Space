@@ -17,7 +17,8 @@ import UpdateModal from "./UpdateModal";
 import { UserContext } from "../UserContext";
 
 const Account = () => {
-  const { signInUser, isError } = useContext(UserContext);
+  const { signInUser, isError, isUserAction, setIsUserAction } =
+    useContext(UserContext);
 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
@@ -91,6 +92,10 @@ const Account = () => {
           host: signInUser.userId,
         }),
       });
+
+      if (response.ok) {
+        setIsUserAction(!isUserAction);
+      }
     } catch (error) {
       setIsAddSpaceError(true);
     }
@@ -119,6 +124,10 @@ const Account = () => {
           needs: needs,
         }),
       });
+
+      if (response.ok) {
+        setIsUserAction(!isUserAction);
+      }
     } catch (error) {
       setIsUpdateSpaceError(true);
     }
@@ -132,6 +141,12 @@ const Account = () => {
       const response = await fetch(`/api/delete-space/${spaceId}`, {
         method: "DELETE",
       });
+
+      console.log(response);
+
+      if (response.ok) {
+        setIsUserAction(!isUserAction);
+      }
     } catch (error) {
       setIsDeleteSpaceError(true);
     }
@@ -234,7 +249,9 @@ const Account = () => {
                           </Button>
 
                           <Button
-                            onClick={(e) => handleDeleteSpace(e, space.spaceId)}
+                            onClick={async (evt) =>
+                              await handleDeleteSpace(evt, space.spaceId)
+                            }
                           >
                             <FiTrash2 style={{ fontSize: "13px" }} />
                             {` Delete`}

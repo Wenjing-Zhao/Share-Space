@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
 
   const [signInUser, setSignInUser] = useState(null);
   const [isError, setIsError] = useState(false);
+  const [isUserAction, setIsUserAction] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,10 +37,12 @@ export const UserProvider = ({ children }) => {
     };
 
     user && isAuthenticated && fetchUserData();
-  }, [user]);
+  }, [user, isUserAction]);
 
   return (
-    <UserContext.Provider value={{ signInUser, isError }}>
+    <UserContext.Provider
+      value={{ signInUser, isError, isUserAction, setIsUserAction }}
+    >
       {children}
     </UserContext.Provider>
   );

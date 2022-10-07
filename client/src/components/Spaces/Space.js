@@ -17,7 +17,7 @@ import Login from "../Header/Login";
 
 const Space = () => {
   const { spaceId } = useParams();
-  const { signInUser } = useContext(UserContext);
+  const { signInUser, isUserAction, setIsUserAction } = useContext(UserContext);
 
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const [space, setSpace] = useState(null);
@@ -64,6 +64,10 @@ const Space = () => {
           }),
         }
       );
+
+      if (response.ok) {
+        setIsUserAction(!isUserAction);
+      }
     } catch (error) {
       setIsFavoriteError(true);
     }

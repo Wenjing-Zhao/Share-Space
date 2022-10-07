@@ -81,7 +81,6 @@ const updateUserFavorites = async (req, res) => {
   const { userId } = req.params;
   const { spaceId } = req.body;
   const client = new MongoClient(MONGO_URI, options);
-  console.log(userId, spaceId);
 
   try {
     await client.connect();

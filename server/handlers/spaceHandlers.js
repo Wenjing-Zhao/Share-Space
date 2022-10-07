@@ -128,6 +128,7 @@ const addSpace = async (req, res) => {
 
     // validate transaction
     await session.commitTransaction();
+    await session.endSession();
 
     if (transactionResults) {
       res.status(201).json({
@@ -138,8 +139,6 @@ const addSpace = async (req, res) => {
     } else {
       res.status(500).json({ status: 500, message: "Transaction Aborted" });
     }
-
-    await session.endSession();
   } catch (error) {
     if (!error.statusCode) {
       res.status(500).json({ status: 500, message: error.message });
@@ -266,14 +265,13 @@ const deleteSpace = async (req, res) => {
     });
 
     await session.commitTransaction();
+    await session.endSession();
 
     if (transactionResults) {
       res.status(200).json({ status: 200, message: "Space Deleted" });
     } else {
       res.status(500).json({ status: 500, message: "Transaction Aborted" });
     }
-
-    await session.endSession();
   } catch (error) {
     if (!error.statusCode) {
       res.status(500).json({ status: 500, message: error.message });
