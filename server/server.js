@@ -18,6 +18,7 @@ const {
   getUser,
   addUser,
   updateUserFavorites,
+  updateUserMessages,
 } = require("./handlers/userHandlers");
 
 app.use(helmet());
@@ -36,6 +37,7 @@ app.delete("/api/delete-space/:spaceId", deleteSpace);
 app.get("/api/get-user/:userId", getUser);
 app.post("/api/add-user", addUser);
 app.patch("/api/update-user-favorites/:userId", updateUserFavorites);
+app.patch("/api/update-user-messages/:userId", updateUserMessages);
 
 // ------------------
 

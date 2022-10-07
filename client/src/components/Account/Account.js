@@ -64,7 +64,7 @@ const Account = () => {
     signInUser && fetchUserData();
   }, [signInUser]);
 
-  // handle submit button when user want to add a space
+  // handle submit button for user add a space
   const handleAddSpaceSubmit = async (
     evt,
     imageSrc,
@@ -96,7 +96,7 @@ const Account = () => {
     }
   };
 
-  // handle submit button when user want to update a space
+  // handle submit button for user updates a space
   const handleUpdateSpaceSubmit = async (
     evt,
     imageSrc,
@@ -124,8 +124,8 @@ const Account = () => {
     }
   };
 
-  // handle submit button when user want to delete a space
-  const handleDeleteSpaceSubmit = async (evt, spaceId) => {
+  // handle button for user deletes a space
+  const handleDeleteSpace = async (evt, spaceId) => {
     evt.preventDefault();
 
     try {
@@ -234,9 +234,7 @@ const Account = () => {
                           </Button>
 
                           <Button
-                            onClick={(e) =>
-                              handleDeleteSpaceSubmit(e, space.spaceId)
-                            }
+                            onClick={(e) => handleDeleteSpace(e, space.spaceId)}
                           >
                             <FiTrash2 style={{ fontSize: "13px" }} />
                             {` Delete`}
@@ -421,7 +419,7 @@ const MapSpaceInfo = styled.div`
 const Title = styled.h3`
   width: 100%;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 const House = styled.div`
@@ -464,7 +462,7 @@ const Display = styled.div`
 const MyFavorites = styled.h3`
   width: 100%;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: -34px;
 `;
 
@@ -478,7 +476,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 150px;
+  width: 155px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -12,14 +12,19 @@ import Error from "../Error";
 import Loading from "../Loading";
 import SearchBar from "../Homepage/SearchBar";
 import MessageModal from "./MessageModal";
+import { UserContext } from "../UserContext";
+import Login from "../Header/Login";
 
 const Space = () => {
   const { spaceId } = useParams();
+  const { signInUser } = useContext(UserContext);
 
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const [space, setSpace] = useState(null);
   const [host, setHost] = useState(null);
   const [isError, setIsError] = useState(false);
+  const [isFavoriteError, setIsFavoriteError] = useState(false);
+  const [isMessageError, setIsMessageError] = useState(false);
 
   useEffect(() => {
     const fetchSpaceData = async () => {
@@ -40,6 +45,29 @@ const Space = () => {
 
     spaceId && fetchSpaceData();
   }, [spaceId]);
+
+  // handler button for user favorite a space
+  const handleFavoriteSpace = async (evt) => {
+    evt.preventDefault();
+
+    try {
+      const response = await fetch(
+        `/api/update-user-favorites/${signInUser.userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            spaceId: spaceId,
+          }),
+        }
+      );
+    } catch (error) {
+      setIsFavoriteError(true);
+    }
+  };
 
   // stop scrolling when modal open
   const setHidden = () => {
@@ -70,24 +98,26 @@ const Space = () => {
           <Info>
             <SpaceInfo>
               <ButtonSection>
-                <SpaceId>
-                  Space Id: {space.spaceId.substring(0, 8) + "..."}
-                </SpaceId>
+                <Title>Space Id: {space.spaceId.substring(0, 8) + "..."}</Title>
 
-                <Button
-                  onClick={() => {
-                    setOpenMessageModal(true);
-                    setHidden();
-                  }}
-                >
-                  <FiMessageSquare style={{ fontSize: "13px" }} />
-                  {` Message`}
-                </Button>
+                {signInUser && (
+                  <>
+                    <Button
+                      onClick={() => {
+                        setOpenMessageModal(true);
+                        setHidden();
+                      }}
+                    >
+                      <FiMessageSquare style={{ fontSize: "13px" }} />
+                      {` Message`}
+                    </Button>
 
-                <Button>
-                  <FiHeart style={{ fontSize: "13px" }} />
-                  {` Favorite`}
-                </Button>
+                    <Button onClick={(evt) => handleFavoriteSpace(evt)}>
+                      <FiHeart style={{ fontSize: "13px" }} />
+                      {` Favorite`}
+                    </Button>
+                  </>
+                )}
               </ButtonSection>
 
               <House>
@@ -134,21 +164,29 @@ const Space = () => {
               </Avatar>
 
               <div>
-                <Name>
+                <Title>
                   {host.firstName} {host.lastName}
-                </Name>
+                </Title>
 
-                <Email>E-mail: {host.email}</Email>
+                {signInUser ? (
+                  <>
+                    <Email>E-mail: {host.email}</Email>
 
-                <EmailButton>
-                  <FiMail style={{ fontSize: "13px" }} />
-                  {` Send E-mail`}
-                </EmailButton>
+                    <EmailButton href={`mailto:${host.email}`}>
+                      <FiMail style={{ fontSize: "13px" }} />
+                      {` Send E-mail`}
+                    </EmailButton>
+                  </>
+                ) : (
+                  <Email>
+                    Contact the host now? You can <Login />.
+                  </Email>
+                )}
               </div>
             </UserInfo>
           </Info>
         </InfoSection>
-      ) : isError ? (
+      ) : isError || isFavoriteError || isMessageError ? (
         <Error />
       ) : (
         <Loading />
@@ -202,19 +240,13 @@ const Avatar = styled.div`
   height: 150px;
 `;
 
-const Name = styled.h3`
+const Title = styled.h3`
   font-size: 1.8rem;
 `;
 
 const Email = styled.p`
   font-size: 1.2rem;
   margin: 20px 0;
-`;
-
-const SpaceId = styled.p`
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  font-weight: bold;
 `;
 
 // space info
@@ -231,6 +263,7 @@ const SpaceInfo = styled.div`
 const House = styled.div`
   width: 350px;
   height: 350px;
+  margin-right: 30px;
 `;
 
 const Img = styled.img`
@@ -240,7 +273,6 @@ const Img = styled.img`
 
 const SubSpaceInfo = styled.div`
   display: grid;
-  margin-left: 30px;
   gap: 60px;
 `;
 
@@ -259,11 +291,11 @@ const ButtonSection = styled.div`
   width: 100%;
 `;
 
-const EmailButton = styled.button`
+const EmailButton = styled.a`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 170px;
+  width: 180px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
@@ -281,11 +313,13 @@ const EmailButton = styled.button`
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
+    color: white;
   }
 
   &:active {
     box-shadow: none;
     transform: translateY(0);
+    color: white;
   }
 `;
 
@@ -293,13 +327,14 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 150px;
+  width: 155px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
   cursor: pointer;
   display: inline-block;
   font-weight: 600;
+  margin-top: 20px;
   margin-right: 10px;
   min-height: 30px;
   outline: none;

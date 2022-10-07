@@ -187,11 +187,11 @@ const updateSpace = async (req, res) => {
       $set: { spaceDetails: { ...spaceData.spaceDetails, ...req.body } },
     };
 
-    const result = await db
-      .collection("spaces")
-      .updateOne({ spaceId }, newSpaceValues);
+    await db.collection("spaces").updateOne({ spaceId }, newSpaceValues);
 
-    console.log(result);
+    res
+      .status(200)
+      .json({ status: 200, data: req.body, message: "Space Updated" });
   } catch (error) {
     res.status(500).json({ status: 500, message: error.message });
   } finally {

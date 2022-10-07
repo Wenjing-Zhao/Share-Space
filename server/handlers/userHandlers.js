@@ -76,6 +76,50 @@ const addUser = async (req, res) => {
   }
 };
 
-const updateUserFavorites = async () => {};
+// update user favorites
+const updateUserFavorites = async (req, res) => {
+  const { userId } = req.params;
+  const { spaceId } = req.body;
+  const client = new MongoClient(MONGO_URI, options);
+  console.log(userId, spaceId);
 
-module.exports = { getUser, addUser, updateUserFavorites };
+  try {
+    await client.connect();
+
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    const userData = await db.collection("users").findOne({ userId });
+
+    if (!userData) {
+      return res
+        .status(404)
+        .json({ status: 404, userId, message: "User Not Found" });
+    }
+
+    const spaceIndex = userData.favorites.indexOf(spaceId);
+
+    if (spaceIndex > -1) {
+      userData.favorites.splice(spaceIndex, 1);
+    } else {
+      userData.favorites.push(spaceId);
+    }
+
+    const newFavoritesValues = { $set: { favorites: userData.favorites } };
+
+    await db.collection("users").updateOne({ userId }, newFavoritesValues);
+
+    res
+      .status(200)
+      .json({ stastus: 200, data: req.body, message: "Favorites Updated" });
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  } finally {
+    client.close();
+    console.log("disconnected!");
+  }
+};
+
+const updateUserMessages = async () => {};
+
+module.exports = { getUser, addUser, updateUserFavorites, updateUserMessages };
