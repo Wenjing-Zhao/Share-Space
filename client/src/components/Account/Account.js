@@ -26,7 +26,7 @@ const Account = ({ spaces }) => {
   const [isProAllError, setIsProAllError] = useState(false);
 
   const [openAddModal, setOpenAddModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState({});
 
   const [isAddSpaceError, setIsAddSpaceError] = useState(false);
   const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
@@ -254,7 +254,7 @@ const Account = ({ spaces }) => {
 
                           {/* popup for update a space*/}
                           <UpdateModal
-                            openFormModal={openUpdateModal}
+                            openFormModal={openUpdateModal[space.spaceId]}
                             setOpenFormModal={setOpenUpdateModal}
                             setHidden={setHidden}
                             handleSubmit={handleUpdateSpaceSubmit}
@@ -267,7 +267,11 @@ const Account = ({ spaces }) => {
 
                           <Button
                             onClick={() => {
-                              setOpenUpdateModal(true);
+                              setOpenUpdateModal({
+                                ...openUpdateModal,
+                                [space.spaceId]: true,
+                              });
+
                               setHidden();
                             }}
                           >

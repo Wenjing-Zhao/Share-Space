@@ -23,7 +23,7 @@ const UpdateModal = ({
   const { RangePicker } = DatePicker;
   const dateFormat = "MMM DD YYYY";
 
-  console.log(spaceId);
+  // console.log(spaceId);
 
   const [imageSrc, setImageSrc] = useState("");
   const [datePicker, setDatePicker] = useState([]);
@@ -63,7 +63,11 @@ const UpdateModal = ({
       <Section>
         <CloseButton
           onClick={() => {
-            setOpenFormModal(false);
+            setOpenFormModal({
+              ...openFormModal,
+              [spaceId]: false,
+            });
+
             setHidden();
             setIsSuccess(false);
           }}
