@@ -57,7 +57,6 @@ const Img = styled.img`
 
 const SearchSection = styled.div`
   position: absolute;
-  z-index: 1;
   top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);

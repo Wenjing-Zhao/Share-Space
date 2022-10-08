@@ -20,15 +20,18 @@ const Account = ({ spaces }) => {
   const { signInUser, isError, userActionToggler, setUserActionToggler } =
     useContext(UserContext);
 
-  const [openAddModal, setOpenAddModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const [isAddSpaceError, setIsAddSpaceError] = useState(false);
-  const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
-  const [isDeleteSpaceError, setIsDeleteSpaceError] = useState(false);
-
   const [userSpaces, setUserSpaces] = useState(null);
   const [userFavorites, setFavorites] = useState(null);
   const [isProAllError, setIsProAllError] = useState(false);
+
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+
+  const [isAddSpaceError, setIsAddSpaceError] = useState(false);
+  const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
+  const [isDeleteSpaceError, setIsDeleteSpaceError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     // ftech user data about spaces and favorites
@@ -74,6 +77,9 @@ const Account = ({ spaces }) => {
     addressData
   ) => {
     evt.preventDefault();
+    setIsAddSpaceError(false);
+    setIsLoading(true);
+    setIsSuccess(false);
 
     try {
       const response = await fetch("/api/add-space", {
@@ -95,9 +101,13 @@ const Account = ({ spaces }) => {
 
       if (response.ok) {
         setUserActionToggler(!userActionToggler);
+        setIsSuccess(true);
+        setIsLoading(false);
+        evt.target.reset();
       }
     } catch (error) {
       setIsAddSpaceError(true);
+      setIsLoading(false);
     }
   };
 
@@ -110,6 +120,9 @@ const Account = ({ spaces }) => {
     spaceId
   ) => {
     evt.preventDefault();
+    setIsUpdateSpaceError(false);
+    setIsLoading(true);
+    setIsSuccess(false);
 
     try {
       const response = await fetch(`/api/update-space/${spaceId}`, {
@@ -127,9 +140,13 @@ const Account = ({ spaces }) => {
 
       if (response.ok) {
         setUserActionToggler(!userActionToggler);
+        setIsSuccess(true);
+        setIsLoading(false);
+        evt.target.reset();
       }
     } catch (error) {
       setIsUpdateSpaceError(true);
+      setIsLoading(false);
     }
   };
 
@@ -167,7 +184,10 @@ const Account = ({ spaces }) => {
         setOpenFormModal={setOpenAddModal}
         setHidden={setHidden}
         handleSubmit={handleAddSpaceSubmit}
-        error={isAddSpaceError}
+        isError={isAddSpaceError}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        setIsSuccess={setIsSuccess}
       />
 
       {/* search bar  */}
@@ -232,7 +252,10 @@ const Account = ({ spaces }) => {
                             setOpenFormModal={setOpenUpdateModal}
                             setHidden={setHidden}
                             handleSubmit={handleUpdateSpaceSubmit}
-                            error={isUpdateSpaceError}
+                            isError={isAddSpaceError}
+                            isLoading={isLoading}
+                            isSuccess={isSuccess}
+                            setIsSuccess={setIsSuccess}
                             spaceId={space.spaceId}
                           />
 

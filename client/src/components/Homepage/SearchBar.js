@@ -106,7 +106,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const ListWrapper = styled.ul`

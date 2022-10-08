@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MdOutlineClear } from "react-icons/md";
+import { FiLoader } from "react-icons/fi";
 import moment from "moment";
 
 import { DatePicker } from "antd";
@@ -13,7 +14,10 @@ const AddModal = ({
   setOpenFormModal,
   setHidden,
   handleSubmit,
-  error,
+  isError,
+  isLoading,
+  isSuccess,
+  setIsSuccess,
 }) => {
   const { RangePicker } = DatePicker;
   const dateFormat = "MMM DD YYYY";
@@ -66,6 +70,7 @@ const AddModal = ({
           onClick={() => {
             setOpenFormModal(false);
             setHidden();
+            setIsSuccess(false);
           }}
         >
           <MdOutlineClear style={{ fontSize: "15px" }} />
@@ -148,9 +153,17 @@ const AddModal = ({
             />
           </InputWrapper>
 
-          <SubmitButton type="submit">Add New Space</SubmitButton>
-          <Alert>Success! You can close or add one more.</Alert>
-          <Alert>Error! You are missing a piece of information.</Alert>
+          <SubmitButton type="submit">
+            {isLoading ? <FiLoaderAnimation /> : "Add New Space"}
+          </SubmitButton>
+
+          {isSuccess && (
+            <AlertSuc>Success! You can close or add one more.</AlertSuc>
+          )}
+
+          {isError && (
+            <AlertErr>Error! You are missing a piece of information.</AlertErr>
+          )}
         </form>
       </Section>
     </Wrapper>
@@ -164,7 +177,7 @@ const Wrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  z-index: 2;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 5px;
@@ -261,11 +274,31 @@ const SubmitButton = styled.button`
   }
 `;
 
-const Alert = styled.p`
+const AlertErr = styled.p`
   color: red;
   font-size: 1rem;
   text-align: center;
   margin-top: 10px;
+`;
+
+const AlertSuc = styled.p`
+  color: green;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const FiLoaderAnimation = styled(FiLoader)`
+  font-size: 1rem;
+  font-weight: bolder;
+  color: white;
+  animation: rotate 1.5s linear infinite;
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 export default AddModal;
