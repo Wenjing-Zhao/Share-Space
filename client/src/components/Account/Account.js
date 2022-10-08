@@ -6,6 +6,7 @@ import {
   FiTrash2,
   FiCheckCircle,
   FiAlertCircle,
+  FiLoader,
 } from "react-icons/fi";
 
 import Error from "../Error";
@@ -30,7 +31,9 @@ const Account = ({ spaces }) => {
   const [isAddSpaceError, setIsAddSpaceError] = useState(false);
   const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
   const [isDeleteSpaceError, setIsDeleteSpaceError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isAddLoading, setIsAddLoading] = useState(false);
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
@@ -78,7 +81,7 @@ const Account = ({ spaces }) => {
   ) => {
     evt.preventDefault();
     setIsAddSpaceError(false);
-    setIsLoading(true);
+    setIsAddLoading(true);
     setIsSuccess(false);
 
     try {
@@ -102,12 +105,12 @@ const Account = ({ spaces }) => {
       if (response.ok) {
         setUserActionToggler(!userActionToggler);
         setIsSuccess(true);
-        setIsLoading(false);
+        setIsAddLoading(false);
         evt.target.reset();
       }
     } catch (error) {
       setIsAddSpaceError(true);
-      setIsLoading(false);
+      setIsAddLoading(false);
     }
   };
 
@@ -121,7 +124,7 @@ const Account = ({ spaces }) => {
   ) => {
     evt.preventDefault();
     setIsUpdateSpaceError(false);
-    setIsLoading(true);
+    setIsUpdateLoading(true);
     setIsSuccess(false);
 
     try {
@@ -141,18 +144,19 @@ const Account = ({ spaces }) => {
       if (response.ok) {
         setUserActionToggler(!userActionToggler);
         setIsSuccess(true);
-        setIsLoading(false);
-        evt.target.reset();
+        setIsUpdateLoading(false);
       }
     } catch (error) {
       setIsUpdateSpaceError(true);
-      setIsLoading(false);
+      setIsUpdateLoading(false);
     }
   };
 
   // handle button for user deletes a space
   const handleDeleteSpace = async (evt, spaceId) => {
     evt.preventDefault();
+    setIsDeleteSpaceError(false);
+    setIsDeleteLoading(true);
 
     try {
       const response = await fetch(`/api/delete-space/${spaceId}`, {
@@ -161,9 +165,11 @@ const Account = ({ spaces }) => {
 
       if (response.ok) {
         setUserActionToggler(!userActionToggler);
+        setIsDeleteLoading(false);
       }
     } catch (error) {
       setIsDeleteSpaceError(true);
+      setIsDeleteLoading(false);
     }
   };
 
@@ -178,18 +184,6 @@ const Account = ({ spaces }) => {
 
   return (
     <Wrapper>
-      {/* popup for add a space */}
-      <AddModal
-        openFormModal={openAddModal}
-        setOpenFormModal={setOpenAddModal}
-        setHidden={setHidden}
-        handleSubmit={handleAddSpaceSubmit}
-        isError={isAddSpaceError}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-        setIsSuccess={setIsSuccess}
-      />
-
       {/* search bar  */}
       <SearchSection>
         <Search>
@@ -223,6 +217,18 @@ const Account = ({ spaces }) => {
               <SpaceInfo>
                 <Title>My Spaces</Title>
 
+                {/* popup for add a space */}
+                <AddModal
+                  openFormModal={openAddModal}
+                  setOpenFormModal={setOpenAddModal}
+                  setHidden={setHidden}
+                  handleSubmit={handleAddSpaceSubmit}
+                  isError={isAddSpaceError}
+                  isLoading={isAddLoading}
+                  isSuccess={isSuccess}
+                  setIsSuccess={setIsSuccess}
+                />
+
                 <Button
                   onClick={() => {
                     setOpenAddModal(true);
@@ -252,8 +258,8 @@ const Account = ({ spaces }) => {
                             setOpenFormModal={setOpenUpdateModal}
                             setHidden={setHidden}
                             handleSubmit={handleUpdateSpaceSubmit}
-                            isError={isAddSpaceError}
-                            isLoading={isLoading}
+                            isError={isUpdateSpaceError}
+                            isLoading={isUpdateLoading}
                             isSuccess={isSuccess}
                             setIsSuccess={setIsSuccess}
                             spaceId={space.spaceId}
@@ -270,12 +276,19 @@ const Account = ({ spaces }) => {
                           </Button>
 
                           <Button
-                            onClick={async (evt) =>
-                              await handleDeleteSpace(evt, space.spaceId)
+                            disabled={isDeleteLoading}
+                            onClick={(evt) =>
+                              handleDeleteSpace(evt, space.spaceId)
                             }
                           >
-                            <FiTrash2 style={{ fontSize: "13px" }} />
-                            {` Delete`}
+                            {isDeleteLoading ? (
+                              <FiLoaderAnimation />
+                            ) : (
+                              <>
+                                <FiTrash2 style={{ fontSize: "13px" }} />
+                                {` Delete`}
+                              </>
+                            )}
                           </Button>
                         </ButtonSection>
 
@@ -288,7 +301,7 @@ const Account = ({ spaces }) => {
 
                         <SubSpaceInfo>
                           <div>
-                            <SmallTitlt>Available date</SmallTitlt>
+                            <SmallTitlt>Available Date</SmallTitlt>
 
                             <p>
                               {space.spaceDetails.availableDate[0]} -{" "}
@@ -310,7 +323,7 @@ const Account = ({ spaces }) => {
                           </div>
 
                           <div>
-                            <SmallTitlt>Address</SmallTitlt>
+                            <SmallTitlt>Shared Address</SmallTitlt>
                             <p>
                               {space.spaceDetails.addressDetails.address},{" "}
                               {space.spaceDetails.addressDetails.city},{" "}
@@ -537,6 +550,24 @@ const Button = styled.button`
   &:active {
     box-shadow: none;
     transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
+`;
+
+const FiLoaderAnimation = styled(FiLoader)`
+  font-size: 0.8rem;
+  font-weight: bolder;
+  color: white;
+  animation: rotate 1.5s linear infinite;
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 

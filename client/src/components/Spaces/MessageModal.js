@@ -30,7 +30,7 @@ const MessageModal = ({
             </Label>
             <Label htmlFor="meaasge">Send message to space host:</Label>
             <TextArea
-              rows="25"
+              rows="23"
               cols="50"
               stype="text"
               value={textValue}
@@ -63,7 +63,6 @@ const Wrapper = styled.div`
 
 const Section = styled.div`
   width: 85%;
-  height: 85%;
 `;
 
 const Label = styled.label`
@@ -78,6 +77,7 @@ const TextAreaWrapper = styled.div`
 `;
 
 const TextArea = styled.textarea`
+  margin-top: 10px;
   padding: 10px;
   width: 100%;
   font-size: 1rem;

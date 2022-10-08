@@ -23,6 +23,8 @@ const UpdateModal = ({
   const { RangePicker } = DatePicker;
   const dateFormat = "MMM DD YYYY";
 
+  console.log(spaceId);
+
   const [imageSrc, setImageSrc] = useState("");
   const [datePicker, setDatePicker] = useState([]);
   const [needs, setNeeds] = useState([]);
@@ -103,7 +105,7 @@ const UpdateModal = ({
             <Checkbox.Group options={plainOptions} onChange={onChange} />
           </InputWrapper>
 
-          <SubmitButton type="submit">
+          <SubmitButton disabled={isLoading} type="submit">
             {isLoading ? <FiLoaderAnimation /> : "Update Space"}
           </SubmitButton>
 
@@ -122,7 +124,7 @@ const UpdateModal = ({
 
 const Wrapper = styled.div`
   width: 650px;
-  height: 420px;
+  height: 450px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -138,7 +140,6 @@ const Wrapper = styled.div`
 
 const Section = styled.div`
   width: 85%;
-  height: 85%;
 `;
 
 const SpaceId = styled.p`
@@ -217,6 +218,11 @@ const SubmitButton = styled.button`
     box-shadow: none;
     transform: translateY(0);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
 `;
 
 const AlertErr = styled.p`
@@ -234,7 +240,7 @@ const AlertSuc = styled.p`
 `;
 
 const FiLoaderAnimation = styled(FiLoader)`
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bolder;
   color: white;
   animation: rotate 1.5s linear infinite;

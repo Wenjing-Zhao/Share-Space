@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   FiMail,
-  FiHeart,
   FiMessageSquare,
   FiCheckCircle,
+  FiLoader,
 } from "react-icons/fi";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import Error from "../Error";
 import Loading from "../Loading";
@@ -23,17 +24,30 @@ const Space = ({ spaces }) => {
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const [space, setSpace] = useState(null);
   const [host, setHost] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isFavoriteError, setIsFavoriteError] = useState(false);
-  const [isMessageError, setIsMessageError] = useState(false);
+  // const [isMessageError, setIsMessageError] = useState(false);
 
   useEffect(() => {
     const fetchSpaceData = async () => {
       try {
+        //
+        setIsLoading(true);
+        const responseFavorite = await fetch(
+          `/api/get-user-favorites/${signInUser.userId}?spaceId=${spaceId}`
+        );
+        const jsonFavorite = await responseFavorite.json();
+        setIsFavorite(jsonFavorite.isFavorite);
+        setIsLoading(false);
+
+        //
         const responseSpace = await fetch(`/api/get-space/${spaceId}`);
         const jsonSpace = await responseSpace.json();
         setSpace(jsonSpace.data);
 
+        //
         const responseHost = await fetch(
           `/api/get-user/${jsonSpace.data.host}`
         );
@@ -41,15 +55,17 @@ const Space = ({ spaces }) => {
         setHost(jsonHost.data);
       } catch (error) {
         setIsError(true);
+        setIsLoading(false);
       }
     };
 
-    spaceId && fetchSpaceData();
-  }, [spaceId]);
+    spaceId && signInUser && fetchSpaceData();
+  }, [spaceId, signInUser]);
 
   // handler button for user favorite a space
   const handleFavoriteSpace = async (evt) => {
     evt.preventDefault();
+    setIsFavoriteError(false);
 
     try {
       const response = await fetch(
@@ -98,7 +114,7 @@ const Space = ({ spaces }) => {
         </Search>
       </SearchSection>
 
-      {space && host ? (
+      {space && host && isLoading !== null ? (
         <InfoSection>
           <Info>
             <SpaceInfo>
@@ -118,8 +134,19 @@ const Space = ({ spaces }) => {
                     </Button>
 
                     <Button onClick={(evt) => handleFavoriteSpace(evt)}>
-                      <FiHeart style={{ fontSize: "13px" }} />
-                      {` Favorite`}
+                      {isLoading ? (
+                        <FiLoaderAnimation />
+                      ) : isFavorite ? (
+                        <>
+                          <AiFillHeart style={{ fontSize: "13px" }} />
+                          {` Favorited`}
+                        </>
+                      ) : (
+                        <>
+                          <AiOutlineHeart style={{ fontSize: "13px" }} />
+                          {` Favorite`}
+                        </>
+                      )}
                     </Button>
                   </>
                 )}
@@ -131,7 +158,7 @@ const Space = ({ spaces }) => {
 
               <SubSpaceInfo>
                 <div>
-                  <SmallTitlt>Available date</SmallTitlt>
+                  <SmallTitlt>Available Date</SmallTitlt>
                   <p>
                     {space.spaceDetails.availableDate[0]} -{" "}
                     {space.spaceDetails.availableDate[1]}
@@ -151,7 +178,7 @@ const Space = ({ spaces }) => {
                 </div>
 
                 <div>
-                  <SmallTitlt>Address</SmallTitlt>
+                  <SmallTitlt>Shared Address</SmallTitlt>
                   <p>
                     {space.spaceDetails.addressDetails.address},{" "}
                     {space.spaceDetails.addressDetails.city},{" "}
@@ -191,7 +218,7 @@ const Space = ({ spaces }) => {
             </UserInfo>
           </Info>
         </InfoSection>
-      ) : isError || isFavoriteError || isMessageError ? (
+      ) : isError || isFavoriteError ? (
         <Error />
       ) : (
         <Loading />
@@ -356,6 +383,19 @@ const Button = styled.button`
   &:active {
     box-shadow: none;
     transform: translateY(0);
+  }
+`;
+
+const FiLoaderAnimation = styled(FiLoader)`
+  font-size: 0.8rem;
+  font-weight: bolder;
+  color: white;
+  animation: rotate 1.5s linear infinite;
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 

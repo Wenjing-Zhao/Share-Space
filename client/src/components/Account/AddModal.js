@@ -153,7 +153,7 @@ const AddModal = ({
             />
           </InputWrapper>
 
-          <SubmitButton type="submit">
+          <SubmitButton disabled={isLoading} type="submit">
             {isLoading ? <FiLoaderAnimation /> : "Add New Space"}
           </SubmitButton>
 
@@ -188,7 +188,6 @@ const Wrapper = styled.div`
 
 const Section = styled.div`
   width: 85%;
-  height: 85%;
 `;
 
 const Label = styled.label`
@@ -272,6 +271,11 @@ const SubmitButton = styled.button`
     box-shadow: none;
     transform: translateY(0);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
 `;
 
 const AlertErr = styled.p`
@@ -289,7 +293,7 @@ const AlertSuc = styled.p`
 `;
 
 const FiLoaderAnimation = styled(FiLoader)`
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bolder;
   color: white;
   animation: rotate 1.5s linear infinite;

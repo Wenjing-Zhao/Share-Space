@@ -17,6 +17,7 @@ const {
 const {
   getUser,
   addUser,
+  getUserFavorites,
   updateUserFavorites,
   updateUserMessages,
 } = require("./handlers/userHandlers");
@@ -36,7 +37,10 @@ app.delete("/api/delete-space/:spaceId", deleteSpace);
 
 app.get("/api/get-user/:userId", getUser);
 app.post("/api/add-user", addUser);
+
+app.get("/api/get-user-favorites/:userId", getUserFavorites);
 app.patch("/api/update-user-favorites/:userId", updateUserFavorites);
+
 app.patch("/api/update-user-messages/:userId", updateUserMessages);
 
 // ------------------
