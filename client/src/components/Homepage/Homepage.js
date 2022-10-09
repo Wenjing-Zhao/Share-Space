@@ -1,30 +1,64 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
+import { RiUserSearchLine } from "react-icons/ri";
 
+import intro1 from "../../assets/intro-1.png";
+import intro2 from "../../assets/intro-2.png";
+import intro3 from "../../assets/intro-3.png";
+import intro4 from "../../assets/intro-4.png";
+import intro5 from "../../assets/intro-5.png";
+import intro6 from "../../assets/intro-6.png";
 import poster from "../../assets/poster.jpg";
 import SearchBar from "./SearchBar";
+import ImgDisplay from "./ImgDisplay";
 
+// this function is for homepage display
 const Homepage = ({ spaces }) => {
   return (
     <Wrapper>
-      <Poster>
+      {/* poster display */}
+      <PosterSection>
         <Img src={poster} alt="poster-img" />
         <Title>Happy travel and happy pets</Title>
 
+        {/* search bar display */}
         <SearchSection>
           <SearchBar spaces={spaces} />
         </SearchSection>
-      </Poster>
+      </PosterSection>
 
-      <Section>
-        <Intro>
-          <FaRegHeart style={{ fontSize: "50px" }} />
+      {/* site introduces display */}
+      <IntrosSection>
+        <Display>
+          <div style={{ width: "100%" }}>
+            <FaRegHeart style={{ fontSize: "50px" }} />
+          </div>
 
-          <Para>Connecting like-minded people around the world</Para>
-        </Intro>
-      </Section>
+          <SubTitle>Connecting like-minded people around the world</SubTitle>
+
+          <ImgDisplay imageSrc={intro1} />
+          <ImgDisplay imageSrc={intro2} />
+          <ImgDisplay imageSrc={intro3} />
+          <SmallTitle>
+            Find travel and pets lovers to{" "}
+            <Span>look after house and pets</Span> when you are away.
+          </SmallTitle>
+
+          <ImgDisplay imageSrc={intro4} />
+          <ImgDisplay imageSrc={intro5} />
+          <ImgDisplay imageSrc={intro6} />
+          <SmallTitle>
+            Look after house and pets <Span>free of charge in exchange</Span>{" "}
+            for accommodation.
+          </SmallTitle>
+
+          <Para>
+            Sign up for free, complete your profile and start an interesting
+            experience.
+          </Para>
+        </Display>
+      </IntrosSection>
     </Wrapper>
   );
 };
@@ -46,7 +80,7 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const Poster = styled.div`
+const PosterSection = styled.div`
   width: 100%;
   position: relative;
 `;
@@ -69,31 +103,43 @@ const SearchSection = styled.div`
   align-items: center;
 `;
 
-const LinkStyle = styled(Link)`
-  font-size: 1.3rem;
-  color: var(--primary-color);
-  font-weight: 500;
-
-  &:hover {
-    color: white;
-    text-decoration: underline;
-  }
-`;
-
-const Section = styled.div`
+const IntrosSection = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const Intro = styled.div`
-  width: var(--max-page-width);
   text-align: center;
-  margin: 150px 0;
 `;
 
-const Para = styled.h1`
-  font-size: 2rem;
-  margin: 50px 0;
+const Display = styled.div`
+  width: var(--max-page-width);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 100px 20px 50px;
+`;
+
+const SubTitle = styled.h2`
+  width: 100%;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 50px;
+`;
+
+const SmallTitle = styled.h3`
+  width: 100%;
+  font-size: 1.4rem;
+  margin-top: 50px;
+`;
+
+const Para = styled.h3`
+  width: 100%;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 100px;
+`;
+
+const Span = styled.span`
+  color: var(--primary-color);
+  text-decoration: underline;
 `;
 
 export default Homepage;

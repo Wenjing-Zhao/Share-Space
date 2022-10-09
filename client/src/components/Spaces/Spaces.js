@@ -19,7 +19,7 @@ const Spaces = ({ spaces, isError }) => {
 
       {/* conditional: ftech spaces data done? */}
       {spaces ? (
-        <Section>
+        <SpacesSection>
           <Display>
             <Title>- All Spaces -</Title>
 
@@ -38,7 +38,7 @@ const Spaces = ({ spaces, isError }) => {
               />
             ))}
           </Display>
-        </Section>
+        </SpacesSection>
       ) : isError ? (
         <Error />
       ) : (
@@ -65,7 +65,7 @@ const Search = styled.div`
   width: var(--max-page-width);
 `;
 
-const Section = styled.div`
+const SpacesSection = styled.div`
   display: flex;
   justify-content: center;
 `;
