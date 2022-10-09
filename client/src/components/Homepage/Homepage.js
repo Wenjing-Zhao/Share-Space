@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { FaRegHeart } from "react-icons/fa";
-import { RiUserSearchLine } from "react-icons/ri";
 
+import poster from "../../assets/poster.jpg";
 import intro1 from "../../assets/intro-1.png";
 import intro2 from "../../assets/intro-2.png";
 import intro3 from "../../assets/intro-3.png";
 import intro4 from "../../assets/intro-4.png";
 import intro5 from "../../assets/intro-5.png";
 import intro6 from "../../assets/intro-6.png";
-import poster from "../../assets/poster.jpg";
+
 import SearchBar from "./SearchBar";
 import ImgDisplay from "./ImgDisplay";
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MdOutlineClear } from "react-icons/md";
 
+// this function is for send message modal display
 const MessageModal = ({
   spaceId,
   openMessageModal,
@@ -9,6 +10,10 @@ const MessageModal = ({
   setHidden,
 }) => {
   const [textValue, setTextValue] = useState("");
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+  };
 
   return (
     <Wrapper openMessageModal={openMessageModal}>
@@ -23,14 +28,13 @@ const MessageModal = ({
           <MdOutlineClear style={{ fontSize: "15px" }} />
         </CloseButton>
 
-        <form>
+        <form onClick={(evt) => handleSubmit(evt)}>
           <TextAreaWrapper>
-            <Label htmlFor="id">
-              Space Id: {spaceId.substring(0, 8) + "..."}
-            </Label>
-            <Label htmlFor="meaasge">Send message to space host:</Label>
+            <SpaceId>Space Id: {spaceId.substring(0, 8) + "..."}</SpaceId>
+            <Label>Send message to space host:</Label>
+
             <TextArea
-              rows="23"
+              rows="8"
               cols="50"
               stype="text"
               value={textValue}
@@ -47,7 +51,7 @@ const MessageModal = ({
 
 const Wrapper = styled.div`
   width: 650px;
-  height: 650px;
+  height: 420px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -63,6 +67,14 @@ const Wrapper = styled.div`
 
 const Section = styled.div`
   width: 85%;
+`;
+
+const SpaceId = styled.p`
+  font-size: 1.2rem;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  font-weight: bold;
 `;
 
 const Label = styled.label`

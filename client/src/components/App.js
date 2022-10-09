@@ -7,6 +7,7 @@ import Homepage from "./Homepage/Homepage";
 import Spaces from "./Spaces/Spaces";
 import Space from "./Spaces/Space";
 import Account from "./Account/Account";
+import Messages from "./Header/Messages";
 import Footer from "./Footer";
 import { UserContext } from "./UserContext";
 
@@ -45,7 +46,8 @@ const App = () => {
           element={<Spaces spaces={spaces} isError={isError} />}
         />
         <Route path="/spaces/:spaceId" element={<Space spaces={spaces} />} />
-        <Route path="/account/:userId" element={<Account spaces={spaces} />} />
+        <Route path="/account" element={<Account spaces={spaces} />} />
+        <Route path="/messages" element={<Messages spaces={spaces} />} />
       </Routes>
 
       <Footer />

@@ -3,17 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FiLoader } from "react-icons/fi";
+import { TbMessage2 } from "react-icons/tb";
 
 import logo from "../../assets/logo.png";
 import Login from "./Login";
 import Logout from "./Logout";
+
 import { UserContext } from "../UserContext";
 
 // this function is for site header display
 const Header = () => {
   const navigate = useNavigate();
   const { loginWithRedirect } = useAuth0();
-  const { signInUser, isLoading } = useContext(UserContext);
+  const { signInUser } = useContext(UserContext);
 
   return (
     <Wrapper>
@@ -31,16 +33,15 @@ const Header = () => {
 
         {/* sign in/out and account links display */}
         <SignInSection>
-          {/* conditional: data is loading? */}
-          {isLoading ? (
-            <FiLoaderAnimation />
-          ) : // conditional: user is logged in?
-          signInUser ? (
+          {/* conditional: user is logged in? */}
+          {signInUser ? (
             <>
+              <MessageSection to="/messages">
+                <TbMessage2 style={{ fontSize: "28px" }} />
+              </MessageSection>
+
               {/* link to user account page */}
-              <HeaderLink to={`/account/${signInUser.userId}`}>
-                My Account
-              </HeaderLink>
+              <HeaderLink to={`/account`}>My Account</HeaderLink>
 
               {/* logout button */}
               <Logout />
@@ -99,6 +100,12 @@ const SignInSection = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+`;
+
+const MessageSection = styled(Link)`
+  &:hover {
+    color: var(--primary-color);
+  }
 `;
 
 const HeaderLink = styled(Link)`

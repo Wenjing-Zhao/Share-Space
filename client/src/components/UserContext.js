@@ -9,16 +9,12 @@ export const UserProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth0();
 
   const [signInUser, setSignInUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-
   const [userActionToggler, setUserActionToggler] = useState(false);
 
   useEffect(() => {
     // this function fetchs signin user or new user data
     const fetchUserData = async () => {
-      setIsLoading(true);
-
       try {
         // fetch signin user or new user data
         const response = await fetch("/api/add-user", {
@@ -38,11 +34,9 @@ export const UserProvider = ({ children }) => {
         if (response.ok) {
           const json = await response.json();
           setSignInUser(json.data);
-          setIsLoading(false);
         }
       } catch (error) {
         setIsError(true);
-        setIsLoading(false);
       }
     };
 
@@ -54,7 +48,6 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         signInUser,
-        isLoading,
         isError,
         userActionToggler,
         setUserActionToggler,
