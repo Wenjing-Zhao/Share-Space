@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { FiLoader } from "react-icons/fi";
 
-const Error = () => {
+// this function is for loading display
+const Loading = () => {
   return (
     <Wrapper>
       <Section>
@@ -35,4 +36,4 @@ const FiLoaderAnimation = styled(FiLoader)`
   }
 `;
 
-export default Error;
+export default Loading;

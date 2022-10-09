@@ -1,59 +1,72 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
+import { FiLoader } from "react-icons/fi";
 
 import logo from "../../assets/logo.png";
 import Login from "./Login";
 import Logout from "./Logout";
 import { UserContext } from "../UserContext";
 
+// this function is for site header
 const Header = () => {
   const navigate = useNavigate();
   const { loginWithRedirect } = useAuth0();
-  const { signInUser } = useContext(UserContext);
+  const { signInUser, isLoading } = useContext(UserContext);
 
   return (
     <Wrapper>
-      <Section>
-        <Logo
+      <ContentSection>
+        {/* link to homepage */}
+        <LogoSection
           onClick={() => {
             navigate("/");
           }}
         >
           <Img src={logo} alt="logo-img" />
           <Title>Share Space</Title>
-        </Logo>
+        </LogoSection>
 
-        <SignIn>
-          {signInUser ? (
+        <SignInSection>
+          {/* conditional: data is loading? */}
+          {isLoading ? (
+            <FiLoaderAnimation />
+          ) : // conditional: user is logged in?
+          signInUser ? (
             <>
+              {/* link to user account page */}
               <HeaderLink to={`/account/${signInUser.userId}`}>
                 My Account
               </HeaderLink>
+
+              {/* logout button */}
               <Logout />
             </>
           ) : (
             <>
+              {/* link to login page */}
               <HeaderLink onClick={() => loginWithRedirect()}>
                 Share a space?
               </HeaderLink>
+
+              {/* login button */}
               <Login />
             </>
           )}
-        </SignIn>
-      </Section>
+        </SignInSection>
+      </ContentSection>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.header`
   height: 100px;
   display: flex;
   justify-content: center;
 `;
 
-const Section = styled.div`
+const ContentSection = styled.div`
   width: var(--max-page-width);
   display: flex;
   justify-content: space-between;
@@ -61,7 +74,7 @@ const Section = styled.div`
   padding: 0 20px;
 `;
 
-const Logo = styled.div`
+const LogoSection = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -79,7 +92,7 @@ const Title = styled.h1`
   margin-left: 20px;
 `;
 
-const SignIn = styled.div`
+const SignInSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,6 +107,18 @@ const HeaderLink = styled(Link)`
   &:hover {
     color: var(--primary-color);
     text-decoration: underline;
+  }
+`;
+
+const FiLoaderAnimation = styled(FiLoader)`
+  font-size: 1rem;
+  font-weight: bolder;
+  animation: rotate 1.5s linear infinite;
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 

@@ -5,13 +5,16 @@ import { MdOutlineClear, MdRoom } from "react-icons/md";
 
 import Suggestion from "./Suggestion";
 
+// this function is for search bar display
 const SearchBar = ({ spaces }) => {
   const navigate = useNavigate();
 
   const [value, setValue] = useState("");
   const [matchedList, setMatchedList] = useState([]);
 
+  // this function handles selecting each matched space in the list
   const handleSelect = (suggestion) => {
+    // link to each matched space page by each spaceId
     navigate(`/spaces/${suggestion.spaceId}`);
   };
 
@@ -25,7 +28,9 @@ const SearchBar = ({ spaces }) => {
           setValue(evt.target.value);
 
           setMatchedList(
+            // filter out matched spaces
             spaces.filter((ele) => {
+              // get matched spaces by country
               if (
                 ele.spaceDetails.addressDetails.country
                   .toLowerCase()
@@ -35,6 +40,7 @@ const SearchBar = ({ spaces }) => {
                 return ele.spaceDetails.addressDetails;
               }
 
+              // get matched spaces by region
               if (
                 ele.spaceDetails.addressDetails.region
                   .toLowerCase()
@@ -44,6 +50,7 @@ const SearchBar = ({ spaces }) => {
                 return ele.spaceDetails.addressDetails;
               }
 
+              // get matched spaces by city
               if (
                 ele.spaceDetails.addressDetails.city
                   .toLowerCase()
@@ -55,15 +62,10 @@ const SearchBar = ({ spaces }) => {
             })
           );
         }}
-
-        // onKeyDown={(evt) => {
-        //   if (evt.key === "Enter") {
-        //     handleSelect(evt.target.value);
-        //   }
-        // }}
       />
 
-      <ListWrapper disApper={matchedList.length === 0}>
+      <ListSection disApper={matchedList.length === 0}>
+        {/* map each mateched space address in the list */}
         {matchedList.map((suggestion) => {
           return (
             <Suggestion
@@ -80,8 +82,9 @@ const SearchBar = ({ spaces }) => {
             />
           );
         })}
-      </ListWrapper>
+      </ListSection>
 
+      {/* clear input values button */}
       <ClearButton
         type="button"
         onClick={() => {
@@ -92,6 +95,7 @@ const SearchBar = ({ spaces }) => {
         <MdOutlineClear style={{ fontSize: "15px" }} />
       </ClearButton>
 
+      {/* link to spaces page */}
       <FindButton onClick={() => navigate("/spaces")} type="button">
         <MdRoom /> Find All Spaces
       </FindButton>
@@ -109,18 +113,6 @@ const Wrapper = styled.div`
   z-index: 1;
 `;
 
-const ListWrapper = styled.ul`
-  width: 95%;
-  position: absolute;
-  top: 65px;
-  background: white;
-  line-height: 1.5rem;
-  display: ${(p) => (p.disApper ? "none" : "block")};
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-`;
-
 const Input = styled.input`
   padding: 15px 25px;
   width: 100%;
@@ -133,6 +125,18 @@ const Input = styled.input`
     outline: #cf6a87 solid 3px;
     outline-offset: 1px;
   }
+`;
+
+const ListSection = styled.ul`
+  width: 95%;
+  position: absolute;
+  top: 65px;
+  background: white;
+  line-height: 1.5rem;
+  display: ${(p) => (p.disApper ? "none" : "block")};
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `;
 
 const ClearButton = styled.button`

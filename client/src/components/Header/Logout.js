@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
+// this function is for logout button
 const LogoutButton = () => {
   const { logout } = useAuth0();
 
   return (
+    // link to logout and redirect to homepage
     <HeaderLink onClick={() => logout({ returnTo: window.location.origin })}>
       Sign out
     </HeaderLink>

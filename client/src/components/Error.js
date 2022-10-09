@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdRunningWithErrors } from "react-icons/md";
 
+// this function is for error display
 const Error = () => {
   return (
     <Wrapper>

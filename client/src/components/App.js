@@ -4,13 +4,13 @@ import "antd/dist/antd.min.css";
 
 import Header from "./Header/Header";
 import Homepage from "./Homepage/Homepage";
-import SearchResult from "./Homepage/SearchResult";
 import Spaces from "./Spaces/Spaces";
 import Space from "./Spaces/Space";
 import Account from "./Account/Account";
 import Footer from "./Footer";
 import { UserContext } from "./UserContext";
 
+// this function is for site app
 const App = () => {
   const { userActionToggler } = useContext(UserContext);
 
@@ -18,6 +18,7 @@ const App = () => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    // this function fetchs spaces data from database
     const fetchSpacesData = async () => {
       try {
         const response = await fetch("/api/get-spaces");
@@ -29,6 +30,7 @@ const App = () => {
       }
     };
 
+    // call above function
     fetchSpacesData();
   }, [userActionToggler]);
 
@@ -38,7 +40,6 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Homepage spaces={spaces} />} />
-        <Route path="/search" element={<SearchResult />} />
         <Route
           path="/spaces"
           element={<Spaces spaces={spaces} isError={isError} />}

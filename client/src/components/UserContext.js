@@ -7,11 +7,15 @@ export const UserProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth0();
 
   const [signInUser, setSignInUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
   const [userActionToggler, setUserActionToggler] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setIsLoading(true);
+
       try {
         const response = await fetch("/api/add-user", {
           method: "POST",
@@ -30,9 +34,11 @@ export const UserProvider = ({ children }) => {
         if (response.ok) {
           const json = await response.json();
           setSignInUser(json.data);
+          setIsLoading(false);
         }
       } catch (error) {
         setIsError(true);
+        setIsLoading(false);
       }
     };
 
@@ -41,7 +47,13 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ signInUser, isError, userActionToggler, setUserActionToggler }}
+      value={{
+        signInUser,
+        isLoading,
+        isError,
+        userActionToggler,
+        setUserActionToggler,
+      }}
     >
       {children}
     </UserContext.Provider>

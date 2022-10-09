@@ -2,13 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+// this function is for site footer
 const Footer = () => {
   return (
     <Wrapper>
       <Section>
         <Links>
+          {/* link to all spaces page */}
           <FooterLink to="/spaces">All spaces</FooterLink>
 
+          {/* link to the top of page */}
           <FooterLink
             onClick={() => {
               window.scrollTo(0, 0);
@@ -17,6 +20,7 @@ const Footer = () => {
             Back to Top ⇧
           </FooterLink>
 
+          {/* link to github */}
           <ExternalLink href="https://github.com/Wenjing-Zhao" target="_blank">
             About me
           </ExternalLink>
@@ -30,7 +34,7 @@ const Footer = () => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.footer`
   background-color: var(--primary-color);
   height: 150px;
   display: flex;

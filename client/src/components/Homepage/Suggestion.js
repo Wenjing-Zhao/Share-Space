@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
+// this function is for each mateched space address display in the list
 const Suggestion = ({ suggestion, handleSelect, value }) => {
-  const getIndex = suggestion.address
+  // get input value index of the mateched space address
+  const getValueIndex = suggestion.address
     .toLowerCase()
     .indexOf(value.toLowerCase());
-  const getIndexPoint = getIndex + value.length;
+
+  // get index between input value and prediction value
+  const getIndex = getValueIndex + value.length;
 
   return (
     <List onClick={() => handleSelect(suggestion)}>
       <span>
-        {suggestion.address.slice(0, getIndexPoint)}
-        <Prediction>{suggestion.address.slice(getIndexPoint)}</Prediction>
+        {suggestion.address.slice(0, getIndex)}
+        <Prediction>{suggestion.address.slice(getIndex)}</Prediction>
       </span>
     </List>
   );
