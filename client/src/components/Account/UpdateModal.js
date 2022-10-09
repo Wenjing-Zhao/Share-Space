@@ -4,11 +4,13 @@ import { MdOutlineClear } from "react-icons/md";
 import { FiLoader } from "react-icons/fi";
 import moment from "moment";
 
+// import datepicker, image upload and checkbox UI components
 import { DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Checkbox } from "antd";
 
+// this function is for update space modal display
 const UpdateModal = ({
   openFormModal,
   setOpenFormModal,
@@ -23,24 +25,23 @@ const UpdateModal = ({
   const { RangePicker } = DatePicker;
   const dateFormat = "MMM DD YYYY";
 
-  // console.log(spaceId);
-
   const [imageSrc, setImageSrc] = useState("");
   const [datePicker, setDatePicker] = useState([]);
   const [needs, setNeeds] = useState([]);
 
-  // DatePicker can not select days before today and today
+  // disable DatePicker select days before today and today
   const disabledDate = (current) => {
     return current && current < moment().endOf("day");
   };
 
-  // this is for image upload
+  // this is image upload component props
   const props = {
     action: "https://api.cloudinary.com/v1_1/sharespace/image/upload",
     data: {
       upload_preset: "irdmdwmq",
     },
 
+    // upload status
     onChange(info) {
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -51,9 +52,10 @@ const UpdateModal = ({
     },
   };
 
-  // this is for the "pets and needs" check
+  // this is "pets and needs" checkbox options
   const plainOptions = ["Dogs", "Cats", "Plants"];
 
+  // this is for getting checked values array from checkbox
   const onChange = (checkedValues) => {
     setNeeds(checkedValues);
   };
@@ -61,6 +63,7 @@ const UpdateModal = ({
   return (
     <Wrapper openFormModal={openFormModal}>
       <Section>
+        {/* close madal button */}
         <CloseButton
           onClick={() => {
             setOpenFormModal({
@@ -75,6 +78,7 @@ const UpdateModal = ({
           <MdOutlineClear style={{ fontSize: "15px" }} />
         </CloseButton>
 
+        {/* add space infos form */}
         <form
           onSubmit={(evt) => {
             handleSubmit(evt, imageSrc, datePicker, needs, spaceId);
@@ -82,17 +86,17 @@ const UpdateModal = ({
         >
           <SpaceId>Space Id: {spaceId.substring(0, 8) + "..."}</SpaceId>
 
+          {/* space house image upload */}
           <InputWrapper>
             <Label>Space image</Label>
-
             <Upload {...props}>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </InputWrapper>
 
+          {/* space available date pick */}
           <InputWrapper>
             <Label>Available date</Label>
-
             <RangePicker
               format={dateFormat}
               disabledDate={disabledDate}
@@ -104,19 +108,24 @@ const UpdateModal = ({
             />
           </InputWrapper>
 
+          {/* space pets and needs get */}
           <InputWrapper>
-            <Label htmlFor="needs">Pets & Needs</Label>
+            <Label>Pets & Needs</Label>
             <Checkbox.Group options={plainOptions} onChange={onChange} />
           </InputWrapper>
 
+          {/* submit form button */}
           <SubmitButton disabled={isLoading} type="submit">
+            {/* conditional: data is loading? */}
             {isLoading ? <FiLoaderAnimation /> : "Update Space"}
           </SubmitButton>
 
+          {/* update the space successfully and display a message */}
           {isSuccess && (
             <AlertSuc>Success! You can close or update again.</AlertSuc>
           )}
 
+          {/* failed to update the space and display a message */}
           {isError && (
             <AlertErr>Error! You are missing a piece of information.</AlertErr>
           )}

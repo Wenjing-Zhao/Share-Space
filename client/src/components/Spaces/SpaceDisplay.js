@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { MdRoom } from "react-icons/md";
 import { FiCheckCircle } from "react-icons/fi";
 
+// this function is for each space display
 const Space = ({
   spaceId,
   imageSrc,
@@ -18,11 +19,13 @@ const Space = ({
 
   return (
     <Wrapper>
+      {/* space house image */}
       <Image
         onClick={() => {
           navigate(`/spaces/${spaceId}`);
         }}
       >
+        {/* space loction */}
         <Location>
           <MdRoom />
           {city}, {region}, {country}
@@ -31,14 +34,14 @@ const Space = ({
         <Img src={imageSrc} alt="space-img" />
       </Image>
 
+      {/* space available date, needs and address */}
       <Date>
         Date: {availableDateFrom} - {availableDateTo}
       </Date>
-
       <Hr />
-
       <Needs>
         Pets & Needs:
+        {/* map each space pets and needs */}
         {needs.map((need) => (
           <Span key={need}>
             <FiCheckCircle />

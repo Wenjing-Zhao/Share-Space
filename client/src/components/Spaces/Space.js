@@ -13,9 +13,10 @@ import Error from "../Error";
 import Loading from "../Loading";
 import SearchBar from "../Homepage/SearchBar";
 import MessageModal from "./MessageModal";
-import { UserContext } from "../UserContext";
 import Login from "../Header/Login";
+import { UserContext } from "../UserContext";
 
+// this function is for space page display
 const Space = ({ spaces }) => {
   const { spaceId } = useParams();
   const { signInUser, userActionToggler, setUserActionToggler } =
@@ -24,50 +25,68 @@ const Space = ({ spaces }) => {
   const [openMessageModal, setOpenMessageModal] = useState(false);
   const [space, setSpace] = useState(null);
   const [host, setHost] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const [isFavorite, setIsFavorite] = useState(null);
   const [isFavoriteError, setIsFavoriteError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFavoriteSpaceError, setIsFavoriteSpaceError] = useState(false);
+
   // const [isMessageError, setIsMessageError] = useState(false);
 
   useEffect(() => {
+    // this function fetchs space data and host data
     const fetchSpaceData = async () => {
       try {
-        //
-        setIsLoading(true);
-        const responseFavorite = await fetch(
-          `/api/get-user-favorites/${signInUser.userId}?spaceId=${spaceId}`
-        );
-        const jsonFavorite = await responseFavorite.json();
-        setIsFavorite(jsonFavorite.isFavorite);
-        setIsLoading(false);
-
-        //
+        // fetch space data
         const responseSpace = await fetch(`/api/get-space/${spaceId}`);
         const jsonSpace = await responseSpace.json();
+
         setSpace(jsonSpace.data);
 
-        //
+        // fetch host data
         const responseHost = await fetch(
           `/api/get-user/${jsonSpace.data.host}`
         );
         const jsonHost = await responseHost.json();
+
         setHost(jsonHost.data);
       } catch (error) {
         setIsError(true);
+      }
+    };
+
+    // this function fetchs the space status in user favorites
+    const fetchUserFavorite = async () => {
+      setIsLoading(true);
+
+      try {
+        // fetch the space status in user favorites
+        const responseFavorite = await fetch(
+          `/api/get-user-favorites/${signInUser.userId}?spaceId=${spaceId}`
+        );
+        const jsonFavorite = await responseFavorite.json();
+
+        setIsFavorite(jsonFavorite.isFavorite);
+        setIsLoading(false);
+      } catch (error) {
+        setIsFavoriteError(false);
         setIsLoading(false);
       }
     };
 
-    spaceId && signInUser && fetchSpaceData();
+    // call above functions
+    spaceId && fetchSpaceData();
+    signInUser && fetchUserFavorite();
   }, [spaceId, signInUser]);
 
-  // handler button for user favorite a space
+  // this function handles button clicking favorite a space
   const handleFavoriteSpace = async (evt) => {
     evt.preventDefault();
-    setIsFavoriteError(false);
+    setIsFavoriteSpaceError(false);
 
     try {
+      // updata the space status in user favorites
       const response = await fetch(
         `/api/update-user-favorites/${signInUser.userId}`,
         {
@@ -86,11 +105,11 @@ const Space = ({ spaces }) => {
         setUserActionToggler(!userActionToggler);
       }
     } catch (error) {
-      setIsFavoriteError(true);
+      setIsFavoriteSpaceError(true);
     }
   };
 
-  // stop scrolling when modal open
+  // this funcrion toggles scrollbar hidden for modals
   const setHidden = () => {
     if (document.body.style.overflow !== "hidden") {
       document.body.style.overflow = "hidden";
@@ -101,28 +120,34 @@ const Space = ({ spaces }) => {
 
   return (
     <Wrapper>
-      <MessageModal
-        spaceId={spaceId}
-        openMessageModal={openMessageModal}
-        setOpenMessageModal={setOpenMessageModal}
-        setHidden={setHidden}
-      />
-
+      {/* search bar display */}
       <SearchSection>
         <Search>
           <SearchBar spaces={spaces} />
         </Search>
       </SearchSection>
 
-      {space && host && isLoading !== null ? (
+      {/* conditional: fetch space and host data done? */}
+      {space && host ? (
         <InfoSection>
           <Info>
+            {/* space infos display */}
             <SpaceInfo>
               <ButtonSection>
                 <Title>Space Id: {space.spaceId.substring(0, 8) + "..."}</Title>
 
+                {/* conditional: user is logged in? */}
                 {signInUser && (
                   <>
+                    {/* send message modal */}
+                    <MessageModal
+                      spaceId={spaceId}
+                      openMessageModal={openMessageModal}
+                      setOpenMessageModal={setOpenMessageModal}
+                      setHidden={setHidden}
+                    />
+
+                    {/* send message button to open modal */}
                     <Button
                       onClick={() => {
                         setOpenMessageModal(true);
@@ -133,10 +158,13 @@ const Space = ({ spaces }) => {
                       {` Message`}
                     </Button>
 
+                    {/* favorite space button */}
                     <Button onClick={(evt) => handleFavoriteSpace(evt)}>
+                      {/* conditional: data is loading? */}
                       {isLoading ? (
                         <FiLoaderAnimation />
-                      ) : isFavorite ? (
+                      ) : // conditional: user has favorited the space?
+                      isFavorite ? (
                         <>
                           <AiFillHeart style={{ fontSize: "13px" }} />
                           {` Favorited`}
@@ -152,22 +180,25 @@ const Space = ({ spaces }) => {
                 )}
               </ButtonSection>
 
+              {/* space house image */}
               <House>
                 <Img src={space.spaceDetails.imageSrc} alt="house-img" />
               </House>
 
+              {/* space available date, needs and address */}
               <SubSpaceInfo>
                 <div>
                   <SmallTitlt>Available Date</SmallTitlt>
                   <p>
-                    {space.spaceDetails.availableDate[0]} -{" "}
-                    {space.spaceDetails.availableDate[1]}
+                    {`${space.spaceDetails.availableDate[0]} -
+                     ${space.spaceDetails.availableDate[1]}`}
                   </p>
                 </div>
 
                 <div>
                   <SmallTitlt>Pets & Needs</SmallTitlt>
                   <Needs>
+                    {/* map each space pets and needs */}
                     {space.spaceDetails.needs.map((need) => (
                       <span key={need}>
                         <FiCheckCircle />
@@ -180,36 +211,43 @@ const Space = ({ spaces }) => {
                 <div>
                   <SmallTitlt>Shared Address</SmallTitlt>
                   <p>
-                    {space.spaceDetails.addressDetails.address},{" "}
-                    {space.spaceDetails.addressDetails.city},{" "}
-                    {space.spaceDetails.addressDetails.region},{" "}
-                    {space.spaceDetails.addressDetails.country},{" "}
-                    {space.spaceDetails.addressDetails.postal}
+                    {`${space.spaceDetails.addressDetails.address}, 
+                    ${space.spaceDetails.addressDetails.city}, 
+                    ${space.spaceDetails.addressDetails.region}, 
+                    ${space.spaceDetails.addressDetails.country}, 
+                    ${space.spaceDetails.addressDetails.postal}`}
                   </p>
                 </div>
               </SubSpaceInfo>
             </SpaceInfo>
 
+            {/* space host infos display */}
             <UserInfo>
+              {/* host avatar */}
               <Avatar>
                 <Img src={host.avatarUrl} alt="host-avatar" />
               </Avatar>
 
               <div>
+                {/* host name */}
                 <Title>
                   {host.firstName} {host.lastName}
                 </Title>
 
+                {/* conditional: user is logged in? */}
                 {signInUser ? (
                   <>
+                    {/* host email */}
                     <Email>E-mail: {host.email}</Email>
 
+                    {/* send host email button */}
                     <EmailButton href={`mailto:${host.email}`}>
                       <FiMail style={{ fontSize: "13px" }} />
                       {` Send E-mail`}
                     </EmailButton>
                   </>
                 ) : (
+                  // link to login page
                   <Email>
                     Contact the host now? You can <Login />.
                   </Email>
@@ -218,7 +256,7 @@ const Space = ({ spaces }) => {
             </UserInfo>
           </Info>
         </InfoSection>
-      ) : isError || isFavoriteError ? (
+      ) : isError || isFavoriteError || isFavoriteSpaceError ? (
         <Error />
       ) : (
         <Loading />
@@ -232,7 +270,6 @@ const Wrapper = styled.div`
 `;
 
 // search bar
-
 const SearchSection = styled.div`
   height: 80px;
   background: var(--primary-color);
@@ -246,8 +283,7 @@ const Search = styled.div`
   width: var(--max-page-width);
 `;
 
-// user info
-
+// space infos
 const InfoSection = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -258,31 +294,6 @@ const Info = styled.div`
   width: var(--max-page-width);
 `;
 
-const UserInfo = styled.div`
-  width: 100%;
-  padding: 50px 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 50px;
-`;
-
-const Avatar = styled.div`
-  width: 150px;
-  height: 150px;
-`;
-
-const Title = styled.h3`
-  font-size: 1.8rem;
-`;
-
-const Email = styled.p`
-  font-size: 1.2rem;
-  margin: 20px 0;
-`;
-
-// space info
-
 const SpaceInfo = styled.div`
   width: 100%;
   padding: 50px 20px;
@@ -290,6 +301,10 @@ const SpaceInfo = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 20px;
+`;
+
+const Title = styled.h3`
+  font-size: 1.8rem;
 `;
 
 const House = styled.div`
@@ -309,8 +324,8 @@ const SubSpaceInfo = styled.div`
 `;
 
 const SmallTitlt = styled.h4`
-  font-size: 1.3rem;
-  margin-bottom: 5px;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
 `;
 
 const Needs = styled.div`
@@ -318,7 +333,27 @@ const Needs = styled.div`
   gap: 20px;
 `;
 
-// button'
+// user infos
+const UserInfo = styled.div`
+  width: 100%;
+  padding: 50px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 50px;
+`;
+
+const Avatar = styled.div`
+  width: 150px;
+  height: 150px;
+`;
+
+const Email = styled.p`
+  font-size: 1.2rem;
+  margin: 20px 0;
+`;
+
+// buttons
 const ButtonSection = styled.div`
   width: 100%;
 `;
@@ -359,7 +394,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 155px;
+  width: 160px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
@@ -386,6 +421,7 @@ const Button = styled.button`
   }
 `;
 
+// loading icon
 const FiLoaderAnimation = styled(FiLoader)`
   font-size: 0.8rem;
   font-weight: bolder;
@@ -398,14 +434,5 @@ const FiLoaderAnimation = styled(FiLoader)`
     }
   }
 `;
-
-// const ModalContainer = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   background: rgba(0, 0, 0, 0.5);
-// `;
 
 export default Space;

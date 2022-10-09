@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-// this function is for site footer
+// this function is for site footer display
 const Footer = () => {
   return (
     <Wrapper>

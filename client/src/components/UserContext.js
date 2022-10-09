@@ -3,7 +3,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export const UserContext = createContext(null);
 
+// this function is for user context to share signin user infos
 export const UserProvider = ({ children }) => {
+  // get user infos and authentication status from Auth0
   const { user, isAuthenticated } = useAuth0();
 
   const [signInUser, setSignInUser] = useState(null);
@@ -13,10 +15,12 @@ export const UserProvider = ({ children }) => {
   const [userActionToggler, setUserActionToggler] = useState(false);
 
   useEffect(() => {
+    // this function fetchs signin user or new user data
     const fetchUserData = async () => {
       setIsLoading(true);
 
       try {
+        // fetch signin user or new user data
         const response = await fetch("/api/add-user", {
           method: "POST",
           headers: {
@@ -42,6 +46,7 @@ export const UserProvider = ({ children }) => {
       }
     };
 
+    // call above function
     user && isAuthenticated && fetchUserData();
   }, [user, userActionToggler]);
 

@@ -9,7 +9,7 @@ import Login from "./Login";
 import Logout from "./Logout";
 import { UserContext } from "../UserContext";
 
-// this function is for site header
+// this function is for site header display
 const Header = () => {
   const navigate = useNavigate();
   const { loginWithRedirect } = useAuth0();
@@ -18,9 +18,10 @@ const Header = () => {
   return (
     <Wrapper>
       <ContentSection>
-        {/* link to homepage */}
+        {/* site logo display */}
         <LogoSection
           onClick={() => {
+            // link to homepage
             navigate("/");
           }}
         >
@@ -28,6 +29,7 @@ const Header = () => {
           <Title>Share Space</Title>
         </LogoSection>
 
+        {/* sign in/out and account links display */}
         <SignInSection>
           {/* conditional: data is loading? */}
           {isLoading ? (

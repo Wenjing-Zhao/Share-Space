@@ -94,7 +94,7 @@ const addUser = async (req, res) => {
   }
 };
 
-// this function returns user favorites status of a specific space
+// this function returns a specific space status in user favorites
 const getUserFavorites = async (req, res) => {
   const { userId } = req.params;
   const { spaceId } = req.query;
@@ -129,7 +129,7 @@ const getUserFavorites = async (req, res) => {
       isFavorite = false;
     }
 
-    // response status and user favorites status of the space
+    // response status and the space status in user favorites
     res.status(200).json({ stastus: 200, isFavorite });
   } catch (error) {
     // response error status and error message
@@ -141,7 +141,7 @@ const getUserFavorites = async (req, res) => {
   }
 };
 
-// this function updates user favorites status of a specific space
+// this function updates a specific space status in user favorites
 const updateUserFavorites = async (req, res) => {
   const { userId } = req.params;
   const { spaceId } = req.body;
@@ -183,7 +183,7 @@ const updateUserFavorites = async (req, res) => {
     res.status(200).json({
       stastus: 200,
       data: req.body,
-      message: "Favorites Updated",
+      message: "User Favorites Updated",
     });
   } catch (error) {
     // response error status and error message
@@ -195,10 +195,10 @@ const updateUserFavorites = async (req, res) => {
   }
 };
 
-// this function returns user messages of a specific space
+// this function returns user messages related a specific space
 const getUserMessages = async () => {};
 
-// this function updates user messages of a specific space
+// this function updates user messages related a specific space
 const updateUserMessages = async () => {};
 
 module.exports = {

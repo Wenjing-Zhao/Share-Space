@@ -3,41 +3,27 @@ import styled from "styled-components";
 
 import Error from "../Error";
 import Loading from "../Loading";
-import SpaceDisplay from "./SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
+import SpaceDisplay from "./SpaceDisplay";
 
+// this function is for spaces page display
 const Spaces = ({ spaces, isError }) => {
-  // const [spaces, setSpaces] = useState(null);
-  // const [isError, setIsError] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchSpacesData = async () => {
-  //     try {
-  //       const response = await fetch("/api/get-spaces");
-  //       const json = await response.json();
-
-  //       setSpaces(json.data);
-  //     } catch (error) {
-  //       setIsError(true);
-  //     }
-  //   };
-
-  //   fetchSpacesData();
-  // }, []);
-
   return (
     <Wrapper>
+      {/* search bar display */}
       <SearchSection>
         <Search>
           <SearchBar spaces={spaces} />
         </Search>
       </SearchSection>
 
+      {/* conditional: ftech spaces data done? */}
       {spaces ? (
         <Section>
           <Display>
             <Title>- All Spaces -</Title>
 
+            {/* map each space infos */}
             {spaces.map((space) => (
               <SpaceDisplay
                 key={space.spaceId}

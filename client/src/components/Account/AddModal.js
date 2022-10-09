@@ -4,11 +4,13 @@ import { MdOutlineClear } from "react-icons/md";
 import { FiLoader } from "react-icons/fi";
 import moment from "moment";
 
+// import datepicker, image upload and checkbox UI components
 import { DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import { Checkbox } from "antd";
 
+// this function is for add space modal display
 const AddModal = ({
   openFormModal,
   setOpenFormModal,
@@ -27,6 +29,7 @@ const AddModal = ({
   const [needs, setNeeds] = useState([]);
   const [addressData, setAddressData] = useState({});
 
+  // this function handles getting address infos from input values
   const handleChange = (key, value) => {
     setAddressData({
       ...addressData,
@@ -34,18 +37,19 @@ const AddModal = ({
     });
   };
 
-  // DatePicker can not select days before today and today
+  // disable DatePicker select days before today and today
   const disabledDate = (current) => {
     return current && current < moment().endOf("day");
   };
 
-  // this is for image upload
+  // this is image upload component props
   const props = {
     action: "https://api.cloudinary.com/v1_1/sharespace/image/upload",
     data: {
       upload_preset: "irdmdwmq",
     },
 
+    // upload status
     onChange(info) {
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -56,9 +60,10 @@ const AddModal = ({
     },
   };
 
-  // this is for the "pets and needs" check
+  // this is "pets and needs" checkbox options
   const plainOptions = ["Dogs", "Cats", "Plants"];
 
+  // this is for getting checked values array from checkbox
   const onChange = (checkedValues) => {
     setNeeds(checkedValues);
   };
@@ -66,6 +71,7 @@ const AddModal = ({
   return (
     <Wrapper openFormModal={openFormModal}>
       <Section>
+        {/* close madal button */}
         <CloseButton
           onClick={() => {
             setOpenFormModal(false);
@@ -76,22 +82,23 @@ const AddModal = ({
           <MdOutlineClear style={{ fontSize: "15px" }} />
         </CloseButton>
 
+        {/* add space infos form */}
         <form
           onSubmit={(evt) => {
             handleSubmit(evt, imageSrc, datePicker, needs, addressData);
           }}
         >
+          {/* space house image upload */}
           <InputWrapper>
             <Label>Space image</Label>
-
             <Upload {...props}>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </InputWrapper>
 
+          {/* space available date pick */}
           <InputWrapper>
             <Label>Available date</Label>
-
             <RangePicker
               format={dateFormat}
               disabledDate={disabledDate}
@@ -103,11 +110,13 @@ const AddModal = ({
             />
           </InputWrapper>
 
+          {/* space pets and needs get */}
           <InputWrapper>
             <Label>Pets & Needs</Label>
             <Checkbox.Group options={plainOptions} onChange={onChange} />
           </InputWrapper>
 
+          {/* space address get */}
           <InputWrapper>
             <Label>Address</Label>
             <Input
@@ -153,14 +162,18 @@ const AddModal = ({
             />
           </InputWrapper>
 
+          {/* submit form button */}
           <SubmitButton disabled={isLoading} type="submit">
+            {/* conditional: data is loading? */}
             {isLoading ? <FiLoaderAnimation /> : "Add New Space"}
           </SubmitButton>
 
+          {/* add the space successfully and display a message */}
           {isSuccess && (
             <AlertSuc>Success! You can close or add one more.</AlertSuc>
           )}
 
+          {/* failed to add the space and display a message */}
           {isError && (
             <AlertErr>Error! You are missing a piece of information.</AlertErr>
           )}

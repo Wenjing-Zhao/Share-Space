@@ -11,12 +11,13 @@ import {
 
 import Error from "../Error";
 import Loading from "../Loading";
-import SpaceDisplay from "../Spaces/SpaceDisplay";
 import SearchBar from "../Homepage/SearchBar";
+import SpaceDisplay from "../Spaces/SpaceDisplay";
 import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
 import { UserContext } from "../UserContext";
 
+// this function is for account page display
 const Account = ({ spaces }) => {
   const { signInUser, isError, userActionToggler, setUserActionToggler } =
     useContext(UserContext);
@@ -28,19 +29,19 @@ const Account = ({ spaces }) => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState({});
 
-  const [isAddSpaceError, setIsAddSpaceError] = useState(false);
-  const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
-  const [isDeleteSpaceError, setIsDeleteSpaceError] = useState(false);
-  const [isAddLoading, setIsAddLoading] = useState(false);
-  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isAddLoading, setIsAddLoading] = useState(false);
+  const [isAddSpaceError, setIsAddSpaceError] = useState(false);
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+  const [isUpdateSpaceError, setIsUpdateSpaceError] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isDeleteSpaceError, setIsDeleteSpaceError] = useState(false);
 
   useEffect(() => {
-    // ftech user data about spaces and favorites
+    // this function fetchs user spaces and favorites data
     const fetchUserData = async () => {
       try {
-        // fetch user all the spaces
+        // fetch user spaces data
         const proAllResSpaces = await Promise.all(
           signInUser.spaces.map(async (space) => {
             const responseSpace = await fetch(`/api/get-space/${space}`);
@@ -52,7 +53,7 @@ const Account = ({ spaces }) => {
 
         setUserSpaces(proAllResSpaces);
 
-        // fetch user all the favorites
+        // fetch user favorites data
         const proAllResFavorites = await Promise.all(
           signInUser.favorites.map(async (favorite) => {
             const responseFavorite = await fetch(`/api/get-space/${favorite}`);
@@ -68,10 +69,11 @@ const Account = ({ spaces }) => {
       }
     };
 
+    // call above function
     signInUser && fetchUserData();
   }, [signInUser]);
 
-  // handle submit button for user add a space
+  // this function handles button adding a space submit
   const handleAddSpaceSubmit = async (
     evt,
     imageSrc,
@@ -114,7 +116,7 @@ const Account = ({ spaces }) => {
     }
   };
 
-  // handle submit button for user updates a space
+  // this function handles button updating a space submit
   const handleUpdateSpaceSubmit = async (
     evt,
     imageSrc,
@@ -152,7 +154,7 @@ const Account = ({ spaces }) => {
     }
   };
 
-  // handle button for user deletes a space
+  // this function handles button clicking delete a space
   const handleDeleteSpace = async (evt, spaceId) => {
     evt.preventDefault();
     setIsDeleteSpaceError(false);
@@ -173,7 +175,7 @@ const Account = ({ spaces }) => {
     }
   };
 
-  // stop scrolling when modal open
+  // this funcrion toggles scrollbar hidden for modals
   const setHidden = () => {
     if (document.body.style.overflow !== "hidden") {
       document.body.style.overflow = "hidden";
@@ -184,40 +186,41 @@ const Account = ({ spaces }) => {
 
   return (
     <Wrapper>
-      {/* search bar  */}
+      {/* search bar display */}
       <SearchSection>
         <Search>
           <SearchBar spaces={spaces} />
         </Search>
       </SearchSection>
 
-      {/* sign in user info display */}
+      {/* conditional: fetch user profile, spaces and favorites data done? */}
       {signInUser && userSpaces && userFavorites ? (
         <>
-          {/* user profile */}
           <InfoSection>
             <Info>
+              {/* user profile display */}
               <UserInfo>
+                {/* user avatar */}
                 <Avatar>
                   <Img src={signInUser.avatarUrl} alt="user-avatar" />
                 </Avatar>
 
+                {/* user name and id */}
                 <div>
                   <Name>
                     {signInUser.firstName} {signInUser.lastName}
                   </Name>
-
                   <UserId>
                     User Id: {signInUser.userId.substring(0, 13) + "..."}
                   </UserId>
                 </div>
               </UserInfo>
 
-              {/* user spaces */}
+              {/* user spaces display */}
               <SpaceInfo>
                 <Title>My Spaces</Title>
 
-                {/* popup for add a space */}
+                {/* add space modal */}
                 <AddModal
                   openFormModal={openAddModal}
                   setOpenFormModal={setOpenAddModal}
@@ -229,6 +232,7 @@ const Account = ({ spaces }) => {
                   setIsSuccess={setIsSuccess}
                 />
 
+                {/* add space button to open modal */}
                 <Button
                   onClick={() => {
                     setOpenAddModal(true);
@@ -239,12 +243,14 @@ const Account = ({ spaces }) => {
                   {` Add`}
                 </Button>
 
+                {/* conditional: user has any space? */}
                 {userSpaces.length === 0 ? (
                   <Alert>
                     <FiAlertCircle /> You don't have any space yet.
                   </Alert>
                 ) : (
                   <>
+                    {/* map each user space */}
                     {userSpaces.map((space) => (
                       <MapSpaceInfo key={space.spaceId}>
                         <ButtonSection>
@@ -252,7 +258,7 @@ const Account = ({ spaces }) => {
                             Space Id: {space.spaceId.substring(0, 8) + "..."}
                           </SpaceId>
 
-                          {/* popup for update a space*/}
+                          {/* update space modal */}
                           <UpdateModal
                             openFormModal={openUpdateModal[space.spaceId]}
                             setOpenFormModal={setOpenUpdateModal}
@@ -265,6 +271,7 @@ const Account = ({ spaces }) => {
                             spaceId={space.spaceId}
                           />
 
+                          {/* update space button to open madal */}
                           <Button
                             onClick={() => {
                               setOpenUpdateModal({
@@ -279,12 +286,14 @@ const Account = ({ spaces }) => {
                             {` Edit`}
                           </Button>
 
+                          {/* delete space button */}
                           <Button
                             disabled={isDeleteLoading}
                             onClick={(evt) =>
                               handleDeleteSpace(evt, space.spaceId)
                             }
                           >
+                            {/* conditional: data is loading? */}
                             {isDeleteLoading ? (
                               <FiLoaderAnimation />
                             ) : (
@@ -296,6 +305,7 @@ const Account = ({ spaces }) => {
                           </Button>
                         </ButtonSection>
 
+                        {/* space house image */}
                         <House>
                           <Img
                             src={space.spaceDetails.imageSrc}
@@ -303,20 +313,20 @@ const Account = ({ spaces }) => {
                           />
                         </House>
 
+                        {/* space available date, needs and address */}
                         <SubSpaceInfo>
                           <div>
                             <SmallTitlt>Available Date</SmallTitlt>
-
                             <p>
-                              {space.spaceDetails.availableDate[0]} -{" "}
-                              {space.spaceDetails.availableDate[1]}
+                              {`${space.spaceDetails.availableDate[0]} - 
+                              ${space.spaceDetails.availableDate[1]}`}
                             </p>
                           </div>
 
                           <div>
                             <SmallTitlt>Pets & Needs</SmallTitlt>
-
                             <Needs>
+                              {/* map each space pets and needs */}
                               {space.spaceDetails.needs.map((need) => (
                                 <span key={need}>
                                   <FiCheckCircle />
@@ -329,11 +339,11 @@ const Account = ({ spaces }) => {
                           <div>
                             <SmallTitlt>Shared Address</SmallTitlt>
                             <p>
-                              {space.spaceDetails.addressDetails.address},{" "}
-                              {space.spaceDetails.addressDetails.city},{" "}
-                              {space.spaceDetails.addressDetails.region},{" "}
-                              {space.spaceDetails.addressDetails.country},{" "}
-                              {space.spaceDetails.addressDetails.postal}
+                              {`${space.spaceDetails.addressDetails.address}, 
+                              ${space.spaceDetails.addressDetails.city}, 
+                              ${space.spaceDetails.addressDetails.region}, 
+                              ${space.spaceDetails.addressDetails.country}, 
+                              ${space.spaceDetails.addressDetails.postal}`}
                             </p>
                           </div>
                         </SubSpaceInfo>
@@ -345,16 +355,19 @@ const Account = ({ spaces }) => {
             </Info>
           </InfoSection>
 
-          {/* user favorites */}
+          {/* user favorites display */}
           <Section>
             <Display>
               <MyFavorites>My Favorites</MyFavorites>
+
+              {/* conditional: user has any favorite? */}
               {userFavorites.length === 0 ? (
                 <Alert>
                   <FiAlertCircle /> You don't have any favorite yet.
                 </Alert>
               ) : (
                 <>
+                  {/* map each user favorite */}
                   {userFavorites.map((favorite) => (
                     <SpaceDisplay
                       key={favorite.spaceId}
@@ -387,13 +400,7 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Alert = styled.p`
-  width: 100%;
-  font-size: 1.2rem;
-`;
-
 // search bar
-
 const SearchSection = styled.div`
   height: 80px;
   background: var(--primary-color);
@@ -408,7 +415,6 @@ const Search = styled.div`
 `;
 
 // user info
-
 const InfoSection = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -453,6 +459,10 @@ const SpaceId = styled.p`
 `;
 
 // space info
+const Alert = styled.p`
+  width: 100%;
+  font-size: 1.2rem;
+`;
 
 const SpaceInfo = styled.div`
   width: 100%;
@@ -473,8 +483,7 @@ const MapSpaceInfo = styled.div`
 
 const Title = styled.h3`
   width: 100%;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.8rem;
 `;
 
 const House = styled.div`
@@ -489,8 +498,8 @@ const SubSpaceInfo = styled.div`
 `;
 
 const SmallTitlt = styled.h4`
-  font-size: 1.3rem;
-  margin-bottom: 5px;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
 `;
 
 const Needs = styled.div`
@@ -499,7 +508,6 @@ const Needs = styled.div`
 `;
 
 // favorites
-
 const Section = styled.div`
   display: flex;
   justify-content: center;
@@ -516,13 +524,11 @@ const Display = styled.div`
 
 const MyFavorites = styled.h3`
   width: 100%;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.8rem;
   margin-bottom: -34px;
 `;
 
-// button
-
+// buttons
 const ButtonSection = styled.div`
   width: 100%;
 `;
@@ -531,7 +537,7 @@ const Button = styled.button`
   background-color: var(--primary-color);
   border: 2px solid var(--primary-color);
   border-radius: 5px;
-  width: 155px;
+  width: 160px;
   font-size: 1rem;
   box-sizing: border-box;
   color: white;
@@ -562,6 +568,7 @@ const Button = styled.button`
   }
 `;
 
+// loading icon
 const FiLoaderAnimation = styled(FiLoader)`
   font-size: 0.8rem;
   font-weight: bolder;
