@@ -84,7 +84,7 @@ const UpdateModal = ({
             handleSubmit(evt, imageSrc, datePicker, needs, spaceId);
           }}
         >
-          <SpaceId>Space Id: {spaceId.substring(0, 8) + "..."}</SpaceId>
+          <SpaceId>Space Id: {spaceId}</SpaceId>
 
           {/* space house image upload */}
           <InputWrapper>

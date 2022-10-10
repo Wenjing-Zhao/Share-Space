@@ -252,7 +252,9 @@ const Account = ({ spaces }) => {
                     {userSpaces.map((space) => (
                       <MapSpaceInfo key={space.spaceId}>
                         <ButtonSection>
-                          <SpaceId>Space Id: {space.spaceId}</SpaceId>
+                          <SpaceId>
+                            Space Id: {space.spaceId.substring(0, 8) + "..."}
+                          </SpaceId>
 
                           {/* update space modal */}
                           <UpdateModal
@@ -451,7 +453,7 @@ const UserId = styled.p`
 
 const SpaceId = styled.p`
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin: 10px 0;
 `;
 
 // space info
@@ -485,11 +487,11 @@ const Title = styled.h3`
 const House = styled.div`
   width: 350px;
   height: 350px;
+  margin-right: 30px;
 `;
 
 const SubSpaceInfo = styled.div`
   display: grid;
-  margin-left: 30px;
   gap: 60px;
 `;
 

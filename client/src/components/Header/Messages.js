@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FiLoader, FiAlertCircle } from "react-icons/fi";
 import moment from "moment";
@@ -21,9 +22,10 @@ const Messages = ({ spaces }) => {
   const handleSendMessage = async (
     evt,
     spaceId,
-    talkerId,
+    hostId,
     hostFirstName,
-    hostLastName
+    hostLastName,
+    talkerId
   ) => {
     evt.preventDefault();
     setIsLoading(true);
@@ -40,9 +42,10 @@ const Messages = ({ spaces }) => {
           },
           body: JSON.stringify({
             spaceId: spaceId,
-            talkerId: talkerId,
+            hostId: hostId,
             hostFirstName: hostFirstName,
             hostLastName: hostLastName,
+            talkerId: talkerId,
             message: textValue,
             timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
           }),
@@ -52,7 +55,7 @@ const Messages = ({ spaces }) => {
       if (response.ok) {
         setUserActionToggler(!userActionToggler);
         setIsLoading(false);
-        setTextValue("");
+        evt.target.reset();
       }
     } catch (error) {
       setIsSedMessError(true);
@@ -84,17 +87,28 @@ const Messages = ({ spaces }) => {
                       handleSendMessage(
                         evt,
                         message.spaceId,
-                        message.talkerId,
+                        message.hostId,
                         message.hostFirstName,
-                        message.hostLastName
+                        message.hostLastName,
+                        message.talkerId
                       )
                     }
                   >
                     <MessageInfo key={message.spaceId}>
-                      <SubTitle>
-                        Host: {message.hostFirstName} {message.hostLastName}
-                      </SubTitle>
-                      <SubTitle>Space Id: {message.spaceId}</SubTitle>
+                      {signInUser.userId === message.hostId ? (
+                        <SubTitle>
+                          Host: {message.hostFirstName} {message.hostLastName}{" "}
+                          (Me)
+                        </SubTitle>
+                      ) : (
+                        <SubTitle>
+                          Host: {message.hostFirstName} {message.hostLastName}
+                        </SubTitle>
+                      )}
+
+                      <SpaceLink to={`/spaces/${message.spaceId}`}>
+                        Space Id: {message.spaceId}
+                      </SpaceLink>
                       <Hr />
 
                       {message.messagesLog.map((log, index) => (
@@ -111,7 +125,6 @@ const Messages = ({ spaces }) => {
                       <TextArea
                         rows="5"
                         stype="text"
-                        value={textValue}
                         onChange={(evt) => setTextValue(evt.target.value)}
                       />
 
@@ -189,6 +202,17 @@ const SubTitle = styled.p`
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 10px;
+`;
+
+const SpaceLink = styled(Link)`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--primary-color);
+  }
 `;
 
 const Hr = styled.hr`

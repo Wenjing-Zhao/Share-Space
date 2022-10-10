@@ -32,8 +32,6 @@ const Space = ({ spaces }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFavoriteSpaceError, setIsFavoriteSpaceError] = useState(false);
 
-  // const [isMessageError, setIsMessageError] = useState(false);
-
   useEffect(() => {
     // this function fetchs space data and host data
     const fetchSpaceData = async () => {
@@ -136,8 +134,8 @@ const Space = ({ spaces }) => {
               <ButtonSection>
                 <Title>Space Id: {space.spaceId.substring(0, 8) + "..."}</Title>
 
-                {/* conditional: user is logged in? */}
-                {signInUser && (
+                {/* conditional: user is logged in and it is not user's space? */}
+                {signInUser && signInUser.userId !== host.userId && (
                   <>
                     {/* send message modal */}
                     <MessageModal
@@ -244,10 +242,12 @@ const Space = ({ spaces }) => {
                     <Email>E-mail: {host.email}</Email>
 
                     {/* send host email button */}
-                    <EmailButton href={`mailto:${host.email}`}>
-                      <FiMail style={{ fontSize: "13px" }} />
-                      {` Send E-mail`}
-                    </EmailButton>
+                    {signInUser.userId !== host.userId && (
+                      <EmailButton href={`mailto:${host.email}`}>
+                        <FiMail style={{ fontSize: "13px" }} />
+                        {` Send E-mail`}
+                      </EmailButton>
+                    )}
                   </>
                 ) : (
                   // link to login page

@@ -42,9 +42,10 @@ const MessageModal = ({
           },
           body: JSON.stringify({
             spaceId,
-            talkerId: hostId,
+            hostId,
             hostFirstName,
             hostLastName,
+            talkerId: hostId,
             message: textValue,
             timestamp: moment().format("MMMM Do YYYY, h:mm:ss a"),
           }),
@@ -78,13 +79,16 @@ const MessageModal = ({
 
         <form onSubmit={(evt) => handleSendMessage(evt)}>
           <TextAreaWrapper>
-            <SpaceId>Space Id: {spaceId.substring(0, 8) + "..."}</SpaceId>
-            <Label>Send message to space host:</Label>
+            <Label>
+              Host: {hostFirstName} {hostLastName}
+            </Label>
+            <Label>Space Id: {spaceId}</Label>
 
             <TextArea
               rows="8"
               stype="text"
               value={textValue}
+              placeholder="Send a message to the host ..."
               onChange={(evt) => setTextValue(evt.target.value)}
             />
           </TextAreaWrapper>
@@ -128,19 +132,12 @@ const Section = styled.div`
   width: 85%;
 `;
 
-const SpaceId = styled.p`
-  font-size: 1.2rem;
-  display: block;
-  width: 100%;
-  margin-bottom: 20px;
-  font-weight: bold;
-`;
-
 const Label = styled.label`
-  font-size: 1.2rem;
   display: block;
   width: 100%;
-  margin-bottom: 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
 `;
 
 const TextAreaWrapper = styled.div`

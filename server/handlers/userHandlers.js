@@ -205,8 +205,15 @@ const updateUserFavorites = async (req, res) => {
 // this function updates user messages related a specific space
 const updateUserMessages = async (req, res) => {
   const { userId } = req.params;
-  const { spaceId, talkerId, hostFirstName, hostLastName, message, timestamp } =
-    req.body;
+  const {
+    spaceId,
+    hostId,
+    hostFirstName,
+    hostLastName,
+    talkerId,
+    message,
+    timestamp,
+  } = req.body;
   const client = new MongoClient(MONGO_URI, options);
 
   console.log(req.body);
@@ -214,9 +221,10 @@ const updateUserMessages = async (req, res) => {
   // validate new message infos miss
   if (
     !spaceId ||
-    !talkerId ||
+    !hostId ||
     !hostFirstName ||
     !hostLastName ||
+    !talkerId ||
     !message ||
     !timestamp
   ) {
@@ -264,9 +272,10 @@ const updateUserMessages = async (req, res) => {
       // create a new dialogue obj and a new message related the space
       const createNewMessage = {
         spaceId,
-        talkerId,
+        hostId,
         hostFirstName,
         hostLastName,
+        talkerId,
         messagesLog: [
           {
             userId,
@@ -318,9 +327,10 @@ const updateUserMessages = async (req, res) => {
       // create a new dialogue obj and a new message for talker related the space
       const createTalkerNewMessage = {
         spaceId,
-        talkerId: userId,
+        hostId,
         hostFirstName,
         hostLastName,
+        talkerId: userId,
         messagesLog: [
           {
             userId,
