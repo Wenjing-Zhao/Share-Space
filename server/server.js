@@ -21,7 +21,7 @@ const {
   addUser,
   getUserFavorites,
   updateUserFavorites,
-  getUserMessages,
+  // getUserMessages,
   updateUserMessages,
 } = require("./handlers/userHandlers");
 
@@ -48,7 +48,7 @@ app.get("/api/get-user-favorites/:userId", getUserFavorites);
 app.patch("/api/update-user-favorites/:userId", updateUserFavorites);
 
 //endpoints about user messages
-app.get("/api/get-user-messages/:userId", getUserMessages);
+// app.get("/api/get-user-messages/:userId", getUserMessages);
 app.patch("/api/update-user-messages/:userId", updateUserMessages);
 
 // ------------------

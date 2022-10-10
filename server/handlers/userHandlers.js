@@ -77,6 +77,13 @@ const addUser = async (req, res) => {
         .json({ status: 200, data: userData, message: "User Already Exists" });
     }
 
+    // validate new user infos miss
+    if (!firstName || !lastName || !avatarUrl || !email) {
+      return res
+        .status(400)
+        .json({ status: 400, data: req.body, message: "Information Missing" });
+    }
+
     // if the user doesn't exist, insert new user data
     await db.collection("users").insertOne(newUser);
 
@@ -195,17 +202,200 @@ const updateUserFavorites = async (req, res) => {
   }
 };
 
-// this function returns user messages related a specific space
-const getUserMessages = async () => {};
-
 // this function updates user messages related a specific space
-const updateUserMessages = async () => {};
+const updateUserMessages = async (req, res) => {
+  const { userId } = req.params;
+  const { spaceId, talkerId, hostFirstName, hostLastName, message, timestamp } =
+    req.body;
+  const client = new MongoClient(MONGO_URI, options);
+
+  console.log(req.body);
+
+  // validate new message infos miss
+  if (
+    !spaceId ||
+    !talkerId ||
+    !hostFirstName ||
+    !hostLastName ||
+    !message ||
+    !timestamp
+  ) {
+    return res
+      .status(400)
+      .json({ status: 400, data: req.body, message: "Information Missing" });
+  }
+
+  try {
+    // connect to the mongodb
+    await client.connect();
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    // start session for transaction
+    const session = client.startSession();
+
+    // this function is for transaction
+    const transactionResults = await session.withTransaction(async () => {
+      // ------------------------------------------------------------------
+
+      // find user data by userId
+      const userData = await db
+        .collection("users")
+        .findOne({ userId }, { session });
+
+      // validate the user exists
+      if (!userData) {
+        // abort transaction and throw error
+        await session.abortTransaction();
+        const error = new Error(`User Not Found`);
+        error.statusCode = 404;
+        throw error;
+      }
+
+      // insert a new message into existed ialogue obj related the space
+      const insertNewMessage = {
+        userId,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        message,
+        timestamp,
+      };
+
+      // create a new dialogue obj and a new message related the space
+      const createNewMessage = {
+        spaceId,
+        talkerId,
+        hostFirstName,
+        hostLastName,
+        messagesLog: [
+          {
+            userId,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            message,
+            timestamp,
+          },
+        ],
+      };
+
+      // validate the space and talker exists in user messages
+      const result = userData.messages.find(
+        (ele) => ele.spaceId === spaceId && ele.talkerId === talkerId
+      );
+
+      if (!result) {
+        // if not exists, create
+        userData.messages.push(createNewMessage);
+      } else {
+        // if exists, insert
+        const index = userData.messages.indexOf(result);
+        userData.messages[index].messagesLog.push(insertNewMessage);
+      }
+
+      // modify the users collection
+      const newMessagesValues = { $set: { messages: userData.messages } };
+
+      await db
+        .collection("users")
+        .updateOne({ userId }, newMessagesValues, { session });
+
+      // ------------------------------------------------------------------
+
+      // find talker data by userId
+      const talkerData = await db
+        .collection("users")
+        .findOne({ userId: talkerId }, { session });
+
+      // validate the talker exists
+      if (!talkerData) {
+        // abort transaction and throw error
+        await session.abortTransaction();
+        const error = new Error(`Talker Not Found`);
+        error.statusCode = 404;
+        throw error;
+      }
+
+      // create a new dialogue obj and a new message for talker related the space
+      const createTalkerNewMessage = {
+        spaceId,
+        talkerId: userId,
+        hostFirstName,
+        hostLastName,
+        messagesLog: [
+          {
+            userId,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            message,
+            timestamp,
+          },
+        ],
+      };
+
+      // validate the space and user exists in talker messages
+      const talkerResult = talkerData.messages.find(
+        (ele) => ele.spaceId === spaceId && ele.talkerId === userId
+      );
+
+      if (!talkerResult) {
+        // if not exists, create
+        talkerData.messages.push(createTalkerNewMessage);
+      } else {
+        // if exists, insert
+        const index = talkerData.messages.indexOf(talkerResult);
+        talkerData.messages[index].messagesLog.push(insertNewMessage);
+      }
+
+      // modify the users collection
+      const newTalkerMessagesValues = {
+        $set: { messages: talkerData.messages },
+      };
+
+      await db
+        .collection("users")
+        .updateOne({ userId: talkerId }, newTalkerMessagesValues, { session });
+
+      // ------------------------------------------------------------------
+    });
+
+    // commit transaction
+    await session.commitTransaction();
+
+    // end session for transaction
+    await session.endSession();
+
+    if (transactionResults) {
+      // transaction is successful and response status and new space data
+      res.status(201).json({
+        status: 201,
+        data: req.body,
+        message: "User Messages Updated",
+      });
+    } else {
+      // transaction fails and abort and response error
+      res.status(500).json({ status: 500, message: "Transaction Aborted" });
+    }
+  } catch (error) {
+    // response throwing error status and error message
+    if (!error.statusCode) {
+      res.status(500).json({ status: 500, message: error.message });
+    }
+
+    // response error status and error message
+    res
+      .status(error.statusCode)
+      .json({ status: error.statusCode, message: error.message });
+  } finally {
+    // close the mongodb
+    client.close();
+    console.log("disconnected!");
+  }
+};
 
 module.exports = {
   getUser,
   addUser,
   getUserFavorites,
   updateUserFavorites,
-  getUserMessages,
   updateUserMessages,
 };

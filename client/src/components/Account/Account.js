@@ -210,9 +210,7 @@ const Account = ({ spaces }) => {
                   <Name>
                     {signInUser.firstName} {signInUser.lastName}
                   </Name>
-                  <UserId>
-                    User Id: {signInUser.userId.substring(0, 13) + "..."}
-                  </UserId>
+                  <UserId>User Id: {signInUser.userId}</UserId>
                 </div>
               </UserInfo>
 
@@ -254,9 +252,7 @@ const Account = ({ spaces }) => {
                     {userSpaces.map((space) => (
                       <MapSpaceInfo key={space.spaceId}>
                         <ButtonSection>
-                          <SpaceId>
-                            Space Id: {space.spaceId.substring(0, 8) + "..."}
-                          </SpaceId>
+                          <SpaceId>Space Id: {space.spaceId}</SpaceId>
 
                           {/* update space modal */}
                           <UpdateModal

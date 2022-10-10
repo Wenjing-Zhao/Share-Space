@@ -21,7 +21,7 @@ const Spaces = ({ spaces, isError }) => {
       {spaces ? (
         <SpacesSection>
           <Display>
-            <Title>- All Spaces -</Title>
+            <Title>Find All Spaces</Title>
 
             {/* map each space infos */}
             {spaces.map((space) => (
@@ -82,8 +82,6 @@ const Display = styled.div`
 const Title = styled.h1`
   width: 100%;
   font-size: 1.8rem;
-  text-align: center;
-  font-weight: 700;
 `;
 
 export default Spaces;

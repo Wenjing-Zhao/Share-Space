@@ -142,6 +142,9 @@ const Space = ({ spaces }) => {
                     {/* send message modal */}
                     <MessageModal
                       spaceId={spaceId}
+                      hostId={host.userId}
+                      hostFirstName={host.firstName}
+                      hostLastName={host.lastName}
                       openMessageModal={openMessageModal}
                       setOpenMessageModal={setOpenMessageModal}
                       setHidden={setHidden}

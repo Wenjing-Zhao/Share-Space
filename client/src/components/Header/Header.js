@@ -41,7 +41,9 @@ const Header = () => {
               </MessageSection>
 
               {/* link to user account page */}
-              <HeaderLink to={`/account`}>My Account</HeaderLink>
+              <HeaderLink to={`/account`}>
+                Hi, {signInUser.firstName}!
+              </HeaderLink>
 
               {/* logout button */}
               <Logout />
