@@ -385,6 +385,11 @@ const EmailButton = styled.a`
     transform: translateY(0);
     color: white;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
 `;
 
 const Button = styled.button`

@@ -311,6 +311,11 @@ const Button = styled.button`
     box-shadow: none;
     transform: translateY(0);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 50%;
+  }
 `;
 
 const FiLoaderAnimation = styled(FiLoader)`
