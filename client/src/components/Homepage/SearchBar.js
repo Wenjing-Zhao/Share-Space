@@ -84,7 +84,7 @@ const SearchBar = ({ spaces }) => {
         })}
       </ListSection>
 
-      {/* clear input values button */}
+      {/* clear button */}
       <ClearButton
         type="button"
         onClick={() => {
@@ -95,7 +95,7 @@ const SearchBar = ({ spaces }) => {
         <MdOutlineClear style={{ fontSize: "15px" }} />
       </ClearButton>
 
-      {/* link to spaces page */}
+      {/* link to all spaces page button */}
       <FindButton onClick={() => navigate("/spaces")} type="button">
         <MdRoom /> Find All Spaces
       </FindButton>

@@ -65,6 +65,7 @@ const MessageModal = ({
   return (
     <Wrapper openMessageModal={openMessageModal}>
       <Section>
+        {/* close modal button */}
         <CloseButton
           type="button"
           onClick={() => {
@@ -75,6 +76,7 @@ const MessageModal = ({
           <MdOutlineClear style={{ fontSize: "15px" }} />
         </CloseButton>
 
+        {/* send message form */}
         <form onSubmit={(evt) => handleSendMessage(evt)}>
           <TextAreaWrapper>
             <Label>
@@ -82,6 +84,7 @@ const MessageModal = ({
             </Label>
             <Label>Space Id: {spaceId}</Label>
 
+            {/* input text area display */}
             <TextArea
               rows="8"
               stype="text"
@@ -91,7 +94,8 @@ const MessageModal = ({
             />
           </TextAreaWrapper>
 
-          <SubmitButton type="submit">
+          {/* submit button */}
+          <SubmitButton disabled={isLoading} type="submit">
             {isLoading ? <FiLoaderAnimation /> : "Send Message"}
           </SubmitButton>
 

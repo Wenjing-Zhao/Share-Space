@@ -31,6 +31,7 @@ const Space = ({
           {city}, {region}, {country}
         </Location>
 
+        {/* space house image */}
         <Img src={imageSrc} alt="space-img" />
       </Image>
 

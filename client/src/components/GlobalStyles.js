@@ -9,7 +9,6 @@ export default createGlobalStyle`
 
         //width
         --max-page-width: 1200px;
-        --breakpoint-phone: 600px;
       
         //font
         --primary-family: 'Montserrat', sans-serif;

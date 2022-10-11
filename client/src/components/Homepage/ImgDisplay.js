@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-// this function is for each intro display
+// this function is for each intro image display
 const ImgDisplay = ({ imageSrc }) => {
   return (
     <Wrapper>
-      {/* intro image */}
       <Image>
         <Img src={imageSrc} alt="intro-img" />
       </Image>

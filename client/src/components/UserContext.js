@@ -13,10 +13,10 @@ export const UserProvider = ({ children }) => {
   const [userActionToggler, setUserActionToggler] = useState(false);
 
   useEffect(() => {
-    // this function fetchs signin user or new user data
+    // this function fetchs signin user data or new user data
     const fetchUserData = async () => {
       try {
-        // fetch signin user or new user data
+        // fetch signin user data or new user data
         const response = await fetch("/api/add-user", {
           method: "POST",
           headers: {
@@ -42,7 +42,7 @@ export const UserProvider = ({ children }) => {
 
     // call above function
     user && isAuthenticated && fetchUserData();
-  }, [user, userActionToggler]);
+  }, [user, isAuthenticated, userActionToggler]);
 
   return (
     <UserContext.Provider

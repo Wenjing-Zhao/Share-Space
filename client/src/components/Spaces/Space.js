@@ -125,7 +125,6 @@ const Space = ({ spaces }) => {
         </Search>
       </SearchSection>
 
-      {/* conditional: fetch space and host data done? */}
       {space && host ? (
         <InfoSection>
           <Info>
@@ -134,7 +133,6 @@ const Space = ({ spaces }) => {
               <ButtonSection>
                 <Title>Space Id: {space.spaceId.substring(0, 8) + "..."}</Title>
 
-                {/* conditional: user is logged in and it is not user's space? */}
                 {signInUser && signInUser.userId !== host.userId && (
                   <>
                     {/* send message modal */}
@@ -148,7 +146,7 @@ const Space = ({ spaces }) => {
                       setHidden={setHidden}
                     />
 
-                    {/* send message button to open modal */}
+                    {/* button to open modal */}
                     <Button
                       onClick={() => {
                         setOpenMessageModal(true);
@@ -160,12 +158,13 @@ const Space = ({ spaces }) => {
                     </Button>
 
                     {/* favorite space button */}
-                    <Button onClick={(evt) => handleFavoriteSpace(evt)}>
-                      {/* conditional: data is loading? */}
+                    <Button
+                      disabled={isLoading}
+                      onClick={(evt) => handleFavoriteSpace(evt)}
+                    >
                       {isLoading ? (
                         <FiLoaderAnimation />
-                      ) : // conditional: user has favorited the space?
-                      isFavorite ? (
+                      ) : isFavorite ? (
                         <>
                           <AiFillHeart style={{ fontSize: "13px" }} />
                           {` Favorited`}
@@ -224,21 +223,17 @@ const Space = ({ spaces }) => {
 
             {/* space host infos display */}
             <UserInfo>
-              {/* host avatar */}
               <Avatar>
                 <Img src={host.avatarUrl} alt="host-avatar" />
               </Avatar>
 
               <div>
-                {/* host name */}
                 <Title>
                   {host.firstName} {host.lastName}
                 </Title>
 
-                {/* conditional: user is logged in? */}
                 {signInUser ? (
                   <>
-                    {/* host email */}
                     <Email>E-mail: {host.email}</Email>
 
                     {/* send host email button */}
@@ -250,7 +245,6 @@ const Space = ({ spaces }) => {
                     )}
                   </>
                 ) : (
-                  // link to login page
                   <Email>
                     Contact the host now? You can <Login />.
                   </Email>

@@ -17,7 +17,7 @@ const Spaces = ({ spaces, isError }) => {
         </Search>
       </SearchSection>
 
-      {/* conditional: ftech spaces data done? */}
+      {/* all spaces display */}
       {spaces ? (
         <SpacesSection>
           <Display>

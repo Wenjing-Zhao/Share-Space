@@ -9,10 +9,9 @@ import Loading from "../Loading";
 import SearchBar from "../Homepage/SearchBar";
 import { UserContext } from "../UserContext";
 
-// this function is for space page display
+// this function is for messages page display
 const Messages = ({ spaces }) => {
-  const { signInUser, userActionToggler, setUserActionToggler } =
-    useContext(UserContext);
+  const { signInUser } = useContext(UserContext);
 
   const [userMessages, setUserMessages] = useState(null);
   const [isError, setIsError] = useState(null);
@@ -22,16 +21,14 @@ const Messages = ({ spaces }) => {
   const [isSedMessError, setIsSedMessError] = useState(false);
 
   useEffect(() => {
-    // this function fetchs user messages
-
+    // this function fetchs user messages data
     const fetchUserMessagesData = async () => {
       try {
-        // fetch user messages
+        // fetch user messages data
         const response = await fetch(
           `/api/get-user-messages/${signInUser.userId}`
         );
         const json = await response.json();
-        console.log(json.data);
 
         setUserMessages(json.data);
       } catch (error) {
@@ -82,7 +79,6 @@ const Messages = ({ spaces }) => {
       );
 
       if (response.ok) {
-        setUserActionToggler(!userActionToggler);
         setIsLoading(false);
         evt.target.reset();
       }
@@ -101,14 +97,15 @@ const Messages = ({ spaces }) => {
         </Search>
       </SearchSection>
 
-      {/* conditional: user is logged in? */}
-      {userMessages ? (
+      {/* messages section display */}
+      {signInUser && userMessages ? (
         <InfoSection>
           <Info>
             <Title>My Messages</Title>
 
             {userMessages.length > 0 ? (
               <MessageSection>
+                {/* map each user message */}
                 {userMessages.map((message, index) => (
                   <form
                     key={index.toString()}
@@ -140,6 +137,7 @@ const Messages = ({ spaces }) => {
                       </SpaceLink>
                       <Hr />
 
+                      {/* map each message log */}
                       {message.messagesLog.map((log, index) => (
                         <div key={index.toString()}>
                           <Para>
@@ -151,13 +149,15 @@ const Messages = ({ spaces }) => {
                         </div>
                       ))}
 
+                      {/* input text area */}
                       <TextArea
                         rows="5"
                         stype="text"
                         onChange={(evt) => setTextValue(evt.target.value)}
                       />
 
-                      <Button type="submit">
+                      {/* submit button */}
+                      <Button disabled={isLoading} type="submit">
                         {isLoading ? <FiLoaderAnimation /> : "Send Message"}
                       </Button>
                     </MessageInfo>

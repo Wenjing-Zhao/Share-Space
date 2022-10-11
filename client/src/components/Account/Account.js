@@ -193,7 +193,6 @@ const Account = ({ spaces }) => {
         </Search>
       </SearchSection>
 
-      {/* conditional: fetch user profile, spaces and favorites data done? */}
       {signInUser && userSpaces && userFavorites ? (
         <>
           <InfoSection>
@@ -230,7 +229,7 @@ const Account = ({ spaces }) => {
                   setIsSuccess={setIsSuccess}
                 />
 
-                {/* add space button to open modal */}
+                {/* button to open modal */}
                 <Button
                   onClick={() => {
                     setOpenAddModal(true);
@@ -241,7 +240,6 @@ const Account = ({ spaces }) => {
                   {` Add`}
                 </Button>
 
-                {/* conditional: user has any space? */}
                 {userSpaces.length === 0 ? (
                   <Alert>
                     <FiAlertCircle /> You don't have any space yet.
@@ -269,7 +267,7 @@ const Account = ({ spaces }) => {
                             spaceId={space.spaceId}
                           />
 
-                          {/* update space button to open madal */}
+                          {/* button to open madal */}
                           <Button
                             onClick={() => {
                               setOpenUpdateModal({
@@ -291,7 +289,6 @@ const Account = ({ spaces }) => {
                               handleDeleteSpace(evt, space.spaceId)
                             }
                           >
-                            {/* conditional: data is loading? */}
                             {isDeleteLoading ? (
                               <FiLoaderAnimation />
                             ) : (
@@ -358,7 +355,6 @@ const Account = ({ spaces }) => {
             <Display>
               <MyFavorites>My Favorites</MyFavorites>
 
-              {/* conditional: user has any favorite? */}
               {userFavorites.length === 0 ? (
                 <Alert>
                   <FiAlertCircle /> You don't have any favorite yet.

@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
-import { FiLoader } from "react-icons/fi";
 import { TbMessage2 } from "react-icons/tb";
 
 import logo from "../../assets/logo.png";
 import Login from "./Login";
 import Logout from "./Logout";
-
 import { UserContext } from "../UserContext";
 
 // this function is for site header display
@@ -23,7 +21,6 @@ const Header = () => {
         {/* site logo display */}
         <LogoSection
           onClick={() => {
-            // link to homepage
             navigate("/");
           }}
         >
@@ -31,9 +28,8 @@ const Header = () => {
           <Title>Share Space</Title>
         </LogoSection>
 
-        {/* sign in/out and account links display */}
+        {/* signin section display */}
         <SignInSection>
-          {/* conditional: user is logged in? */}
           {signInUser ? (
             <>
               <MessageSection to="/messages">
@@ -41,6 +37,7 @@ const Header = () => {
               </MessageSection>
 
               {/* link to user account page */}
+
               <HeaderLink to={`/account`}>
                 Hi, {signInUser.firstName}!
               </HeaderLink>
@@ -118,18 +115,6 @@ const HeaderLink = styled(Link)`
   &:hover {
     color: var(--primary-color);
     text-decoration: underline;
-  }
-`;
-
-const FiLoaderAnimation = styled(FiLoader)`
-  font-size: 1rem;
-  font-weight: bolder;
-  animation: rotate 1.5s linear infinite;
-
-  @keyframes rotate {
-    to {
-      transform: rotate(360deg);
-    }
   }
 `;
 

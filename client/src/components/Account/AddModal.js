@@ -164,7 +164,6 @@ const AddModal = ({
 
           {/* submit form button */}
           <SubmitButton disabled={isLoading} type="submit">
-            {/* conditional: data is loading? */}
             {isLoading ? <FiLoaderAnimation /> : "Add New Space"}
           </SubmitButton>
 
@@ -175,7 +174,7 @@ const AddModal = ({
 
           {/* failed to add the space and display a message */}
           {isError && (
-            <AlertErr>Error! You are missing a piece of information.</AlertErr>
+            <AlertErr>Error! Please try again or refresh page.</AlertErr>
           )}
         </form>
       </Section>

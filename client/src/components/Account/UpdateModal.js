@@ -116,7 +116,6 @@ const UpdateModal = ({
 
           {/* submit form button */}
           <SubmitButton disabled={isLoading} type="submit">
-            {/* conditional: data is loading? */}
             {isLoading ? <FiLoaderAnimation /> : "Update Space"}
           </SubmitButton>
 

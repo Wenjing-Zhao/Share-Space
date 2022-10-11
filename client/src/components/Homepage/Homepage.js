@@ -76,8 +76,12 @@ const Title = styled.h1`
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  width: var(--max-page-width);
+  width: 100%;
   text-align: center;
+
+  @media only screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const PosterSection = styled.div`

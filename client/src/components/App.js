@@ -19,7 +19,7 @@ const App = () => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    // this function fetchs spaces data from database
+    // this function fetchs spaces data
     const fetchSpacesData = async () => {
       try {
         const response = await fetch("/api/get-spaces");
