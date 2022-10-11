@@ -13,7 +13,9 @@ const options = {
   useUnifiedTopology: true,
 };
 
+//---------------------------------------------
 // this function returns an array of all spaces
+//---------------------------------------------
 const getSpaces = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
@@ -43,7 +45,9 @@ const getSpaces = async (req, res) => {
   }
 };
 
+//-------------------------------------
 // this function returns a single space
+//-------------------------------------
 const getSpace = async (req, res) => {
   const { spaceId } = req.params;
   const client = new MongoClient(MONGO_URI, options);
@@ -73,7 +77,9 @@ const getSpace = async (req, res) => {
   }
 };
 
+//----------------------------------
 // this function creates a new space
+//----------------------------------
 const addSpace = async (req, res) => {
   const { spaceDetails, host } = req.body;
   const client = new MongoClient(MONGO_URI, options);
@@ -160,12 +166,12 @@ const addSpace = async (req, res) => {
       res.status(500).json({ status: 500, message: "Transaction Aborted" });
     }
   } catch (error) {
-    // response throwing error status and error message
+    // response error status and error message
     if (!error.statusCode) {
       res.status(500).json({ status: 500, message: error.message });
     }
 
-    // response error status and error message
+    // response throwing error status and error message
     res
       .status(error.statusCode)
       .json({ status: error.statusCode, message: error.message });
@@ -176,7 +182,9 @@ const addSpace = async (req, res) => {
   }
 };
 
+//----------------------------------------
 // this function updates a specified space
+//----------------------------------------
 const updateSpace = async (req, res) => {
   const { spaceId } = req.params;
   const { imageSrc, availableDate, needs } = req.body;
@@ -225,7 +233,9 @@ const updateSpace = async (req, res) => {
   }
 };
 
+//----------------------------------------
 // this function deletes a specified space
+//----------------------------------------
 const deleteSpace = async (req, res) => {
   const { spaceId } = req.params;
   const client = new MongoClient(MONGO_URI, options);
@@ -311,12 +321,12 @@ const deleteSpace = async (req, res) => {
       res.status(500).json({ status: 500, message: "Transaction Aborted" });
     }
   } catch (error) {
-    // response throwing error status and error message
+    // response error status and error message
     if (!error.statusCode) {
       res.status(500).json({ status: 500, message: error.message });
     }
 
-    // response error status and error message
+    // response throwing error status and error message
     res
       .status(error.statusCode)
       .json({ status: error.statusCode, message: error.message });

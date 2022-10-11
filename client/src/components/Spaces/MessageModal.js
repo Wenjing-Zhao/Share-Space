@@ -16,8 +16,7 @@ const MessageModal = ({
   setOpenMessageModal,
   setHidden,
 }) => {
-  const { signInUser, userActionToggler, setUserActionToggler } =
-    useContext(UserContext);
+  const { signInUser } = useContext(UserContext);
 
   const [textValue, setTextValue] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -53,7 +52,6 @@ const MessageModal = ({
       );
 
       if (response.ok) {
-        setUserActionToggler(!userActionToggler);
         setIsSuccess(true);
         setIsLoading(false);
         setTextValue("");

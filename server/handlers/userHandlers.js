@@ -13,7 +13,9 @@ const options = {
   useUnifiedTopology: true,
 };
 
+// -----------------------------------
 // this function returns a single user
+// -----------------------------------
 const getUser = async (req, res) => {
   const { userId } = req.params;
   const client = new MongoClient(MONGO_URI, options);
@@ -43,7 +45,9 @@ const getUser = async (req, res) => {
   }
 };
 
-// this function creates a new user
+// ---------------------------------------------------
+// this function gets user infos or creates a new user
+// ---------------------------------------------------
 const addUser = async (req, res) => {
   const { firstName, lastName, avatarUrl, email } = req.body;
   const client = new MongoClient(MONGO_URI, options);
@@ -101,7 +105,9 @@ const addUser = async (req, res) => {
   }
 };
 
+// ---------------------------------------------------------------
 // this function returns a specific space status in user favorites
+// ---------------------------------------------------------------
 const getUserFavorites = async (req, res) => {
   const { userId } = req.params;
   const { spaceId } = req.query;
@@ -148,7 +154,9 @@ const getUserFavorites = async (req, res) => {
   }
 };
 
+// ---------------------------------------------------------------
 // this function updates a specific space status in user favorites
+// ---------------------------------------------------------------
 const updateUserFavorites = async (req, res) => {
   const { userId } = req.params;
   const { spaceId } = req.body;
@@ -202,7 +210,41 @@ const updateUserFavorites = async (req, res) => {
   }
 };
 
+// --------------------------------------
+// this function gets user messages array
+// --------------------------------------
+const getUserMessages = async (req, res) => {
+  const { userId } = req.params;
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    // connect to the mongodb
+    await client.connect();
+    const db = client.db("sharespace");
+    console.log("connected!");
+
+    // find user data by userId
+    const userData = await db.collection("users").findOne({ userId });
+
+    // response status and user messages array or user not found
+    userData
+      ? res.status(200).json({ status: 200, data: userData.messages })
+      : res
+          .status(404)
+          .json({ status: 404, userId, message: "User Not Found" });
+  } catch (error) {
+    // response status and error message
+    res.status(500).json({ status: 500, message: error.message });
+  } finally {
+    // close the mongodb
+    client.close();
+    console.log("disconnected!");
+  }
+};
+
+// ------------------------------------------------------------
 // this function updates user messages related a specific space
+// ------------------------------------------------------------
 const updateUserMessages = async (req, res) => {
   const { userId } = req.params;
   const {
@@ -215,8 +257,6 @@ const updateUserMessages = async (req, res) => {
     timestamp,
   } = req.body;
   const client = new MongoClient(MONGO_URI, options);
-
-  console.log(req.body);
 
   // validate new message infos miss
   if (
@@ -244,7 +284,8 @@ const updateUserMessages = async (req, res) => {
 
     // this function is for transaction
     const transactionResults = await session.withTransaction(async () => {
-      // ------------------------------------------------------------------
+      // ----------------------
+      // below all about user
 
       // find user data by userId
       const userData = await db
@@ -255,12 +296,12 @@ const updateUserMessages = async (req, res) => {
       if (!userData) {
         // abort transaction and throw error
         await session.abortTransaction();
-        const error = new Error(`User Not Found`);
+        const error = new Error(`User ${userId} Not Found`);
         error.statusCode = 404;
         throw error;
       }
 
-      // insert a new message into existed ialogue obj related the space
+      // insert a new message into existed dialogueObj related the specific space and talker
       const insertNewMessage = {
         userId,
         firstName: userData.firstName,
@@ -269,7 +310,7 @@ const updateUserMessages = async (req, res) => {
         timestamp,
       };
 
-      // create a new dialogue obj and a new message related the space
+      // create a new dialogueObj and a new message related the specific space and talker
       const createNewMessage = {
         spaceId,
         hostId,
@@ -308,7 +349,9 @@ const updateUserMessages = async (req, res) => {
         .collection("users")
         .updateOne({ userId }, newMessagesValues, { session });
 
-      // ------------------------------------------------------------------
+      // above all about user
+      // ----------------------
+      // below all about talker
 
       // find talker data by userId
       const talkerData = await db
@@ -319,12 +362,12 @@ const updateUserMessages = async (req, res) => {
       if (!talkerData) {
         // abort transaction and throw error
         await session.abortTransaction();
-        const error = new Error(`Talker Not Found`);
+        const error = new Error(`Talker ${talkerId} Not Found`);
         error.statusCode = 404;
         throw error;
       }
 
-      // create a new dialogue obj and a new message for talker related the space
+      // create a new dialogue Obj and a new message related the specific space for talker
       const createTalkerNewMessage = {
         spaceId,
         hostId,
@@ -365,7 +408,8 @@ const updateUserMessages = async (req, res) => {
         .collection("users")
         .updateOne({ userId: talkerId }, newTalkerMessagesValues, { session });
 
-      // ------------------------------------------------------------------
+      // above all about talker
+      // ----------------------
     });
 
     // commit transaction
@@ -375,9 +419,9 @@ const updateUserMessages = async (req, res) => {
     await session.endSession();
 
     if (transactionResults) {
-      // transaction is successful and response status and new space data
-      res.status(201).json({
-        status: 201,
+      // transaction is successful and response status and body data
+      res.status(200).json({
+        status: 200,
         data: req.body,
         message: "User Messages Updated",
       });
@@ -386,12 +430,12 @@ const updateUserMessages = async (req, res) => {
       res.status(500).json({ status: 500, message: "Transaction Aborted" });
     }
   } catch (error) {
-    // response throwing error status and error message
+    // response error status and error message
     if (!error.statusCode) {
       res.status(500).json({ status: 500, message: error.message });
     }
 
-    // response error status and error message
+    // response throwing error status and error message
     res
       .status(error.statusCode)
       .json({ status: error.statusCode, message: error.message });
@@ -407,5 +451,6 @@ module.exports = {
   addUser,
   getUserFavorites,
   updateUserFavorites,
+  getUserMessages,
   updateUserMessages,
 };

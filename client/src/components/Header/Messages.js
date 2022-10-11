@@ -11,12 +11,41 @@ import { UserContext } from "../UserContext";
 
 // this function is for space page display
 const Messages = ({ spaces }) => {
-  const { signInUser, isError, userActionToggler, setUserActionToggler } =
+  const { signInUser, userActionToggler, setUserActionToggler } =
     useContext(UserContext);
+
+  const [userMessages, setUserMessages] = useState(null);
+  const [isError, setIsError] = useState(null);
 
   const [textValue, setTextValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSedMessError, setIsSedMessError] = useState(false);
+
+  useEffect(() => {
+    // this function fetchs user messages
+
+    const fetchUserMessagesData = async () => {
+      try {
+        // fetch user messages
+        const response = await fetch(
+          `/api/get-user-messages/${signInUser.userId}`
+        );
+        const json = await response.json();
+        console.log(json.data);
+
+        setUserMessages(json.data);
+      } catch (error) {
+        setIsError(true);
+      }
+    };
+
+    // call above function every second,
+    // To recieve new messages instantly.
+    const interval = setInterval(() => {
+      signInUser && fetchUserMessagesData();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [signInUser]);
 
   // this function handles button clicking send a message
   const handleSendMessage = async (
@@ -73,14 +102,14 @@ const Messages = ({ spaces }) => {
       </SearchSection>
 
       {/* conditional: user is logged in? */}
-      {signInUser ? (
+      {userMessages ? (
         <InfoSection>
           <Info>
             <Title>My Messages</Title>
 
-            {signInUser.messages.length > 0 ? (
+            {userMessages.length > 0 ? (
               <MessageSection>
-                {signInUser.messages.map((message, index) => (
+                {userMessages.map((message, index) => (
                   <form
                     key={index.toString()}
                     onSubmit={(evt) =>
