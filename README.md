@@ -8,15 +8,15 @@ A multi-page modern website for users in exchange for free accommodation by help
 - Techniques: HTML, CSS, JavaScript, ReactJS, NodeJS, Express, MongoDB
 - APIs & Packages: auth0, cloudinary, styled-components, react-icons, ant-design, moment, uuid, dotenv etc.
 
-### Screenshot - Homepage (header, Big search bar...)
+### Screenshot - Homepage (Header, Big search bar)
 
 <img src='client/public/assets/Homepage.png' style='width:100%' />
 
-### Screenshot - Homepage (introductions, footer...)
+### Screenshot - Homepage (Introductions, Footer)
 
 <img src='client/public/assets/Introduction.png' style='width:100%' />
 
-### Screenshot - Spaces
+### Screenshot - Spaces Page
 
 <img src='client/public/assets/Spaces.png' style='width:100%' />
 
@@ -24,22 +24,22 @@ A multi-page modern website for users in exchange for free accommodation by help
 
 <img src='client/public/assets/Search.png' style='width:100%' />
 
-### Screenshot - Sign in/Sign up
+### Screenshot - Signin/Signup Page
 
 <img src='client/public/assets/Signin.png' style='width:100%' />
 
-### Screenshot - Space
+### Screenshot - Space Page
 
 <img src='client/public/assets/Space.png' style='width:100%' />
 
-### Screenshot - Account (profile, add/edit/delete space)
+### Screenshot - Account Page (Profile, Add/Edit/Delete Space)
 
 <img src='client/public/assets/Account.png' style='width:100%' />
 
-### Screenshot - Account (favorites)
+### Screenshot - Account Page (Favorites)
 
 <img src='client/public/assets/Favorites.png' style='width:100%' />
 
-### Screenshot - Messages
+### Screenshot - Messages Page
 
 <img src='client/public/assets/Messages.png' style='width:100%' />
