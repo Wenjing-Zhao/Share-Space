@@ -2,7 +2,7 @@
 
 A multi-page modern website for users in exchange for free accommodation by helping other users who will be traveling or go away to look after their houses and pets.
 
-### Youtube link: [Share Space Demo - Wenjing Zhao](https://youtu.be/42zPMd1XzLg)
+### YouTube link: [Share Space Demo - Wenjing Zhao](https://youtu.be/42zPMd1XzLg)
 
 - Functionalities: user signin and authentication, search, publication, favorites, messages etc.
 - Techniques: HTML, CSS, JavaScript, ReactJS, NodeJS, Express, MongoDB
