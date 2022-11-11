@@ -8,6 +8,35 @@ A multi-page modern website for users in exchange for free accommodation by help
 - Techniques: HTML, CSS, JavaScript, React, NodeJS, Express, MongoDB Atlas.
 - APIs & Packages: auth0, cloudinary, styled-components, react-icons, antd, moment, uuid, dotenv, etc.
 
+# Setup
+
+### The Frontend
+
+- Open a terminal in VS Code
+- Type `cd client`
+- Type `yarn install`
+- Type `yarn start`
+
+### Auth0 Connection
+
+- Create `.env` file in `client` folder
+- Type `REACT_APP_AUTH0_DOMAIN=` followed by `your Domain`
+- Type `REACT_APP_AUTH0_CLIENTID=` followed by `your Client ID`
+- Save the file
+
+### The Backend
+
+- Open another terminal in VS Code
+- Type `cd server`
+- Type `yarn install`
+- Type `yarn start`
+
+### MongoDB Connection
+
+- Create `.env` file in `server` folder
+- Type `MONGO_URI=` followed by `your MongoDB native driver code`
+- Save the file
+
 # Screenshots
 
 ### Homepage (Header, Search bar)
