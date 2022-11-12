@@ -7,11 +7,12 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
       - run:
           command: cd server
           name: Go to server
+      - run:
+          command: npm install
+          name: install packages
       - run:
           command: npm test
           name: Run tests
