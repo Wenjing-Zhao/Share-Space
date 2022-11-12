@@ -243,6 +243,29 @@ const getUserMessages = async (req, res) => {
 };
 
 // ------------------------------------------------------------
+
+const validateSpaceTalkerExist = (
+  userData,
+  createNewMessage,
+  insertNewMessage,
+  spaceId,
+  talkerId
+) => {
+  const result = userData.messages.find(
+    (ele) => ele.spaceId === spaceId && ele.talkerId === talkerId
+  );
+
+  if (!result) {
+    // if not exists, create
+    userData.messages.push(createNewMessage);
+  } else {
+    // if exists, insert
+    const index = userData.messages.indexOf(result);
+    userData.messages[index].messagesLog.push(insertNewMessage);
+  }
+};
+
+// ------------------------------------------------------------
 // this function updates user messages related a specific space
 // ------------------------------------------------------------
 const updateUserMessages = async (req, res) => {
@@ -329,18 +352,26 @@ const updateUserMessages = async (req, res) => {
       };
 
       // validate the space and talker exists in user messages
-      const result = userData.messages.find(
-        (ele) => ele.spaceId === spaceId && ele.talkerId === talkerId
-      );
+      // const result = userData.messages.find(
+      //   (ele) => ele.spaceId === spaceId && ele.talkerId === talkerId
+      // );
 
-      if (!result) {
-        // if not exists, create
-        userData.messages.push(createNewMessage);
-      } else {
-        // if exists, insert
-        const index = userData.messages.indexOf(result);
-        userData.messages[index].messagesLog.push(insertNewMessage);
-      }
+      // if (!result) {
+      //   // if not exists, create
+      //   userData.messages.push(createNewMessage);
+      // } else {
+      //   // if exists, insert
+      //   const index = userData.messages.indexOf(result);
+      //   userData.messages[index].messagesLog.push(insertNewMessage);
+      // }
+
+      validateSpaceTalkerExist(
+        userData,
+        createNewMessage,
+        insertNewMessage,
+        spaceId,
+        talkerId
+      );
 
       // modify the users collection
       const newMessagesValues = { $set: { messages: userData.messages } };
@@ -453,4 +484,5 @@ module.exports = {
   updateUserFavorites,
   getUserMessages,
   updateUserMessages,
+  validateSpaceTalkerExist,
 };
