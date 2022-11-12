@@ -5,7 +5,7 @@ describe("validateSpaceTalkerExist", () => {
     const userData = { messages: [] };
 
     validateSpaceTalkerExist(userData, {}, {}, 1, 2);
-    expect(userData.messages.length).toBe(1);
+    expect(userData.messages.length).toBe(2);
   });
 
   test("when results is false ", () => {
