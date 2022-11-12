@@ -9,10 +9,10 @@ jobs:
     steps:
       - checkout
       - run:
-          command: cd server
+          command: cd server && pwd
           name: Go to server
       - run:
-          command: npm install
+          command: pwd && npm install
           name: install packages
       - run:
           command: npm test
