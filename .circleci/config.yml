@@ -1,25 +1,26 @@
-name: Node.js CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
-
+  build_and_test:
+    executor: node/default
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: cd server
-      - run: npm install
-      - run: npm test
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: cd server
+          name: Go to server
+      - run:
+          command: npm test
+          name: Run tests
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+workflows:
+  test_my_app:
+    jobs:
+      - build_and_test
