@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 // this function is for each mateched space address display in the list
-const Suggestion = ({ suggestion, handleSelect, value }) => {
+const Suggestion = ({ suggestion, index, handleSelect, value }) => {
   // get input value index of the mateched space address
   const getValueIndex = suggestion.address
     .toLowerCase()
@@ -12,7 +12,10 @@ const Suggestion = ({ suggestion, handleSelect, value }) => {
   const getIndex = getValueIndex + value.length;
 
   return (
-    <List onClick={() => handleSelect(suggestion)}>
+    <List
+      onClick={() => handleSelect(suggestion)}
+      data-test-id={`sugggestion-${index}`}
+    >
       <span>
         {suggestion.address.slice(0, getIndex)}
         <Prediction>{suggestion.address.slice(getIndex)}</Prediction>

@@ -16,6 +16,6 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "jest --coverage"
+    "test": "jest"
   }
 }

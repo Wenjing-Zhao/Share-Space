@@ -21,6 +21,7 @@ const SearchBar = ({ spaces }) => {
   return (
     <Wrapper>
       <Input
+        data-test-id="search-bar"
         type="text"
         value={value}
         placeholder="Where do you want to go? (Country, region, city...)"
@@ -66,9 +67,10 @@ const SearchBar = ({ spaces }) => {
 
       <ListSection disApper={matchedList.length === 0}>
         {/* map each mateched space address in the list */}
-        {matchedList.map((suggestion) => {
+        {matchedList.map((suggestion, index) => {
           return (
             <Suggestion
+              index={index}
               key={suggestion.spaceId}
               suggestion={{
                 spaceId: suggestion.spaceId,
@@ -86,6 +88,7 @@ const SearchBar = ({ spaces }) => {
 
       {/* clear button */}
       <ClearButton
+        data-test-id="clear-button"
         type="button"
         onClick={() => {
           setValue("");

@@ -182,7 +182,11 @@ const Space = ({ spaces }) => {
 
               {/* space house image */}
               <House>
-                <Img src={space.spaceDetails.imageSrc} alt="house-img" />
+                <Img
+                  data-test-id="space-image"
+                  src={space.spaceDetails.imageSrc}
+                  alt="house-img"
+                />
               </House>
 
               {/* space available date, needs and address */}
