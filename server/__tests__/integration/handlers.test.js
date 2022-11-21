@@ -1,11 +1,19 @@
 const axios = require("axios");
 
+describe("Spaces endpoints", () => {
+  test("Get spaces - Should respond with an array", async () => {
+    const response = await axios.get("http://localhost:8000/api/get-spaces");
+    expect(Array.isArray(response.data.data)).toBe(true);
+    expect(response.status).toBe(200);
+  });
+});
+
 describe("test endpoints", () => {
   test("create/get user + add/get/update/delete space", async () => {
     let newUserId = null;
     let newSpaceId = null;
 
-    // create new user test
+    // create new user test or login exsited user
     const responseAddUser = await axios.post(
       "http://localhost:8000/api/add-user",
       {
@@ -83,11 +91,3 @@ describe("test endpoints", () => {
     }
   });
 });
-
-// describe("Spaces endpoints", () => {
-//   test("Get spaces - Should respond with an array", async () => {
-//     const response = await axios.get("http://localhost:8000/api/get-spaces");
-//     expect(Array.isArray(response.data.data)).toBe(true);
-//     expect(response.status).toBe(200);
-//   });
-// });

@@ -21,7 +21,7 @@ const Spaces = ({ spaces, isError }) => {
       {spaces ? (
         <SpacesSection>
           <Display>
-            <Title>Find All Spaces</Title>
+            <Title data-test-id="all-spaces-title">Find All Spaces</Title>
 
             {/* map each space infos */}
             {spaces.map((space) => (

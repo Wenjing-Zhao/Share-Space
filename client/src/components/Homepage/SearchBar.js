@@ -99,7 +99,11 @@ const SearchBar = ({ spaces }) => {
       </ClearButton>
 
       {/* link to all spaces page button */}
-      <FindButton onClick={() => navigate("/spaces")} type="button">
+      <FindButton
+        data-test-id="all-spaces-button"
+        onClick={() => navigate("/spaces")}
+        type="button"
+      >
         <MdRoom /> Find All Spaces
       </FindButton>
     </Wrapper>
