@@ -12,25 +12,25 @@ test.describe("homepage and search bar", () => {
     const spaceImage = page.locator("data-test-id=space-image");
 
     // fill something in the input
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await searchBar.fill("Clear me");
 
     // click clear button
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await clearButton.click();
     // expect the input value is empty
     await expect(searchBar).toHaveValue("");
 
     // fill key words in the input
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await searchBar.fill("canada");
 
     // click the first option of dropdown
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await sugggestion.click();
 
     // expect the image exist.
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
     await expect(spaceImage).toHaveCount(1);
   });
 });
